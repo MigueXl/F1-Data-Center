@@ -1,0 +1,221 @@
+GP_ID, GP_Name, Distance, Team 
+1,Bahrein,930,Mclaren
+1,Bahrein,1604,Aston Martin
+1,Bahrein,2319,Williams
+1,Bahrein,1711,Alfa Romeo
+1,Bahrein,3452,Haas
+1,Bahrein,812,AlphaTauri
+1,Bahrein,0,Red Bull
+1,Bahrein,1252,Alpine
+1,Bahrein,681,Ferrari
+1,Bahrein,388,Mercedes
+2,Imola,43,Mclaren
+2,Imola,727,Aston Martin
+2,Imola,850,Williams
+2,Imola,1563,Alfa Romeo
+2,Imola,1868,Haas
+2,Imola,379,AlphaTauri
+2,Imola,35,Red Bull
+2,Imola,706,Alpine
+2,Imola,329,Ferrari
+2,Imola,0,Mercedes
+3,Portugal,513,Mclaren
+3,Portugal,1002,Aston Martin
+3,Portugal,1141,Williams
+3,Portugal,1248,Alfa Romeo
+3,Portugal,2484,Haas
+3,Portugal,1084,AlphaTauri
+3,Portugal,241,Red Bull
+3,Portugal,618,Alpine
+3,Portugal,801,Ferrari
+3,Portugal,0,Mercedes
+4,Espa�a,881,Mclaren
+4,Espa�a,1233,Aston Martin
+4,Espa�a,1704,Williams
+4,Espa�a,1615,Alfa Romeo
+4,Espa�a,2376,Haas
+4,Espa�a,1241,AlphaTauri
+4,Espa�a,36,Red Bull
+4,Espa�a,839,Alpine
+4,Espa�a,769,Ferrari
+4,Espa�a,0,Mercedes
+5,Monaco,274,Mclaren
+5,Monaco,963,Aston Martin
+5,Monaco,1484,Williams
+5,Monaco,1063,Alfa Romeo
+5,Monaco,2612,Haas
+5,Monaco,554,AlphaTauri
+5,Monaco,230,Red Bull
+5,Monaco,1140,Alpine
+5,Monaco,0,Ferrari
+5,Monaco,255,Mercedes
+6,Azerbaiyan,529,Mclaren
+6,Azerbaiyan,1006,Aston Martin
+6,Azerbaiyan,1510,Williams
+6,Azerbaiyan,1369,Alfa Romeo
+6,Azerbaiyan,2940,Haas
+6,Azerbaiyan,347,AlphaTauri
+6,Azerbaiyan,345,Red Bull
+6,Azerbaiyan,977,Alpine
+6,Azerbaiyan,0,Ferrari
+6,Azerbaiyan,232,Mercedes
+7,Francia,1262,Mclaren
+7,Francia,1777,Aston Martin
+7,Francia,2075,Williams
+7,Francia,1823,Alfa Romeo
+7,Francia,2952,Haas
+7,Francia,878,AlphaTauri
+7,Francia,0,Red Bull
+7,Francia,1350,Alpine
+7,Francia,850,Ferrari
+7,Francia,258,Mercedes
+8,Austria1,279,Mclaren
+8,Austria1,822,Aston Martin
+8,Austria1,830,Williams
+8,Austria1,1072,Alfa Romeo
+8,Austria1,2200,Haas
+8,Austria1,395,AlphaTauri
+8,Austria1,0,Red Bull
+8,Austria1,733,Alpine
+8,Austria1,631,Ferrari
+8,Austria1,194,Mercedes
+9,Austria2,48,Mclaren
+9,Austria2,773,Aston Martin
+9,Austria2,833,Williams
+9,Austria2,1057,Alfa Romeo
+9,Austria2,1707,Haas
+9,Austria2,387,AlphaTauri
+9,Austria2,0,Red Bull
+9,Austria2,752,Alpine
+9,Austria2,839,Ferrari
+9,Austria2,294,Mercedes
+10,GB,874,Mclaren
+10,GB,1080,Aston Martin
+10,GB,948,Williams
+10,GB,1572,Alfa Romeo
+10,GB,2715,Haas
+10,GB,1250,AlphaTauri
+10,GB,186,Red Bull
+10,GB,1222,Alpine
+10,GB,805,Ferrari
+10,GB,0,Mercedes
+11,Hungria,966,Mclaren
+11,Hungria,1331,Aston Martin
+11,Hungria,2525,Williams
+11,Hungria,2134,Alfa Romeo
+11,Hungria,3503,Haas
+11,Hungria,975,AlphaTauri
+11,Hungria,231,Red Bull
+11,Hungria,1122,Alpine
+11,Hungria,1077,Ferrari
+11,Hungria,0,Mercedes
+12,Belgica,0,Mclaren
+12,Belgica,789,Aston Martin
+12,Belgica,925,Williams
+12,Belgica,6281,Alfa Romeo
+12,Belgica,7948,Haas
+12,Belgica,415,AlphaTauri
+12,Belgica,534,Red Bull
+12,Belgica,1329,Alpine
+12,Belgica,1696,Ferrari
+12,Belgica,204,Mercedes
+13,Holanda,980,Mclaren
+13,Holanda,1482,Aston Martin
+13,Holanda,1208,Williams
+13,Holanda,705,Alfa Romeo
+13,Holanda,2502,Haas
+13,Holanda,593,AlphaTauri
+13,Holanda,0,Red Bull
+13,Holanda,1034,Alpine
+13,Holanda,552,Ferrari
+13,Holanda,38,Mercedes
+14,Italia,434,Mclaren
+14,Italia,1358,Aston Martin
+14,Italia,1837,Williams
+14,Italia,1171,Alfa Romeo
+14,Italia,2693,Haas
+14,Italia,705,AlphaTauri
+14,Italia,411,Red Bull
+14,Italia,1514,Alpine
+14,Italia,907,Ferrari
+14,Italia,0,Mercedes
+15,Rusia,0,Mclaren
+15,Rusia,2963,Aston Martin
+15,Rusia,990,Williams
+15,Rusia,7593,Alfa Romeo
+15,Rusia,7837,Haas
+15,Rusia,4648,AlphaTauri
+15,Rusia,3344,Red Bull
+15,Rusia,2211,Alpine
+15,Rusia,517,Ferrari
+15,Rusia,2057,Mercedes
+16,Turquia,1086,Mclaren
+16,Turquia,1437,Aston Martin
+16,Turquia,2139,Williams
+16,Turquia,3562,Alfa Romeo
+16,Turquia,2332,Haas
+16,Turquia,458,AlphaTauri
+16,Turquia,328,Red Bull
+16,Turquia,609,Alpine
+16,Turquia,397,Ferrari
+16,Turquia,0,Mercedes
+17,EEUU,898,Mclaren
+17,EEUU,2371,Aston Martin
+17,EEUU,2820,Williams
+17,EEUU,2884,Alfa Romeo
+17,EEUU,3589,Haas
+17,EEUU,1208,AlphaTauri
+17,EEUU,0,Red Bull
+17,EEUU,2467,Alpine
+17,EEUU,696,Ferrari
+17,EEUU,209,Mercedes
+18,Mexico,888,Mclaren
+18,Mexico,1627,Aston Martin
+18,Mexico,2083,Williams
+18,Mexico,1731,Alfa Romeo
+18,Mexico,2983,Haas
+18,Mexico,581,AlphaTauri
+18,Mexico,350,Red Bull
+18,Mexico,2251,Alpine
+18,Mexico,873,Ferrari
+18,Mexico,0,Mercedes
+19,Brasil,1046,Mclaren
+19,Brasil,1465,Aston Martin
+19,Brasil,1963,Williams
+19,Brasil,1408,Alfa Romeo
+19,Brasil,2024,Haas
+19,Brasil,843,AlphaTauri
+19,Brasil,438,Red Bull
+19,Brasil,1179,Alpine
+19,Brasil,892,Ferrari
+19,Brasil,0,Mercedes
+20,Qatar,904,Mclaren
+20,Qatar,1319,Aston Martin
+20,Qatar,1929,Williams
+20,Qatar,2329,Alfa Romeo
+20,Qatar,2580,Haas
+20,Qatar,813,AlphaTauri
+20,Qatar,455,Red Bull
+20,Qatar,843,Alpine
+20,Qatar,1013,Ferrari
+20,Qatar,0,Mercedes
+21,Saudi,669,Mclaren
+21,Saudi,1687,Aston Martin
+21,Saudi,1415,Williams
+21,Saudi,1105,Alfa Romeo
+21,Saudi,1953,Haas
+21,Saudi,614,AlphaTauri
+21,Saudi,142,Red Bull
+21,Saudi,1063,Alpine
+21,Saudi,543,Ferrari
+21,Saudi,0,Mercedes
+22,AbuDhabi,822,Mclaren
+22,AbuDhabi,1952,Aston Martin
+22,AbuDhabi,2229,Williams
+22,AbuDhabi,2009,Alfa Romeo
+22,AbuDhabi,2797,Haas
+22,AbuDhabi,902,AlphaTauri
+22,AbuDhabi,0,Red Bull
+22,AbuDhabi,1280,Alpine
+22,AbuDhabi,883,Ferrari
+22,AbuDhabi,371,Mercedes
