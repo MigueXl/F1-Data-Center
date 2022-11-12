@@ -1,9 +1,10 @@
-import gp, multidata
+import gp, multidata, gp_txt
 import csv
 import drivers
 import os
 import time
 from tqdm import tqdm
+from file_manager import updateALL
 
 inicio = time.time()
 
@@ -273,7 +274,7 @@ def incident(driver,year,circuit,sesion):
 ##################################################################################
             
     if year == 2022:
-        ric,nor,vet,lat,maz,gas,per,alo,lec,STR, tsu, oco,ver,ham,msc,sai,rus,bot,alb,zho,kmag = False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False, False
+        ric,nor,vet,lat,maz,gas,per,alo,lec,STR, tsu, oco,ver,ham,msc,sai,rus,bot,alb,zho,kmag, gio = False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False, False, False
         driv_list = ['Fernando ALONSO', 'Charles LECLERC', 'Lance STROLL', 'Yuki TSUNODA', 'Esteban OCON', 'Max VERSTAPPEN', 'Lewis HAMILTON', 'Mick SCHUMACHER', 'Carlos SAINZ', 'George RUSSELL', 'Valtteri BOTTAS', 'Antonio GIOVINAZZI', 'Robert KUBICA']       
         if driver == 'Daniel RICCIARDO':
             ric = True
@@ -466,7 +467,7 @@ def incident(driver,year,circuit,sesion):
             if sesion == 'race':
                 if tsu or ric:
                     return 'Yes'
-    
+
 def getLongest(sesiones:list):
     lengths = []
     for l in sesiones:
@@ -476,9 +477,51 @@ def getLongest(sesiones:list):
             
 
         
-################################## MAIN FUNCTION #################################
-    
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################## MAIN FUNCTION #################################
+
+#DATA UPDATE
+
+def createListYear(inicio,final):
+    return [y for y in range(inicio,final + 1)]
+
+upYears = createListYear(2018,2022)
+# years = ['TestYear']
+correctYears = createListYear(2018,2021)
+for gY in correctYears:
+    upYears.remove(gY)
+
+updateALL(upYears)
+
+time.sleep(0.5)
 
 data = [['Driver', 'Team', 'Age', 'Year', 'Month', 'GP', 'GP_ID','fp1_quali_Pace', 'fp1_quali_Laps', 'fp1_race_Pace', 'fp1_race_Laps', 'fp1_fastest_lap', 'fp1_Weather', 'fp1_Incident', 'fp2_quali_Pace', 'fp2_quali_Laps', 'fp2_race_Pace', 'fp2_race_Laps', 'fp2_fastest_lap', 'fp2_Weather', 'fp2_Incident', 'fp3_quali_Pace', 'fp3_quali_Laps', 'fp3_race_Pace', 'fp3_race_Laps', 'fp3_fastest_lap', 'fp3_Weather', 'fp3_Incident', 'quali_Pace', 'quali_Laps', 'quali_fastest_lap', 'quali_Weather', 'quali_Incident', 'race_Pace', 'race_Laps', 'race_fastest_lap', 'race_Stops', 'race_Weather', 'race_Incident']]
 
@@ -488,11 +531,30 @@ data = [['Driver', 'Team', 'Age', 'Year', 'Month', 'GP', 'GP_ID','fp1_quali_Pace
 grand_prix_2021 = multidata.f1_calendar(2021).calendar
 grand_prix_2022 = multidata.f1_calendar(2022).calendar
 
-year = [2021]
+year = [2021, 2022]
 
 ##################################################################################
 #Loops and .csv preparation
 ##################################################################################
+
+def txtInSesions(sesions):
+    txt = False
+    for i in sesions:
+        if '.txt' in i:
+            txt = True
+    return txt
+
+
+
+def max_5_sesions(sesions):
+    txt = txtInSesions(sesions)
+    
+    if txt:
+        sesions = sesions[5:]     
+    else:
+        sesions = sesions[0:5]
+    
+    return sesions
 
 # for y in range(len(year)):
 for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
@@ -504,7 +566,7 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
         os.chdir(path)
         
         sesiones = []
-        p_sesion = ["fp1.pdf","fp2.pdf","fp3.pdf","quali.pdf","race.pdf"]
+        p_sesion = ["fp1.pdf","fp2.pdf","fp3.pdf","quali.pdf","race.pdf","fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
         
         for s in range(len(p_sesion)):
             path = "/Users/migue/Documents/F1 Data Center/"+str(year[y])+"/"+grand_prix[j]+"_"+str(year[y])+"/"+p_sesion[s]
@@ -512,8 +574,13 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
                 sesiones.append(p_sesion[s])
             else:
                 sesiones.append("")
-        
-        datos = gp.gp(sesiones, grand_prix[j])
+
+        sesiones = max_5_sesions(sesiones)
+        print(grand_prix[j])
+        if  txtInSesions(sesiones):
+            datos = gp_txt.gp(sesiones, grand_prix)       
+        else:
+            datos = gp.gp(sesiones, grand_prix)
         
         month = []
         names = []
@@ -628,6 +695,8 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
                     month.append("NOV")
                 elif grand_prix[i]== 'Saudi' or grand_prix[i] == 'AbuDhabi':
                     month.append("DEC")
+                else:
+                    month.append('NO MONTH')
         
 ##################################################################################
 #2022Season
@@ -637,7 +706,7 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
         #teams = multidata.f1_teams(names,year,gp).equipos
         ######
 
-        if year[y] == 2022:
+        if year[y] == 2022 or  year[y] == 'TestYear':
             for i in range(len(names)):
                 if names[i]== 'Daniel RICCIARDO' or names[i] == 'Lando NORRIS':
                     teams.append("McLaren")
@@ -717,6 +786,8 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
                     month.append("OCT")
                 elif grand_prix[i] == 'Brasil' or grand_prix[i] == 'AbuDhabi':
                     month.append("NOV")
+                else:
+                    month.append("NO MONTH")
                     
         for i in range(len(names)):
             if names[i] not in  datos.fp1_name:
@@ -743,9 +814,10 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
                 index_race = 20
             else:
                 index_race = datos.race_name.index(names[i])
-                    
+    
             drivers_lista.append(drivers.drivers(names[i], teams[i], age[i], grand_prix[j], datos.fp1[index_fp1],datos.fp2[index_fp2],datos.fp3[index_fp3],datos.quali[index_quali],datos.race[index_race]))
-                
+        
+
         for i in range(len(drivers_lista)):
             fp1_inc = incident(drivers_lista[i].name,year[y],grand_prix[j],'fp1')
             if fp1_inc == None:
@@ -762,6 +834,15 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
             race_inc = incident(drivers_lista[i].name,year[y],grand_prix[j],'race')
             if race_inc == None:
                 race_inc = 'No'
+
+            #DEBUGGING
+            # with open('debug'+str(grand_prix[j] + year[y])+'.csv','w+') as debug:
+            #     debug.write(str(i) +'\n')
+            #     # l = [drivers_lista[i].name,drivers_lista[i].team,drivers_lista[i].age,year[y],month[j],grand_prix[j],j,drivers_lista[i].fp1_quali_mean,drivers_lista[i].fp1_quali,drivers_lista[i].fp1_race_mean,drivers_lista[i].fp1_race,drivers_lista[i].fp1_fastest,weather(year[y],grand_prix[j],'fp1'),fp1_inc,drivers_lista[i].fp2_quali_mean,drivers_lista[i].fp2_quali,drivers_lista[i].fp2_race_mean,drivers_lista[i].fp2_race,drivers_lista[i].fp2_fastest,weather(year[y],grand_prix[j],'fp2'),fp2_inc,drivers_lista[i].fp3_quali_mean,drivers_lista[i].fp3_quali,drivers_lista[i].fp3_race_mean,drivers_lista[i].fp3_race,drivers_lista[i].fp3_fastest,weather(year[y],grand_prix[j],'fp3'),fp3_inc,drivers_lista[i].quali,drivers_lista[i].quali_laps,drivers_lista[i].quali_fastest,weather(year[y],grand_prix[j],'quali'),quali_inc,drivers_lista[i].race,drivers_lista[i].race_laps,drivers_lista[i].race_fastest,drivers_lista[i].race_stops,weather(year[y],grand_prix[j],'race'),race_inc]
+            #     lred = [drivers_lista[i].name, drivers_lista[i].team, drivers_lista[i].age,year[y],j]
+            #     for i in lred:
+            #         debug.write(str(i)+'\n')
+
             data.append([drivers_lista[i].name,drivers_lista[i].team,drivers_lista[i].age,year[y],month[j],grand_prix[j],j,drivers_lista[i].fp1_quali_mean,drivers_lista[i].fp1_quali,drivers_lista[i].fp1_race_mean,drivers_lista[i].fp1_race,drivers_lista[i].fp1_fastest,weather(year[y],grand_prix[j],'fp1'),fp1_inc,drivers_lista[i].fp2_quali_mean,drivers_lista[i].fp2_quali,drivers_lista[i].fp2_race_mean,drivers_lista[i].fp2_race,drivers_lista[i].fp2_fastest,weather(year[y],grand_prix[j],'fp2'),fp2_inc,drivers_lista[i].fp3_quali_mean,drivers_lista[i].fp3_quali,drivers_lista[i].fp3_race_mean,drivers_lista[i].fp3_race,drivers_lista[i].fp3_fastest,weather(year[y],grand_prix[j],'fp3'),fp3_inc,drivers_lista[i].quali,drivers_lista[i].quali_laps,drivers_lista[i].quali_fastest,weather(year[y],grand_prix[j],'quali'),quali_inc,drivers_lista[i].race,drivers_lista[i].race_laps,drivers_lista[i].race_fastest,drivers_lista[i].race_stops,weather(year[y],grand_prix[j],'race'),race_inc])
 
 

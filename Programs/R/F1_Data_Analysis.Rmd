@@ -102,6 +102,30 @@ index = which(data$race_fastest_lap == 0)
 data$race_fastest_lap[index] = NA
 ```
 
+#Same but now for laps (Because I want to keep 0 Laps because is a number which could be interesting, I will transform it into NA, remove those who overcome 60% out of the data and later returning back to 0)
+```{r}
+index = which(data$fp1_quali_Laps == 0) 
+data$fp1_quali_Laps[index] = NA
+index = which(data$fp1_race_Laps == 0) 
+data$fp1_race_Laps[index] = NA
+
+index = which(data$fp2_quali_Laps == 0) 
+data$fp2_quali_Laps[index] = NA
+index = which(data$fp2_race_Laps == 0) 
+data$fp2_race_Laps[index] = NA
+
+index = which(data$fp3_quali_Laps == 0) 
+data$fp3_quali_Laps[index] = NA
+index = which(data$fp3_race_Laps == 0) 
+data$fp3_race_Laps[index] = NA
+
+
+index = which(data$race_Laps == 0) 
+data$race_Laps[index] = NA
+
+index = which(data$race_Stops == 0) 
+data$race_Stops[index] = NA
+```
 #Data Preprocessing
 ```{r}
 data = data[-which(data$quali_Laps == 0),]
@@ -111,7 +135,43 @@ aggr(data, numbers = TRUE, sortVars = TRUE, labels = names(data), cex.axis = 0.7
      ylab= c('Missing data','Pattern'))
 
 #Remove those with over 0.6 of null values
-data = data[,-c(24,25,34,36)]
+someNACols <- vector()
+for (i in 1:ncol(data)){
+  someNACols[i] <-  c(sum(is.na(data[,i]))/length(data[,i]))
+}
+
+for (i in 1:length(someNACols)){
+  if (someNACols[i] >= 0.5){
+    data = data[,-c(i)]
+    print (i)
+  }
+}
+#data = data[,-c(24,25)]
+```
+
+#Back to Laps == 0
+```{r}
+index = which(is.na(data$fp1_quali_Laps)) 
+data$fp1_quali_Laps[index] = 0
+index = which(is.na(data$fp1_race_Laps)) 
+data$fp1_race_Laps[index] = 0
+
+index = which(is.na(data$fp2_quali_Laps)) 
+data$fp2_quali_Laps[index] = 0
+index = which(is.na(data$fp2_race_Laps )) 
+data$fp2_race_Laps[index] = 0
+
+index = which(is.na(data$fp3_quali_Laps )) 
+data$fp3_quali_Laps[index] = 0
+index = which(is.na(data$fp3_race_Laps )) 
+data$fp3_race_Laps[index] = 0
+
+
+index = which(is.na(data$race_Laps )) 
+data$race_Laps[index] = 0
+
+index = which(is.na(data$race_Stops)) 
+data$race_Stops[index] = 0
 ```
 
 ```{r}

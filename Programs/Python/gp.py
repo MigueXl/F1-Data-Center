@@ -2,6 +2,7 @@ import multidata
 import pdfplumber
 import PyPDF2 as p2
 import re
+from tqdm import tqdm
 
 
 #regex to find numbers
@@ -12,8 +13,9 @@ dev = 'Nyck DE VRIES'
 drivers_sn = re.compile("\d+\s("+dev+"|[A-Z][a-z]+\s[A-Z]+|"+zho+"+)")
 
 class gp:
-    def __init__(self, lista_sesiones,gp,laps=None):
+    def __init__(self, lista_sesiones, gp, bar = False, laps=None):
         self.gp = gp
+        self.progressBar = bar
         self.laps = laps
         self.lista = self.get_lists(lista_sesiones)
         if laps == [None,None] or laps == None:
@@ -32,7 +34,10 @@ class gp:
         self.fp3_name = self.lista[7]
         self.quali_name = self.lista[8]
         self.race_name = self.lista[9]
-        
+    
+    def noName(self):
+        return ["NO DRIVER" for _ in range(20)]
+
     def get_lists(self, lista_sesiones):
             """Obtain times lists and drivers names in each season"""
             drivers_apellido = []
@@ -55,7 +60,7 @@ class gp:
             for i in range(len(drivers)):
                 for _ in range(20):
                     drivers[i].append([])
-                
+
             for sesion in range(len(lista_sesiones)):
                 #Important later this driv = -1
                 driv = -1
@@ -67,10 +72,17 @@ class gp:
                     text = [] #Text of each season separated by pages
 
                     #Extract text from each page
-                    for i in range(a):
-                        with pdfplumber.open(invoice) as pdf:
-                            page = pdf.pages[i]
-                            text.append(page.extract_text())
+                    if self.progressBar:
+                        for i in tqdm(range(a), desc = str(lista_sesiones[sesion]) +' Progress Bar'):
+                            with pdfplumber.open(invoice) as pdf:
+                                page = pdf.pages[i]
+                                text.append(page.extract_text())
+
+                    else:
+                        for i in range(a):
+                            with pdfplumber.open(invoice) as pdf:
+                                page = pdf.pages[i]
+                                text.append(page.extract_text())
 
                     #Split text if enter occurs
                     for i in range(a):
@@ -109,7 +121,10 @@ class gp:
                 
                 #If lista_sesiones = "" (Does not exist)                    
                 else:
-                    drivers_name[sesion] = drivers_name[sesion-1].copy()
+                    if len(drivers_name[sesion-1]) == 0:
+                        drivers_name[sesion] = self.noName()
+                    else:
+                        drivers_name[sesion] = drivers_name[sesion-1].copy()
                     for i in range(len(drivers[sesion])):
                         drivers[sesion][i].append(0)
                     
@@ -247,60 +262,60 @@ class gp:
 
 #ONLY FOR TESTING
 
-import os
-path = "/Users/migue/Documents/F1 Data Center/2022/Francia_2022/"
-os.chdir(path)
+# import os
+# path = "/Users/migue/Documents/F1 Data Center/2022/Francia_2022/"
+# os.chdir(path)
 
-sesiones = []
-p_sesion = ["fp1.pdf","fp2.pdf","fp3.pdf","quali.pdf","race.pdf"]
-for i in range(len(p_sesion)):
-    path = "/Users/migue/Documents/F1 Data Center/2022/Francia_2022/"+p_sesion[i]
-    if os.path.exists(path):
-        sesiones.append(p_sesion[i])
-    else:
-        sesiones.append("")
+# sesiones = []
+# p_sesion = ["fp1.pdf","fp2.pdf","fp3.pdf","quali.pdf","race.pdf"]
+# for i in range(len(p_sesion)):
+#     path = "/Users/migue/Documents/F1 Data Center/2022/Francia_2022/"+p_sesion[i]
+#     if os.path.exists(path):
+#         sesiones.append(p_sesion[i])
+#     else:
+#         sesiones.append("")
         
-inicio = 60
-final = None
-laps = [inicio,final]
+# inicio = 60
+# final = None
+# laps = [inicio,final]
 
-year,grand_prix = 2022,'Francia'
-#Generate all data availble from sesiones
-datos = gp(sesiones, grand_prix,laps)
-
-
-names = []
-teams = []
-teams_lista = []
-drivers_lista = []
-
-#names contains name and surname for every driver that at least has participate at least in one season.
-for i in range(len(datos.fp1_name)):
-        if datos.fp1_name[i] not in drivers_lista and datos.fp1_name[i] != "NO DRIVER":
-            names.append(datos.fp1_name[i])
-        if i < len(datos.fp2_name):
-            if datos.fp2_name[i] not in drivers_lista and datos.fp2_name[i] != "NO DRIVER":
-                names.append(datos.fp2_name[i])
-        if i < len(datos.fp3_name):
-            if datos.fp3_name[i] not in drivers_lista and datos.fp3_name[i] != "NO DRIVER":
-                names.append(datos.fp3_name[i])
-        if i < len(datos.quali_name):
-            if datos.quali_name[i] not in drivers_lista and datos.quali_name[i] != "NO DRIVER":
-                names.append(datos.quali_name[i])
-        if i < len(datos.race_name):
-            if datos.race_name[i] not in drivers_lista and datos.race_name[i] != "NO DRIVER": 
-                names.append(datos.race_name[i])
-
-def remove_duplicates(lista):
-        new_lista = []
-        for i in range(len(lista)):
-            if lista[i] not in new_lista:
-                new_lista.append(lista[i])
-        return new_lista
-
-names = remove_duplicates(names)
+# year,grand_prix = 2022,'Francia'
+# #Generate all data availble from sesiones
+# datos = gp(sesiones, grand_prix,laps)
 
 
-#Depending on names list, add their team to another list ordered in the same way names list is
+# names = []
+# teams = []
+# teams_lista = []
+# drivers_lista = []
 
-teams = multidata.f1_teams(names,year,grand_prix).equipos
+# #names contains name and surname for every driver that at least has participate at least in one season.
+# for i in range(len(datos.fp1_name)):
+#         if datos.fp1_name[i] not in drivers_lista and datos.fp1_name[i] != "NO DRIVER":
+#             names.append(datos.fp1_name[i])
+#         if i < len(datos.fp2_name):
+#             if datos.fp2_name[i] not in drivers_lista and datos.fp2_name[i] != "NO DRIVER":
+#                 names.append(datos.fp2_name[i])
+#         if i < len(datos.fp3_name):
+#             if datos.fp3_name[i] not in drivers_lista and datos.fp3_name[i] != "NO DRIVER":
+#                 names.append(datos.fp3_name[i])
+#         if i < len(datos.quali_name):
+#             if datos.quali_name[i] not in drivers_lista and datos.quali_name[i] != "NO DRIVER":
+#                 names.append(datos.quali_name[i])
+#         if i < len(datos.race_name):
+#             if datos.race_name[i] not in drivers_lista and datos.race_name[i] != "NO DRIVER": 
+#                 names.append(datos.race_name[i])
+
+# def remove_duplicates(lista):
+#         new_lista = []
+#         for i in range(len(lista)):
+#             if lista[i] not in new_lista:
+#                 new_lista.append(lista[i])
+#         return new_lista
+
+# names = remove_duplicates(names)
+
+
+# #Depending on names list, add their team to another list ordered in the same way names list is
+
+# teams = multidata.f1_teams(names,year,grand_prix).equipos

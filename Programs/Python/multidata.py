@@ -163,7 +163,7 @@ class f1_calendar:
     def getCalendar(self,year):
         '''Returns a list with all the gps calendar'''
         if year == 'TestYear':
-            calendar = ['Austria1','Austria2']
+            calendar = ['Austria1','Austria2','Japon', 'JaponTxt'] #'Austria1','Austria2',
         elif year == 2018:
             calendar = ['Australia','Bahrein','China','Azerbaiyan','España','Monaco','Canada','Francia','Austria','GB','Alemania','Hungria','Belgica','Italia','Singapur','Rusia','Japon','EEUU','Mexico','Brasil','AbuDhabi']
         elif year == 2019:

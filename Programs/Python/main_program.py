@@ -5,14 +5,17 @@ import re
 import os
 import sectors
 import multidata
+import time
 
-grand_prix = "Japon"
-year = 2022
+inicio_t = time.time()
+
+grand_prix = 'Hungria'
+year = 2021
 
 path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"+grand_prix+"_"+str(year)
 os.chdir(path)
 
-sesion = "race"
+sesion = "fp1"
 inicio = 1
 final = None
 laps = [inicio,final]
@@ -27,16 +30,23 @@ name_gp  = ngp.read()
 #ESPAÑA
 name_gp = re.sub("Ã‘","Ñ",name_gp)
 
-def max_5_sesions(sesions):
-    pdf = False
+
+def pdfInSesions(sesions):
+    pdf = True
     for i in sesions:
-        if '.pdf' in i:
-            pdf = True
+        if '.txt' in i:
+            pdf = False
+    return pdf
+
+
+def max_5_sesions(sesions):
+    pdf = pdfInSesions(sesions)
     
     if pdf:
         sesions = sesions[0:5]
     else:
         sesions = sesions[5:]
+    
     return sesions
 
 if mode == 'n':
@@ -51,10 +61,10 @@ if mode == 'n':
 
     #Generate all data availble from sesiones
     sesiones = max_5_sesions(sesiones)
-    if '.pdf' in sesiones[0]:
-        datos = gp.gp(sesiones, grand_prix,laps)
+    if pdfInSesions(sesiones):
+        datos = gp.gp(sesiones, grand_prix, True, laps)
     else:
-        datos = gp_txt.gp(sesiones, grand_prix,laps)
+        datos = gp_txt.gp(sesiones, grand_prix, True, laps)
     names = []
     teams = []
     teams_lista = []
@@ -620,3 +630,5 @@ elif mode == 's':
         return text
         
     print(printer_sect(names,times,eq,eq_times))
+
+# print(time.time() - inicio_t)

@@ -2,6 +2,9 @@ import os
 import shutil
 import multidata
 import re
+import pyautogui
+import time
+from tqdm import tqdm
 
 class fase1:
     '''Create the folders in the corresponding year and introduce a false namegp.txt file inside each of them'''
@@ -72,12 +75,158 @@ class fase2:
         self.printMessage()
 
 class fase3:
-    '''Obtain a readable file by main_program'''
+    '''Create a copy of .txt if any information is readable regarding this folder'''
     def __init__(self, gps: list, year: int or str):
         self.gps = gps
         self.year = year    
         self.path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"
-        self.fileAdd = []
+        self.newFiles = []
+        self.dir = []
+    
+    def whatFault(self,dirFiles):
+        os.chdir(dirFiles)
+        possible =  ["fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
+        possiblePDF = ['_p1_','_p2_','_p3_','_q0_', '_r0_']
+        new = []
+        for f in os.listdir(dirFiles):
+            #CHECK WHICH TEXT FILES ARE ALREADY INSIDE THE FILE
+            for pos in possible:
+                if pos in f:
+                    index =  possible.index(pos)
+                    possible.pop(index)
+                    possiblePDF.pop(index)
+
+        for f in os.listdir(dirFiles):
+            for p in possiblePDF:
+                if p in f: #EXISTS PDF CONTAINING THE CORRESPONDING SESSION
+                    index = possiblePDF.index(p)
+
+                    new.append(possible[index])
+                    open(possible[index],'w+')
+
+                    possible.pop(index)
+                    possiblePDF.pop(index)
+        
+        return new
+
+    def printMessage(self):
+        text = ''
+        for f,dir in zip(self.newFiles,self.dir):
+            text += str(f) + ' file has been created successuffly in '+str(dir)+'\n'
+        print(text)
+
+    def creatingFault(self):
+        all = os.listdir(self.path)
+        for f in all:
+            dirFiles = os.path.join(self.path,f)
+            if os.path.isdir(dirFiles):
+                fault = self.whatFault(dirFiles)
+                self.newFiles += fault
+                for _ in range(len(fault)):
+                    self.dir.append(dirFiles)
+        
+        self.printMessage()
+        
+class fase4:
+    '''Copies the information from the pdf to the txt file '''
+    def __init__(self, gps: list, year: int or str):
+        self.gps = gps
+        self.year = year    
+        self.path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"
+        self.newFiles = []
+        self.dir = []
+    
+    def returnCorrectFiles(self, dirFiles: list, possible: list, possiblePDF: list, index: int):
+        '''Returns the correct pdf regarding that document'''
+        txt = possible[index]
+        
+        for f in os.listdir(dirFiles):
+            if possiblePDF[index] in f:
+                pdf = f
+        
+        return pdf, txt
+    
+    def returnPossPDF(self,posFixed):
+        possible =  ["fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
+        possiblePDF = ['_p1_','_p2_','_p3_','_q0_', '_r0_']
+
+        PDFFixed = [possiblePDF[possible.index(i)] for i in posFixed if i in possible]
+
+        return PDFFixed
+
+    def whatFault(self,dirFiles):
+        os.chdir(dirFiles)
+        possible =  ["fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
+        possiblePDF = ['_p1_','_p2_','_p3_','_q0_', '_r0_']
+        new = []
+
+        #AFTER THE CREATION OF EVERY TXT FILES; A DONE FILE WILL BE INCLUDED TO AVOID ENTERING AGAIN IN THE FOLDER
+        if 'DONE.txt' in os.listdir(dirFiles):
+            with open('DONE.txt', 'r') as check:
+                result = check.readlines()    
+                resCorrect = [ r.replace('\n','') for r in result]
+
+            setA, setB = set(possible),  set(resCorrect)
+            possible = list(setA-setB)
+            possiblePDF = self.returnPossPDF(possible)
+
+        for f in os.listdir(dirFiles):
+            if f in possible:
+                index = possible.index(f)
+                new.append(possible[index])
+
+                pdf, txt = self.returnCorrectFiles(dirFiles, possible, possiblePDF, index)
+
+                #CHANGE THE WORKING DIRECTORY FOR BEING ABLE TO OPEN AND CLOSE FILES
+                os.chdir(dirFiles)
+                dir = os.getcwd()+ '\\'
+
+                #OPEN THE PDF
+                os.startfile(dir+pdf)
+                time.sleep(0.5)
+                pyautogui.hotkey('ctrl', 'a')
+                pyautogui.hotkey('ctrl', 'c')
+                pyautogui.hotkey('alt', 'f4')
+                time.sleep(0.5)
+
+                #OPEN THE TXT
+                os.startfile(dir+txt)
+                time.sleep(0.5)
+                pyautogui.hotkey('ctrl', 'e')
+                pyautogui.hotkey('ctrl', 'v')
+                pyautogui.hotkey('ctrl', 'g')
+                pyautogui.hotkey('alt', 'f4')
+                time.sleep(0.5)
+
+                #APPEND NEW TO DONE.TXT 
+                done = open('DONE.txt', 'a+')
+                done.writelines(possible[index]+'\n')
+                done.close()
+
+                #REMOVE WHAT HAVE BEEN CREATED
+                possible.pop(index)
+                possiblePDF.pop(index)
+        
+        return new
+
+    def printMessage(self):
+        text = ''
+        for f,dir in zip(self.newFiles,self.dir):
+            text += str(f) + ' file has been updated successuffly in '+str(dir)+'\n'
+        print(text)
+
+    def generateFiles(self):
+        all = os.listdir(self.path)
+        for f in tqdm(all, desc =  str(self.year) + ' GPs PROGRESS BAR'):
+            dirFiles = os.path.join(self.path,f)
+            if os.path.isdir(dirFiles):
+                fault = self.whatFault(dirFiles)
+                self.newFiles += fault
+                for _ in range(len(fault)):
+                    self.dir.append(dirFiles)
+        
+        self.printMessage()
+        
 
 class returnFault:
     '''Will return every file which fault in each directory'''
@@ -98,7 +247,7 @@ class returnFault:
     
     def whatFault(self,dirFiles):
         pdf = False
-        possible = ["fp1.pdf","fp2.pdf","fp3.pdf","quali.pdf","race.pdf","fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
+        possible = ["fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
         sesionFiles = os.listdir(dirFiles)
         for f in sesionFiles:
             if f in possible:
@@ -113,9 +262,9 @@ class returnFault:
 
     
     def printMessage(self):
-        text = ''
+        text = '\n\n\n'
         for f,dir in zip(self.fault,self.dir):
-            text += str(f) + ' file is not in '+str(dir)+'\n'
+            text +=  str(f) + ' file is not in '+str(dir)+'\n'
         print(text)
 
     def lookingFault(self):
@@ -133,31 +282,31 @@ class returnFault:
 
 
 
+class updateALL:
+    '''Call this class and the F1 DATA CENTER will update until the last data version'''
+    def __init__(self, years: list):
+        #FASE 1: CREATION OF DIRECTORIES
+        for y in years: 
+            f1 = fase1(multidata.f1_calendar(y).calendar, y)
+            f1.createFolder()
 
-def createListYear(inicio,final):
-    return [y for y in range(inicio,final + 1)]
+        #FASE 2: APPEND FILES IN THE CORRESPONDING DIRECTORY
+        for y in years: 
+            f2 = fase2(multidata.f1_calendar(y).calendar, y)
+            f2.addFile()
 
-years = createListYear(2018,2022)
-# years = ['TestYear']
-correctYears = [2021]
-for gY in correctYears:
-    years.remove(gY)
+        #FASE 3: APPEND FILES IN THE CORRESPONDING DIRECTORY
+        for y in years: 
+            f3 = fase3(multidata.f1_calendar(y).calendar, y)
+            f3.creatingFault()
 
-#FASE 1: CREATION OF DIRECTORIES
-for y in years: 
-    f1 = fase1(multidata.f1_calendar(y).calendar, y)
-    f1.createFolder()
+        #FASE 4: OBTAIN THE .TXT FILE WITH THE CORRECT INFORMATION INSIDE
+        for y in tqdm(years, desc = 'Year Progress Bar'):
+            f4 = fase4(multidata.f1_calendar(y).calendar, y)
+            f4.generateFiles()
 
-#FASE 2: APPEND FILES IN THE CORRESPONDING DIRECTORY
-for y in years: 
-    f2 = fase2(multidata.f1_calendar(y).calendar, y)
-    f2.addFile()
+        #CHECK MISSING: WHICH FILES IS NOT IN EACH DIRECTORY
+        for y in years: 
+            chck = returnFault(multidata.f1_calendar(y).calendar, y)
+            chck.lookingFault()
 
-#FASE 3: APPEND FILES IN THE CORRESPONDING DIRECTORY
-for y in years: 
-    f3 = fase3(multidata.f1_calendar(y).calendar, y)
-
-#CHECK MISSING: WHICH FILES IS NOT IN EACH DIRECTORY
-for y in years: 
-    chck = returnFault(multidata.f1_calendar(y).calendar, y)
-    chck.lookingFault()
