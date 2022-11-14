@@ -5,6 +5,7 @@ import os
 import time
 from tqdm import tqdm
 from file_manager import updateALL
+from multidata import getWEATHER as weather
 
 inicio = time.time()
 
@@ -15,65 +16,6 @@ def remove_duplicates(lista):
         if lista[i] not in new_lista:
             new_lista.append(lista[i])
     return new_lista
-
-def weather(year,circuit,sesion):
-    '''Posible outputs: D(Dry), D/I(Mixed conditions), I(Inter), I/W(Mixed wet conditions), W(Full Wet)'''
-
-##################################################################################
-#2021Season
-##################################################################################
-    if year == 2021:
-        if circuit == 'Imola' and sesion == 'race':
-            return 'D/I'
-        elif circuit == 'Belgica' and (sesion == 'fp3' or sesion == 'quali'):
-            if sesion == 'fp3':
-                return 'I'
-            elif sesion =='quali':
-                return 'I/W'
-        elif circuit == 'Rusia' and (sesion == 'race' or sesion == 'quali'): 
-                return 'D/I'
-        elif circuit == 'Turquia' and (sesion == 'fp3' or sesion == 'race'): 
-                return 'I'    
-        else:
-            return 'D'
-    
-##################################################################################
-#2022Season
-##################################################################################
-    
-    elif year == 2022:
-        if circuit == 'Imola' and (sesion == 'fp1' or sesion == 'quali' or sesion == 'race'):
-            if sesion == 'fp1':
-                return 'I/W'
-            elif sesion =='quali' or 'race':
-                return 'D/I'
-        if circuit == 'Monaco' and sesion == 'race':
-            return 'D/I'
-        if circuit == 'Canada' and sesion == 'fp3' or sesion == 'quali':
-            return 'I/W'
-        if circuit == 'GB' and sesion == 'fp1' or sesion == 'quali':
-            return 'I'
-        if circuit == 'Hungria' and (sesion == 'fp3' or sesion == 'quali'):
-            if sesion == 'fp3':
-                return 'I/W'
-            elif sesion == 'quali':
-                return 'D/I'
-        if circuit == 'Singapur' and (sesion == 'fp3' or sesion == 'quali'):
-            if sesion == 'fp3':
-                return 'I'
-            elif sesion == 'quali':
-                return 'D/I'
-        if circuit == 'Japon' and (sesion == 'fp1' or sesion == 'fp2' or sesion == 'race'):
-            if sesion == 'fp2':
-                return 'I'
-            elif sesion == 'fp1' or sesion == 'race':
-                return 'I/W'
-        else:
-            return 'D'
-    
-    else:
-        return 'D'
-        
 
 ##################################################################################
 #Incidents
@@ -467,6 +409,13 @@ def incident(driver,year,circuit,sesion):
             if sesion == 'race':
                 if tsu or ric:
                     return 'Yes'
+        elif circuit == 'Brasil':
+            if sesion == 'fp2':
+                if oco or alo:
+                    return 'Yes'
+            if sesion == 'race':
+                if lec or nor or kmag or ric or ver or ham:
+                    return 'Yes'
 
 def getLongest(sesiones:list):
     lengths = []
@@ -475,14 +424,34 @@ def getLongest(sesiones:list):
     return  max(lengths)  
 
             
-
+def getShortNames(teams):
+    '''Return a shorter version of the name and regarding the final team is in the grid. 
+    For example Renault became Alpine because in the grid they are called Alpine in the last year of the dataset
+    '''
+    for i,t in enumerate(teams):
+        if 'McLaren' in t:
+            teams[i] = 'McLaren'
+        elif 'Force India' in t or 'Racing Point' in t or ('Aston Martin' in t and not 'Red Bull' in t):
+            teams[i] = 'Aston Martin'
+        elif 'Williams' in  t:
+            teams[i] = 'Williams'
+        elif 'Alfa Romeo' in  t:
+            teams[i] = 'Alfa Romeo'
+        elif 'Haas' in  t:
+            teams[i] = 'Haas'
+        elif 'Toro Rosso' in t or 'AlphaTauri' in t:
+            teams[i] = 'AlphaTauri'
+        elif 'Red Bull' in  t and not 'Toro Rosso' in t:
+            teams[i] = 'Red Bull'
+        elif 'Renault' in  t  or 'Alpine' in t:
+            teams[i] = 'Alpine'
+        elif 'Ferrari' in  t:
+            teams[i] = 'Ferrari'
+        elif 'Mercedes' in  t:
+            teams[i] = 'Mercedes'
+    
+    return teams
         
-
-
-
-
-
-
 
 
 
@@ -525,13 +494,10 @@ time.sleep(0.5)
 
 data = [['Driver', 'Team', 'Age', 'Year', 'Month', 'GP', 'GP_ID','fp1_quali_Pace', 'fp1_quali_Laps', 'fp1_race_Pace', 'fp1_race_Laps', 'fp1_fastest_lap', 'fp1_Weather', 'fp1_Incident', 'fp2_quali_Pace', 'fp2_quali_Laps', 'fp2_race_Pace', 'fp2_race_Laps', 'fp2_fastest_lap', 'fp2_Weather', 'fp2_Incident', 'fp3_quali_Pace', 'fp3_quali_Laps', 'fp3_race_Pace', 'fp3_race_Laps', 'fp3_fastest_lap', 'fp3_Weather', 'fp3_Incident', 'quali_Pace', 'quali_Laps', 'quali_fastest_lap', 'quali_Weather', 'quali_Incident', 'race_Pace', 'race_Laps', 'race_fastest_lap', 'race_Stops', 'race_Weather', 'race_Incident']]
 
-# grand_prix_2021 = ['Bahrein', 'Imola', 'Portugal', 'España', 'Monaco', 'Azerbaiyan','Francia', 'Austria1', 'Austria2',  'GB', 'Hungria', 'Belgica', 'Holanda', 'Italia', 'Rusia', 'Turquia','EEUU', 'Mexico', 'Brasil', 'Qatar', 'Saudi',  'AbuDhabi']
-# grand_prix_2022 = ['Bahrein', 'Saudi', 'Australia', 'Imola', 'Miami', 'España','Monaco','Azerbaiyan','Canada','GB','Austria','Francia','Hungria']
 
-grand_prix_2021 = multidata.f1_calendar(2021).calendar
-grand_prix_2022 = multidata.f1_calendar(2022).calendar
-
-year = [2021, 2022]
+############ INPUT YEARS #############
+year = createListYear(2018,2022)     #
+######################################
 
 ##################################################################################
 #Loops and .csv preparation
@@ -581,11 +547,8 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
             datos = gp_txt.gp(sesiones, grand_prix)       
         else:
             datos = gp.gp(sesiones, grand_prix)
-        
-        month = []
+
         names = []
-        teams = []
-        age = []
         drivers_lista = []
         
         ses_Nlist = [datos.fp1_name,datos.fp2_name,datos.fp3_name,datos.quali_name,datos.race_name]
@@ -604,190 +567,20 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
             
             names = remove_duplicates(names)
 
-##################################################################################
-#2021Season
-##################################################################################
-        
 
-        #MIRAR
-        #teams = multidata.f1_teams(names,year,gp).equipos
-        ######
+        ##################################################################################
+        #DATA GENERATION
+        ##################################################################################
 
-        if year[y] == 2021:
-            for i in range(len(names)):
-                if names[i]== 'Daniel RICCIARDO' or names[i] == 'Lando NORRIS':
-                    teams.append("McLaren")
-                elif names[i]== 'Sebastian VETTEL' or names[i] == 'Lance STROLL':
-                    teams.append("Aston Martin")
-                elif names[i]== 'Nicholas LATIFI' or names[i] == 'George RUSSELL'or names[i] == 'Jack AITKEN'or names[i] == 'Roy NISSANY':
-                    teams.append("Williams")
-                elif names[i]== 'Kimi RAIKKONEN' or names[i] == 'Antonio GIOVINAZZI'or names[i] == 'Robert KUBICA'or names[i] == 'Callum ILOTT':
-                    teams.append("Alfa Romeo")
-                elif names[i]== 'Nikita MAZEPIN' or names[i] == 'Mick SCHUMACHER':
-                    teams.append("Haas")
-                elif names[i]== 'Pierre GASLY' or names[i] == 'Yuki TSUNODA':
-                    teams.append("AlphaTauri")
-                elif names[i]== 'Sergio PEREZ' or names[i] == 'Max VERSTAPPEN':
-                    teams.append("Red Bull")
-                elif names[i]== 'Fernando ALONSO' or names[i] == 'Esteban OCON'or names[i] == 'Guanyu ZHOU':
-                    teams.append("Alpine")
-                elif names[i]== 'Charles LECLERC' or names[i] == 'Carlos SAINZ':
-                    teams.append("Ferrari")
-                elif names[i]== 'Valtteri BOTTAS' or names[i] == 'Lewis HAMILTON':
-                    teams.append("Mercedes")
-                else:
-                    teams.append("NO TEAM")
-                    
-            for i in range(len(names)):
-                if names[i]== 'Lance STROLL' or names[i] == 'George RUSSELL' or names[i] == 'Callum ILOTT':
-                    age.append(23)
-                elif names[i]== 'Charles LECLERC' or names[i] == 'Max VERSTAPPEN':
-                    age.append(24)
-                elif names[i]== 'Pierre GASLY' or names[i] == 'Esteban OCON':
-                    age.append(25)
-                elif names[i]== 'Nicholas LATIFI' or names[i] == 'Jack AITKEN':
-                    age.append(26)
-                elif names[i]== 'Nikita MAZEPIN' or names[i] == 'Mick SCHUMACHER'or names[i] == 'Guanyu ZHOU':
-                    age.append(22)
-                elif names[i] == 'Yuki TSUNODA':
-                    age.append(21)
-                elif names[i]== 'Sergio PEREZ':
-                    age.append(31)
-                elif names[i]== 'Fernando ALONSO':
-                    age.append(40)
-                elif names[i] == 'Roy NISSANY' or names[i] == 'Carlos SAINZ':
-                    age.append(27)
-                elif names[i]== 'Valtteri BOTTAS' or names[i] == 'Daniel RICCIARDO':
-                    age.append(32)
-                elif names[i]== 'Lewis HAMILTON':
-                    age.append(36)
-                elif names[i]== 'Lando NORRIS':
-                    age.append(22)
-                elif names[i]== 'Kimi RAIKKONEN':
-                    age.append(42)
-                elif names[i]== 'Sebastian VETTEL':
-                    age.append(34)
-                elif names[i]== 'Antonio GIOVINAZZI':
-                    age.append(28)
-                elif names[i]== 'Robert KUBICA':
-                    age.append(37)
-                else:
-                    age.append("NO AGE")
-            
-            for i in range(len(grand_prix)):
-                if grand_prix[i]== 'Bahrein':
-                    month.append("MAR")
-                elif grand_prix[i]== 'Imola':
-                    month.append("APR")
-                elif grand_prix[i]== 'Portugal' or grand_prix[i] == 'España' or grand_prix[i] == 'Monaco':
-                    month.append("MAY")
-                elif grand_prix[i]== 'Azerbaiyan' or grand_prix[i] == 'Francia' or grand_prix[i] == 'Austria1':
-                    month.append("JUN")
-                elif grand_prix[i]== 'Austria2' or grand_prix[i] == 'GB':
-                    month.append("JUL")
-                elif grand_prix[i]== 'Hungria' or grand_prix[i] == 'Belgica':
-                    month.append("AUG")
-                elif grand_prix[i]== 'Holanda' or grand_prix[i] == 'Italia' or grand_prix[i] == 'Rusia':
-                    month.append("SEP")
-                elif grand_prix[i]== 'Turquia' or grand_prix[i] == 'EEUU':
-                    month.append("OCT")
-                elif grand_prix[i]== 'Mexico' or grand_prix[i] == 'Brasil' or grand_prix[i] == 'Qatar':
-                    month.append("NOV")
-                elif grand_prix[i]== 'Saudi' or grand_prix[i] == 'AbuDhabi':
-                    month.append("DEC")
-                else:
-                    month.append('NO MONTH')
-        
-##################################################################################
-#2022Season
-##################################################################################
+        teams = multidata.f1_teams(names,year[y],grand_prix[j]).equipos
+        teams = getShortNames(teams)
+        age = multidata.driversAGE(names,year[y]).age
+        month = multidata.raceMONTH(year[y], grand_prix).month
 
-        #MIRAR
-        #teams = multidata.f1_teams(names,year,gp).equipos
-        ######
+        ##################################################################################
+        #DATA GENERATION
+        ##################################################################################
 
-        if year[y] == 2022 or  year[y] == 'TestYear':
-            for i in range(len(names)):
-                if names[i]== 'Daniel RICCIARDO' or names[i] == 'Lando NORRIS':
-                    teams.append("McLaren")
-                elif names[i]== 'Sebastian VETTEL' or names[i] == 'Lance STROLL' or names[i] == 'Nico HULKENBERG':
-                    teams.append("Aston Martin")
-                elif names[i]== 'Nicholas LATIFI' or names[i] == 'Jack AITKEN'or names[i] == 'Roy NISSANY' or names[i] == 'Alexander ALBON' or names[i] == 'Nyck  VRIES':
-                    teams.append("Williams")
-                elif names[i]== 'Valtteri BOTTAS' or names[i] == 'Antonio GIOVINAZZI'or names[i] == 'Robert KUBICA'or names[i] == 'Callum ILOTT'or names[i] == 'ZHOU Guanyu' or names[i] == 'Guanyu ZHOU':
-                    teams.append('Alfa Romeo')
-                elif names[i]== 'Kevin MAGNUSSEN' or names[i] == 'Mick SCHUMACHER':
-                    teams.append("Haas")
-                elif names[i]== 'Pierre GASLY' or names[i] == 'Yuki TSUNODA':
-                    teams.append("AlphaTauri")
-                elif names[i]== 'Sergio PEREZ' or names[i] == 'Max VERSTAPPEN' or names[i] == 'Juri VIPS':
-                    teams.append(" Red Bull")
-                elif names[i]== 'Fernando ALONSO' or names[i] == 'Esteban OCON':
-                    teams.append("Alpine")
-                elif names[i]== 'Charles LECLERC' or names[i] == 'Carlos SAINZ':
-                    teams.append("Ferrari")
-                elif names[i]== 'George RUSSELL' or names[i] == 'Lewis HAMILTON':
-                    teams.append("Mercedes")
-                else:
-                    teams.append("NO TEAM")
-                    
-            for i in range(len(names)):
-                if names[i]== 'Lance STROLL' or names[i] == 'George RUSSELL' or names[i] == 'Callum ILOTT':
-                    age.append(24)
-                elif names[i]== 'Charles LECLERC' or names[i] == 'Max VERSTAPPEN':
-                    age.append(25)
-                elif names[i]== 'Pierre GASLY' or names[i] == 'Esteban OCON' or names[i] == 'Alexander ALBON':
-                    age.append(26)
-                elif names[i]== 'Nicholas LATIFI' or names[i] == 'Jack AITKEN':
-                    age.append(27)
-                elif names[i]== 'Nikita MAZEPIN' or names[i] == 'Mick SCHUMACHER'or names[i] == 'Guanyu ZHOU':
-                    age.append(28)
-                elif names[i] == 'Yuki TSUNODA':
-                    age.append(22)
-                elif names[i]== 'Sergio PEREZ':
-                    age.append(32)
-                elif names[i]== 'Fernando ALONSO':
-                    age.append(41)
-                elif names[i] == 'Roy NISSANY' or names[i] == 'Carlos SAINZ':
-                    age.append(28)
-                elif names[i]== 'Valtteri BOTTAS' or names[i] == 'Daniel RICCIARDO':
-                    age.append(33)
-                elif names[i]== 'Lewis HAMILTON':
-                    age.append(37)
-                elif names[i]== 'Lando NORRIS':
-                    age.append(23)
-                elif names[i]== 'Sebastian VETTEL':
-                    age.append(35)
-                elif names[i]== 'Antonio GIOVINAZZI':
-                    age.append(29)
-                elif names[i]== 'Robert KUBICA':
-                    age.append(38)
-                elif names[i]== 'Kevin MAGNUSSEN':
-                    age.append(30)
-                else:
-                    age.append("NO AGE")
-            
-            for i in range(len(grand_prix)):
-                if grand_prix[i]== 'Bahrein' or  grand_prix[i]== 'Saudi':
-                    month.append("MAR")
-                elif grand_prix[i]== 'Imola' or grand_prix[i]== 'Australia':
-                    month.append("APR")
-                elif grand_prix[i]== 'Miami' or grand_prix[i] == 'España' or grand_prix[i] == 'Monaco':
-                    month.append("MAY")
-                elif grand_prix[i]== 'Azerbaiyan' or grand_prix[i] == 'Canada':
-                    month.append("JUN")
-                elif grand_prix[i]== 'Austria' or grand_prix[i] == 'GB' or grand_prix[i] == 'Francia' or grand_prix[i]== 'Hungria':
-                    month.append("JUL")
-                elif grand_prix[i] == 'Belgica':
-                    month.append("AUG")
-                elif grand_prix[i]== 'Holanda' or grand_prix[i] == 'Italia':
-                    month.append("SEP")
-                elif grand_prix[i]== 'Singapur' or grand_prix[i] == 'EEUU' or grand_prix[i] == 'Japon' or grand_prix[i]== 'Mexico':
-                    month.append("OCT")
-                elif grand_prix[i] == 'Brasil' or grand_prix[i] == 'AbuDhabi':
-                    month.append("NOV")
-                else:
-                    month.append("NO MONTH")
                     
         for i in range(len(names)):
             if names[i] not in  datos.fp1_name:
@@ -836,14 +629,15 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
                 race_inc = 'No'
 
             #DEBUGGING
-            # with open('debug'+str(grand_prix[j] + year[y])+'.csv','w+') as debug:
+            # os.chdir("/Users/migue/Documents/F1 Data Center/"+str(year[y])+"/")
+            # with open('debug'+ grand_prix[j] + str(year[y])+'.csv','w+') as debug:
             #     debug.write(str(i) +'\n')
             #     # l = [drivers_lista[i].name,drivers_lista[i].team,drivers_lista[i].age,year[y],month[j],grand_prix[j],j,drivers_lista[i].fp1_quali_mean,drivers_lista[i].fp1_quali,drivers_lista[i].fp1_race_mean,drivers_lista[i].fp1_race,drivers_lista[i].fp1_fastest,weather(year[y],grand_prix[j],'fp1'),fp1_inc,drivers_lista[i].fp2_quali_mean,drivers_lista[i].fp2_quali,drivers_lista[i].fp2_race_mean,drivers_lista[i].fp2_race,drivers_lista[i].fp2_fastest,weather(year[y],grand_prix[j],'fp2'),fp2_inc,drivers_lista[i].fp3_quali_mean,drivers_lista[i].fp3_quali,drivers_lista[i].fp3_race_mean,drivers_lista[i].fp3_race,drivers_lista[i].fp3_fastest,weather(year[y],grand_prix[j],'fp3'),fp3_inc,drivers_lista[i].quali,drivers_lista[i].quali_laps,drivers_lista[i].quali_fastest,weather(year[y],grand_prix[j],'quali'),quali_inc,drivers_lista[i].race,drivers_lista[i].race_laps,drivers_lista[i].race_fastest,drivers_lista[i].race_stops,weather(year[y],grand_prix[j],'race'),race_inc]
-            #     lred = [drivers_lista[i].name, drivers_lista[i].team, drivers_lista[i].age,year[y],j]
+            #     lred = [drivers_lista[i].age,year[y],month[j]]
             #     for i in lred:
             #         debug.write(str(i)+'\n')
 
-            data.append([drivers_lista[i].name,drivers_lista[i].team,drivers_lista[i].age,year[y],month[j],grand_prix[j],j,drivers_lista[i].fp1_quali_mean,drivers_lista[i].fp1_quali,drivers_lista[i].fp1_race_mean,drivers_lista[i].fp1_race,drivers_lista[i].fp1_fastest,weather(year[y],grand_prix[j],'fp1'),fp1_inc,drivers_lista[i].fp2_quali_mean,drivers_lista[i].fp2_quali,drivers_lista[i].fp2_race_mean,drivers_lista[i].fp2_race,drivers_lista[i].fp2_fastest,weather(year[y],grand_prix[j],'fp2'),fp2_inc,drivers_lista[i].fp3_quali_mean,drivers_lista[i].fp3_quali,drivers_lista[i].fp3_race_mean,drivers_lista[i].fp3_race,drivers_lista[i].fp3_fastest,weather(year[y],grand_prix[j],'fp3'),fp3_inc,drivers_lista[i].quali,drivers_lista[i].quali_laps,drivers_lista[i].quali_fastest,weather(year[y],grand_prix[j],'quali'),quali_inc,drivers_lista[i].race,drivers_lista[i].race_laps,drivers_lista[i].race_fastest,drivers_lista[i].race_stops,weather(year[y],grand_prix[j],'race'),race_inc])
+            data.append([drivers_lista[i].name,drivers_lista[i].team,drivers_lista[i].age,year[y],month[j],grand_prix[j],j,drivers_lista[i].fp1_quali_mean,drivers_lista[i].fp1_quali,drivers_lista[i].fp1_race_mean,drivers_lista[i].fp1_race,drivers_lista[i].fp1_fastest,weather(year[y],grand_prix[j],'fp1').w,fp1_inc,drivers_lista[i].fp2_quali_mean,drivers_lista[i].fp2_quali,drivers_lista[i].fp2_race_mean,drivers_lista[i].fp2_race,drivers_lista[i].fp2_fastest,weather(year[y],grand_prix[j],'fp2').w,fp2_inc,drivers_lista[i].fp3_quali_mean,drivers_lista[i].fp3_quali,drivers_lista[i].fp3_race_mean,drivers_lista[i].fp3_race,drivers_lista[i].fp3_fastest,weather(year[y],grand_prix[j],'fp3').w,fp3_inc,drivers_lista[i].quali,drivers_lista[i].quali_laps,drivers_lista[i].quali_fastest,weather(year[y],grand_prix[j],'quali').w,quali_inc,drivers_lista[i].race,drivers_lista[i].race_laps,drivers_lista[i].race_fastest,drivers_lista[i].race_stops,weather(year[y],grand_prix[j],'race').w,race_inc])
 
 
 

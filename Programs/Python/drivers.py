@@ -149,74 +149,75 @@ class drivers:
         return quali_len, race_len, mean_quali, mean_race                
 
     
-    def good_printing(self,text):
+    def good_printing(self,text, item_name: list):
+        r = len(max(item_name, key = len))
         l = len(text)
-        for i in range(18-l):
+        for i in range(r + 1 -l):
             text += " "
         return text
     
-    def printer(self,sesion):
+    def printer(self,sesion, item_name: list):
         if sesion == "fp1":
-                name = self.good_printing(self.name)
+                name = self.good_printing(self.name, item_name)
                 if self.fp1_laps < 10:
                     text = name+ " "+self.get_time(self.fp1)+"       "+str(self.fp1_laps)+"            "+str(self.fp1_quali)+"           "+str(self.fp1_race)
                 else:
                     text = name+ " "+self.get_time(self.fp1)+"       "+str(self.fp1_laps)+"           "+str(self.fp1_quali)+"           "+str(self.fp1_race)
         if sesion == "fp2":
-                name = self.good_printing(self.name)
+                name = self.good_printing(self.name, item_name)
                 if self.fp2_laps < 10:
                     text = name+ " "+self.get_time(self.fp2)+"       "+str(self.fp2_laps)+"            "+str(self.fp2_quali)+"           "+str(self.fp2_race)
                 else:
                     text = name+ " "+self.get_time(self.fp2)+"       "+str(self.fp2_laps)+"           "+str(self.fp2_quali)+"           "+str(self.fp2_race)
         if sesion == "fp3":
-                name = self.good_printing(self.name)
+                name = self.good_printing(self.name, item_name)
                 if self.fp3_laps < 10:
                     text = name+ " "+self.get_time(self.fp3)+"       "+str(self.fp3_laps)+"            "+str(self.fp3_quali)+"           "+str(self.fp3_race)
                 else:
                     text = name+ " "+self.get_time(self.fp3)+"       "+str(self.fp3_laps)+"           "+str(self.fp3_quali)+"           "+str(self.fp3_race)
         if sesion == "quali":
-                name = self.good_printing(self.name)
+                name = self.good_printing(self.name, item_name)
                 text = name+ " "+self.get_time(self.quali)+"       "+str(self.quali_laps)
         if sesion == "race":
-                name = self.good_printing(self.name)
+                name = self.good_printing(self.name, item_name)
                 text = name+ " "+self.get_time(self.race)+"       "+str(self.race_laps)
 
         return text
     
-    def printer_detail(self,sesion):
+    def printer_detail(self,sesion, item_name: list):
         if sesion == "fp1":
-                name = self.good_printing(self.name)
+                name = self.good_printing(self.name, item_name)
                 if self.fp1_laps < 10:
                     text1 = name+ " "+self.get_time(self.fp1_quali_mean)+"       "+str(self.fp1_quali)
                 else:
                     text1 = name+ " "+self.get_time(self.fp1_quali_mean)+"       "+str(self.fp1_quali)          
         if sesion == "fp2":
-                name = self.good_printing(self.name)
+                name = self.good_printing(self.name, item_name)
                 if self.fp2_laps < 10:
                     text1 = name+ " "+self.get_time(self.fp2_quali_mean)+"       "+str(self.fp2_quali)           
                 else:
                     text1 = name+ " "+self.get_time(self.fp2_quali_mean)+"       "+str(self.fp2_quali)           
         if sesion == "fp3":
-                name = self.good_printing(self.name)
+                name = self.good_printing(self.name, item_name)
                 if self.fp3_laps < 10:
                     text1 = name+ " "+self.get_time(self.fp3_quali_mean)+"       "+str(self.fp3_quali)          
                 else:
                     text1 = name+ " "+self.get_time(self.fp3_quali_mean)+"       "+str(self.fp3_quali)
 
         if sesion == "fp1":
-                name = self.good_printing(self.name)
+                name = self.good_printing(self.name, item_name)
                 if self.fp1_laps < 10:
                     text2 = name+ " "+self.get_time(self.fp1_race_mean)+"       "+str(self.fp1_race)
                 else:
                     text2 = name+ " "+self.get_time(self.fp1_race_mean)+"       "+str(self.fp1_race)          
         if sesion == "fp2":
-                name = self.good_printing(self.name)
+                name = self.good_printing(self.name, item_name)
                 if self.fp2_laps < 10:
                     text2 = name+ " "+self.get_time(self.fp2_race_mean)+"       "+str(self.fp2_race)           
                 else:
                     text2 = name+ " "+self.get_time(self.fp2_race_mean)+"       "+str(self.fp2_race)           
         if sesion == "fp3":
-                name = self.good_printing(self.name)
+                name = self.good_printing(self.name, item_name)
                 if self.fp3_laps < 10:
                     text2 = name+ " "+self.get_time(self.fp3_race_mean)+"       "+str(self.fp3_race)          
                 else:

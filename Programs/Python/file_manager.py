@@ -310,3 +310,16 @@ class updateALL:
             chck = returnFault(multidata.f1_calendar(y).calendar, y)
             chck.lookingFault()
 
+auto = False #TO AVOID DOUBLE EXECUTION WHILE CSV GENERATES DATA 
+#(USE BETTER CSV GENERATOR BECAUSE IT UPDATES THE CSV, BUT IF IT TAKES A LOT BECAUSE THE LECTURE OF THE .TXT, USE THIS FILE DIRECTLY)
+if auto:
+    def createListYear(inicio,final):
+        return [y for y in range(inicio,final + 1)]
+
+    upYears = createListYear(2018,2022)
+    # years = ['TestYear']
+    correctYears = createListYear(2018,2021)
+    for gY in correctYears:
+        upYears.remove(gY)
+
+    updateALL(upYears)

@@ -9,13 +9,13 @@ import time
 
 inicio_t = time.time()
 
-grand_prix = 'Hungria'
-year = 2021
+grand_prix = 'Brasil'
+year = 2022
 
 path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"+grand_prix+"_"+str(year)
 os.chdir(path)
 
-sesion = "fp1"
+sesion = "race"
 inicio = 1
 final = None
 laps = [inicio,final]
@@ -24,7 +24,7 @@ laps = [inicio,final]
 mode = 'n'
 
 #TO PRINT 
-ngp = open("name_gp.txt", "r")
+ngp = open("name_gp.txt", "r", encoding='utf-8')
 name_gp  = ngp.read()
 
 #ESPAÑA
@@ -419,76 +419,76 @@ if mode == 'n':
             text += header_d + "\n"
             for i in range(len(orden_drivers[0])):
                 if i < 9:
-                    text += str(i+1)+".  "+orden_drivers[0][i].printer(sesion)+ "\n"
+                    text += str(i+1)+".  "+orden_drivers[0][i].printer(sesion, names)+ "\n"
                 else:
-                    text += str(i+1)+". "+orden_drivers[0][i].printer(sesion)+ "\n"
+                    text += str(i+1)+". "+orden_drivers[0][i].printer(sesion, names)+ "\n"
             text += "--------------------------------------------------------------------------"+"\n"
             text += header_t + "\n"
             for i in range(len(orden_teams[0])):
                 if i < 9:
-                    text += str(i+1)+".  "+orden_teams[0][i].printer(sesion)+ "\n"
+                    text += str(i+1)+".  "+orden_teams[0][i].printer(sesion, unique_teams)+ "\n"
                 else:
-                    text += str(i+1)+". "+orden_teams[0][i].printer(sesion)+ "\n"
+                    text += str(i+1)+". "+orden_teams[0][i].printer(sesion, unique_teams)+ "\n"
         if sesion == "fp2":
             text += name_gp+" "+sesion.upper()+"\n"
             text += header_d + "\n"
             for i in range(len(orden_drivers[1])):
                 if i < 9:
-                    text += str(i+1)+".  "+orden_drivers[1][i].printer(sesion)+ "\n"
+                    text += str(i+1)+".  "+orden_drivers[1][i].printer(sesion, names)+ "\n"
                 else:
-                    text += str(i+1)+". "+orden_drivers[1][i].printer(sesion)+ "\n"
+                    text += str(i+1)+". "+orden_drivers[1][i].printer(sesion, names)+ "\n"
             text += "--------------------------------------------------------------------------"+"\n"
             text += header_t + "\n"
             for i in range(len(orden_teams[1])):
                 if i < 9:
-                    text += str(i+1)+".  "+orden_teams[1][i].printer(sesion)+ "\n"
+                    text += str(i+1)+".  "+orden_teams[1][i].printer(sesion, unique_teams)+ "\n"
                 else:
-                    text += str(i+1)+". "+orden_teams[1][i].printer(sesion)+ "\n"
+                    text += str(i+1)+". "+orden_teams[1][i].printer(sesion, unique_teams)+ "\n"
         if sesion == "fp3":
             text += name_gp+" "+sesion.upper()+"\n"
             text += header_d + "\n"
             for i in range(len(orden_drivers[2])):
                 if i < 9:
-                    text += str(i+1)+".  "+orden_drivers[2][i].printer(sesion)+ "\n"
+                    text += str(i+1)+".  "+orden_drivers[2][i].printer(sesion, names)+ "\n"
                 else:
-                    text += str(i+1)+". "+orden_drivers[2][i].printer(sesion)+ "\n"
+                    text += str(i+1)+". "+orden_drivers[2][i].printer(sesion, names)+ "\n"
             text += "--------------------------------------------------------------------------"+"\n"
             text += header_t + "\n"
             for i in range(len(orden_teams[2])):
                 if i < 9:
-                    text += str(i+1)+".  "+orden_teams[2][i].printer(sesion)+ "\n"
+                    text += str(i+1)+".  "+orden_teams[2][i].printer(sesion, unique_teams)+ "\n"
                 else:
-                    text += str(i+1)+". "+orden_teams[2][i].printer(sesion)+ "\n"
+                    text += str(i+1)+". "+orden_teams[2][i].printer(sesion, unique_teams)+ "\n"
         if sesion == "quali":
             text += name_gp+" "+sesion.upper()+"\n"
             text += header_d + "\n"
             for i in range(len(orden_drivers[3])):
                 if i < 9:
-                    text += str(i+1)+".  "+orden_drivers[3][i].printer(sesion)+ "\n"
+                    text += str(i+1)+".  "+orden_drivers[3][i].printer(sesion, names)+ "\n"
                 else:
-                    text += str(i+1)+". "+orden_drivers[3][i].printer(sesion)+ "\n"
+                    text += str(i+1)+". "+orden_drivers[3][i].printer(sesion, names)+ "\n"
             text += "--------------------------------------------------------------------------"+"\n"
             text += header_t + "\n"
             for i in range(len(orden_teams[3])):
                 if i < 9:
-                    text += str(i+1)+".  "+orden_teams[3][i].printer(sesion)+ "\n"
+                    text += str(i+1)+".  "+orden_teams[3][i].printer(sesion, unique_teams)+ "\n"
                 else:
-                    text += str(i+1)+". "+orden_teams[3][i].printer(sesion)+ "\n"
+                    text += str(i+1)+". "+orden_teams[3][i].printer(sesion, unique_teams)+ "\n"
         if sesion == "race":
             text += name_gp+" "+sesion.upper()+"\n"
             text += header_d + "\n"
             for i in range(len(orden_drivers[4])):
                 if i < 9:
-                    text += str(i+1)+".  "+orden_drivers[4][i].printer(sesion)+ "\n"
+                    text += str(i+1)+".  "+orden_drivers[4][i].printer(sesion, names)+ "\n"
                 else:
-                    text += str(i+1)+". "+orden_drivers[4][i].printer(sesion)+ "\n"
+                    text += str(i+1)+". "+orden_drivers[4][i].printer(sesion, names)+ "\n"
             text += "------------------------------------------------------------------------"+"\n"
             text += header_t + "\n"
             for i in range(len(orden_teams[4])):
                 if i < 9:
-                    text += str(i+1)+".  "+orden_teams[4][i].printer(sesion)+ "\n"
+                    text += str(i+1)+".  "+orden_teams[4][i].printer(sesion, unique_teams)+ "\n"
                 else:
-                    text += str(i+1)+". "+orden_teams[4][i].printer(sesion)+ "\n"
+                    text += str(i+1)+". "+orden_teams[4][i].printer(sesion, unique_teams)+ "\n"
             
         return text
 
@@ -501,16 +501,16 @@ if mode == 'n':
             text += header_q + "\n"
             for i in range(len(orden_drivers[0])):
                 if i < 9:
-                    text += str(i+1)+".  "+orden_drivers[0][i].printer_detail(sesion)[0]+ "\n"
+                    text += str(i+1)+".  "+orden_drivers[0][i].printer_detail(sesion, names)[0]+ "\n"
                 else:
-                    text += str(i+1)+". "+orden_drivers[0][i].printer_detail(sesion)[0]+ "\n"
+                    text += str(i+1)+". "+orden_drivers[0][i].printer_detail(sesion, names)[0]+ "\n"
             text += "--------------------------------------------------------------------------"+"\n"
             text += header_r + "\n"
             for i in range(len(orden_drivers[1])):
                 if i < 9:
-                    text += str(i+1)+".  "+orden_drivers[1][i].printer_detail(sesion)[1]+ "\n"
+                    text += str(i+1)+".  "+orden_drivers[1][i].printer_detail(sesion, names)[1]+ "\n"
                 else:
-                    text += str(i+1)+". "+orden_drivers[1][i].printer_detail(sesion)[1]+ "\n"
+                    text += str(i+1)+". "+orden_drivers[1][i].printer_detail(sesion, names)[1]+ "\n"
             text += "--------------------------------------------------------------------------"+"\n"
 
         if sesion == "fp2":
@@ -518,32 +518,32 @@ if mode == 'n':
             text += header_q + "\n"
             for i in range(len(orden_drivers[2])):
                 if i < 9:
-                    text += str(i+1)+".  "+orden_drivers[2][i].printer_detail(sesion)[0]+ "\n"
+                    text += str(i+1)+".  "+orden_drivers[2][i].printer_detail(sesion, names)[0]+ "\n"
                 else:
-                    text += str(i+1)+". "+orden_drivers[2][i].printer_detail(sesion)[0]+ "\n"
+                    text += str(i+1)+". "+orden_drivers[2][i].printer_detail(sesion, names)[0]+ "\n"
             text += "--------------------------------------------------------------------------"+"\n"
             text += header_r + "\n"
             for i in range(len(orden_drivers[3])):
                 if i < 9:
-                    text += str(i+1)+".  "+orden_drivers[3][i].printer_detail(sesion)[1]+ "\n"
+                    text += str(i+1)+".  "+orden_drivers[3][i].printer_detail(sesion, names)[1]+ "\n"
                 else:
-                    text += str(i+1)+". "+orden_drivers[3][i].printer_detail(sesion)[1]+ "\n"
+                    text += str(i+1)+". "+orden_drivers[3][i].printer_detail(sesion, names)[1]+ "\n"
 
         if sesion == "fp3":
             text += name_gp+" "+sesion.upper()+"\n"
             text += header_q + "\n"
             for i in range(len(orden_drivers[4])):
                 if i < 9:
-                    text += str(i+1)+".  "+orden_drivers[4][i].printer_detail(sesion)[0]+ "\n"
+                    text += str(i+1)+".  "+orden_drivers[4][i].printer_detail(sesion, names)[0]+ "\n"
                 else:
-                    text += str(i+1)+". "+orden_drivers[4][i].printer_detail(sesion)[0]+ "\n"
+                    text += str(i+1)+". "+orden_drivers[4][i].printer_detail(sesion, names)[0]+ "\n"
             text += "--------------------------------------------------------------------------"+"\n"
             text += header_r + "\n"
             for i in range(len(orden_drivers[5])):
                 if i < 9:
-                    text += str(i+1)+".  "+orden_drivers[5][i].printer_detail(sesion)[1]+ "\n"
+                    text += str(i+1)+".  "+orden_drivers[5][i].printer_detail(sesion, names)[1]+ "\n"
                 else:
-                    text += str(i+1)+". "+orden_drivers[5][i].printer_detail(sesion)[1]+ "\n"
+                    text += str(i+1)+". "+orden_drivers[5][i].printer_detail(sesion, names)[1]+ "\n"
             
         return text
 
@@ -573,14 +573,11 @@ elif mode == 's':
     eq = equipos.teams
     eq_times = equipos.teams_t
 
-    def good_printing(text,type):
+    def good_printing(text, item_name: list):
+        r = len(max(item_name, key = len))
         l = len(text)
-        if type == 'd':
-            for i in range(18-l):
-                text += " "
-        else:
-            for i in range(31-l):
-                text += " "
+        for _ in range(r + 1 -l):
+            text += " "
         return text
     
     def get_time(milisec):
@@ -611,7 +608,7 @@ elif mode == 's':
         text = name_gp+" "+sesion.upper()+"\n"
         text += header_d + "\n"
         for i in range(len(names)):
-            name =  good_printing(names[i],'d')
+            name =  good_printing(names[i], names)
             time = get_time(times[i])
             if i < 9:
                 text += str(i+1)+".  "+name+ " "+str(time)+"\n"
@@ -620,7 +617,7 @@ elif mode == 's':
         text += "--------------------------------------------------------------------------"+"\n"
         text += header_t + "\n"
         for i in range(len(eq)):
-            equipo =  good_printing(eq[i],'t')
+            equipo =  good_printing(eq[i], eq)
             eq_time = get_time(eq_times[i])
             if i < 9:
                 text += str(i+1)+".  "+equipo+ " "+str(eq_time)+"\n"

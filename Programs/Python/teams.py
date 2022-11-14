@@ -51,28 +51,29 @@ class teams:
             return str(mins)+":"+str(sec)+"."+str(mil)
         
         
-        def good_printing(self,text):
+        def good_printing(self,text, item_name: list):
+            r = len(max(item_name, key = len))
             l = len(text)
-            for i in range(31-l):
+            for i in range(r + 1 -l):
                 text += " "
             return text
                         
         
-        def printer(self,sesion):
+        def printer(self,sesion, item_name: list):
             if sesion == "fp1":
-                    name = self.good_printing(self.name)
+                    name = self.good_printing(self.name, item_name)
                     text = name+ " "+self.get_time(self.fp1)+"       "+str(self.fp1_laps)
             if sesion == "fp2":
-                    name = self.good_printing(self.name)
+                    name = self.good_printing(self.name, item_name)
                     text = name+ " "+self.get_time(self.fp2)+"       "+str(self.fp2_laps)
             if sesion == "fp3":
-                    name = self.good_printing(self.name)
+                    name = self.good_printing(self.name, item_name)
                     text = name+ " "+self.get_time(self.fp3)+"       "+str(self.fp3_laps)
             if sesion == "quali":
-                    name = self.good_printing(self.name)
+                    name = self.good_printing(self.name, item_name)
                     text = name+ " "+self.get_time(self.quali)+"       "+str(self.quali_laps)
             if sesion == "race":
-                    name = self.good_printing(self.name)
+                    name = self.good_printing(self.name, item_name)
                     text = name+ " "+self.get_time(self.race)+"       "+str(self.race_laps)
         
             return text

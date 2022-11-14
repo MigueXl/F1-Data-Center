@@ -1,0 +1,8 @@
+Puntos en libres y quali (Dummy Classification, scatter con lines para ver progresion por GP)
+Puntos en libres y quali (Dummy Classification, bar plot con el total de puntos)
+Diferencia en segundos entre los equipos en Quali (Por año)
+Diferencia en Quali y Ritmo de carrera entre pilotos del mismo equipo(Por año)
+Clasificacion por edad (Edad y Media Puntos Conseguidos Quali/Carrera, ALL)
+Clasificacion por mes cada piloto (Puntos Conseguidos Quali/Carrera, ALL)
+Clasificacion por circuito cada piloto (Puntos Conseguidos Quali/Carrera, ALL)
+Contar el número de sesiones que ha lluvido por año 
