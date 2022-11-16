@@ -1,6 +1,6 @@
 
 class drivers:
-    def __init__(self,name,team,age,gp,fp1,fp2,fp3,quali,race):
+    def __init__(self,name,team,age,gp,fp1,fp2,fp3,quali,race,raceResult,raceStops):
         self.name = name
         self.team = team
         self.age = age
@@ -10,6 +10,7 @@ class drivers:
         self.fp3 = self.get_mean(fp3)
         self.quali = self.get_mean(quali)
         self.race = self.get_mean(race)
+        self.raceResult = raceResult
         if fp1[0] != 0:
             self.fp1_laps = len(fp1)
         else:
@@ -61,7 +62,7 @@ class drivers:
         self.quali_fastest = self.get_fastest(quali)
         self.race_fastest = self.get_fastest(race)
         
-        self.race_stops = 0
+        self.race_stops = raceStops
         
         
     def get_sec(self,lista):

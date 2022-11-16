@@ -3,6 +3,7 @@ import pdfplumber
 import PyPDF2 as p2
 import re
 from tqdm import tqdm
+from result import raceResult
 
 
 #regex to find numbers
@@ -34,6 +35,7 @@ class gp:
         self.fp3_name = self.lista[7]
         self.quali_name = self.lista[8]
         self.race_name = self.lista[9]
+        self.race_result = raceResult(self.race_name).result
     
     def noName(self):
         return ["NO DRIVER" for _ in range(20)]

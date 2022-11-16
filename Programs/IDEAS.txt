@@ -6,3 +6,7 @@ Clasificacion por edad (Edad y Media Puntos Conseguidos Quali/Carrera, ALL)
 Clasificacion por mes cada piloto (Puntos Conseguidos Quali/Carrera, ALL)
 Clasificacion por circuito cada piloto (Puntos Conseguidos Quali/Carrera, ALL)
 Contar el número de sesiones que ha lluvido por año 
+Pilotos que más han quedado en cada posicion ALL
+Pilotos con más DNF en carrera
+Evolucion de las paradas por año 
+Equipos que hacen más paradas de media o menos

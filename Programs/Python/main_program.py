@@ -9,8 +9,8 @@ import time
 
 inicio_t = time.time()
 
-grand_prix = 'Brasil'
-year = 2022
+grand_prix = 'Austria'
+year = 2019
 
 path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"+grand_prix+"_"+str(year)
 os.chdir(path)
@@ -51,7 +51,7 @@ def max_5_sesions(sesions):
 
 if mode == 'n':
     sesiones = []
-    p_sesion = ["fp1.pdf","fp2.pdf","fp3.pdf","quali.pdf","race.pdf","fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
+    p_sesion = ["fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
     for i in range(len(p_sesion)):
         path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"+grand_prix+"_"+str(year)+"/"+p_sesion[i]
         if os.path.exists(path):
@@ -60,11 +60,9 @@ if mode == 'n':
             sesiones.append("")
 
     #Generate all data availble from sesiones
-    sesiones = max_5_sesions(sesiones)
-    if pdfInSesions(sesiones):
-        datos = gp.gp(sesiones, grand_prix, True, laps)
-    else:
-        datos = gp_txt.gp(sesiones, grand_prix, True, laps)
+    datos = gp_txt.gp(sesiones, grand_prix, True, laps)
+    
+    # print(datos.quali)
     names = []
     teams = []
     teams_lista = []
@@ -86,6 +84,24 @@ if mode == 'n':
         if i < len(datos.race_name):
             if datos.race_name[i] not in drivers_lista and datos.race_name[i] != "NO DRIVER": 
                 names.append(datos.race_name[i])
+    
+    def correctNames(orderedList:list, num_ord: list, previous_name: list, form: str):
+        correctResult = []
+        for n in orderedList:
+            obj = False
+            for d in previous_name:
+                if d == n:
+                    index = previous_name.index(d)
+                    correctResult.append(num_ord[index])
+                    obj = True
+
+            if not obj:
+                if form == 'res':
+                    correctResult.append('DNF')
+                else:
+                    correctResult.append(0)
+        
+        return correctResult
 
     def remove_duplicates(lista):
         new_lista = []
@@ -130,8 +146,13 @@ if mode == 'n':
             index_race = 20
         else:
             index_race = datos.race_name.index(names[i])
+        
+        num_ord, previous_name = datos.race_result
+        race_result = correctNames(names, num_ord, previous_name, 'res')
+        stops, previous_name = datos.stops
+        pitStops = correctNames(names, stops, previous_name, 'stops')
             
-        drivers_lista.append(drivers.drivers(names[i], teams[i], age[i], grand_prix, datos.fp1[index_fp1],datos.fp2[index_fp2],datos.fp3[index_fp3],datos.quali[index_quali],datos.race[index_race]))
+        drivers_lista.append(drivers.drivers(names[i], teams[i], age[i], grand_prix, datos.fp1[index_fp1],datos.fp2[index_fp2],datos.fp3[index_fp3],datos.quali[index_quali],datos.race[index_race],race_result[i],pitStops[i]))
         
         
     unique_teams = remove_duplicates(teams)

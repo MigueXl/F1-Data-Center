@@ -492,8 +492,10 @@ updateALL(upYears)
 
 time.sleep(0.5)
 
-data = [['Driver', 'Team', 'Age', 'Year', 'Month', 'GP', 'GP_ID','fp1_quali_Pace', 'fp1_quali_Laps', 'fp1_race_Pace', 'fp1_race_Laps', 'fp1_fastest_lap', 'fp1_Weather', 'fp1_Incident', 'fp2_quali_Pace', 'fp2_quali_Laps', 'fp2_race_Pace', 'fp2_race_Laps', 'fp2_fastest_lap', 'fp2_Weather', 'fp2_Incident', 'fp3_quali_Pace', 'fp3_quali_Laps', 'fp3_race_Pace', 'fp3_race_Laps', 'fp3_fastest_lap', 'fp3_Weather', 'fp3_Incident', 'quali_Pace', 'quali_Laps', 'quali_fastest_lap', 'quali_Weather', 'quali_Incident', 'race_Pace', 'race_Laps', 'race_fastest_lap', 'race_Stops', 'race_Weather', 'race_Incident']]
 
+#### LISTAS ####
+data = [['Driver', 'Team', 'Age', 'Year', 'Month', 'GP', 'GP_ID','fp1_quali_Pace', 'fp1_quali_Laps', 'fp1_race_Pace', 'fp1_race_Laps', 'fp1_fastest_lap', 'fp1_Weather', 'fp1_Incident', 'fp2_quali_Pace', 'fp2_quali_Laps', 'fp2_race_Pace', 'fp2_race_Laps', 'fp2_fastest_lap', 'fp2_Weather', 'fp2_Incident', 'fp3_quali_Pace', 'fp3_quali_Laps', 'fp3_race_Pace', 'fp3_race_Laps', 'fp3_fastest_lap', 'fp3_Weather', 'fp3_Incident', 'quali_Pace', 'quali_Laps', 'quali_fastest_lap', 'quali_Weather', 'quali_Incident', 'race_Pace', 'race_Laps', 'race_fastest_lap', 'race_Stops', 'race_Weather', 'race_Incident','race_Result']]
+w_list = []
 
 ############ INPUT YEARS #############
 year = createListYear(2018,2022)     #
@@ -502,25 +504,24 @@ year = createListYear(2018,2022)     #
 ##################################################################################
 #Loops and .csv preparation
 ##################################################################################
+def correctNames(orderedList:list, num_ord: list, previous_name: list, form: str):
+    correctResult = []
+    for n in orderedList:
+        obj = False
+        for d in previous_name:
+            if d == n:
+                index = previous_name.index(d)
+                correctResult.append(num_ord[index])
+                obj = True
 
-def txtInSesions(sesions):
-    txt = False
-    for i in sesions:
-        if '.txt' in i:
-            txt = True
-    return txt
-
-
-
-def max_5_sesions(sesions):
-    txt = txtInSesions(sesions)
+        if not obj:
+            if form == 'res':
+                correctResult.append('DNF')
+            else:
+                correctResult.append(0)
     
-    if txt:
-        sesions = sesions[5:]     
-    else:
-        sesions = sesions[0:5]
-    
-    return sesions
+    return correctResult
+
 
 # for y in range(len(year)):
 for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
@@ -528,11 +529,12 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
 
     # for j in range(len(grand_prix)): 
     for j in tqdm(range(len(grand_prix)), desc = 'GP ' + str(year[y]) +' Progress Bar'):
+        print(grand_prix[j])
         path = "/Users/migue/Documents/F1 Data Center/"+str(year[y])+"/"+grand_prix[j]+"_"+str(year[y])
         os.chdir(path)
         
         sesiones = []
-        p_sesion = ["fp1.pdf","fp2.pdf","fp3.pdf","quali.pdf","race.pdf","fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
+        p_sesion = ["fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
         
         for s in range(len(p_sesion)):
             path = "/Users/migue/Documents/F1 Data Center/"+str(year[y])+"/"+grand_prix[j]+"_"+str(year[y])+"/"+p_sesion[s]
@@ -541,12 +543,7 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
             else:
                 sesiones.append("")
 
-        sesiones = max_5_sesions(sesiones)
-        print(grand_prix[j])
-        if  txtInSesions(sesiones):
-            datos = gp_txt.gp(sesiones, grand_prix)       
-        else:
-            datos = gp.gp(sesiones, grand_prix)
+        datos = gp_txt.gp(sesiones, grand_prix)       
 
         names = []
         drivers_lista = []
@@ -567,7 +564,19 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
             
             names = remove_duplicates(names)
 
+        num_ord, previous_name = datos.race_result
+        race_result = correctNames(names, num_ord, previous_name, 'res')
+        stops, previous_name = datos.stops
+        pitStops = correctNames(names, stops, previous_name, 'stops')
 
+        #### FULL DNF RACE (OBIOUSLY BECAUSE IT IS WRONG) ####
+        w = True
+        for i in race_result:
+            if i != 'DNF':
+                w = False
+        if w:
+            w_list.append(grand_prix[j]+ '_' + str(year[y])+ '\n')
+        
         ##################################################################################
         #DATA GENERATION
         ##################################################################################
@@ -608,8 +617,8 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
             else:
                 index_race = datos.race_name.index(names[i])
     
-            drivers_lista.append(drivers.drivers(names[i], teams[i], age[i], grand_prix[j], datos.fp1[index_fp1],datos.fp2[index_fp2],datos.fp3[index_fp3],datos.quali[index_quali],datos.race[index_race]))
-        
+            drivers_lista.append(drivers.drivers(names[i], teams[i], age[i], grand_prix[j], datos.fp1[index_fp1],datos.fp2[index_fp2],datos.fp3[index_fp3],datos.quali[index_quali],datos.race[index_race],race_result[i],pitStops[i]))
+
 
         for i in range(len(drivers_lista)):
             fp1_inc = incident(drivers_lista[i].name,year[y],grand_prix[j],'fp1')
@@ -637,13 +646,17 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
             #     for i in lred:
             #         debug.write(str(i)+'\n')
 
-            data.append([drivers_lista[i].name,drivers_lista[i].team,drivers_lista[i].age,year[y],month[j],grand_prix[j],j,drivers_lista[i].fp1_quali_mean,drivers_lista[i].fp1_quali,drivers_lista[i].fp1_race_mean,drivers_lista[i].fp1_race,drivers_lista[i].fp1_fastest,weather(year[y],grand_prix[j],'fp1').w,fp1_inc,drivers_lista[i].fp2_quali_mean,drivers_lista[i].fp2_quali,drivers_lista[i].fp2_race_mean,drivers_lista[i].fp2_race,drivers_lista[i].fp2_fastest,weather(year[y],grand_prix[j],'fp2').w,fp2_inc,drivers_lista[i].fp3_quali_mean,drivers_lista[i].fp3_quali,drivers_lista[i].fp3_race_mean,drivers_lista[i].fp3_race,drivers_lista[i].fp3_fastest,weather(year[y],grand_prix[j],'fp3').w,fp3_inc,drivers_lista[i].quali,drivers_lista[i].quali_laps,drivers_lista[i].quali_fastest,weather(year[y],grand_prix[j],'quali').w,quali_inc,drivers_lista[i].race,drivers_lista[i].race_laps,drivers_lista[i].race_fastest,drivers_lista[i].race_stops,weather(year[y],grand_prix[j],'race').w,race_inc])
+            data.append([drivers_lista[i].name,drivers_lista[i].team,drivers_lista[i].age,year[y],month[j],grand_prix[j],j,drivers_lista[i].fp1_quali_mean,drivers_lista[i].fp1_quali,drivers_lista[i].fp1_race_mean,drivers_lista[i].fp1_race,drivers_lista[i].fp1_fastest,weather(year[y],grand_prix[j],'fp1').w,fp1_inc,drivers_lista[i].fp2_quali_mean,drivers_lista[i].fp2_quali,drivers_lista[i].fp2_race_mean,drivers_lista[i].fp2_race,drivers_lista[i].fp2_fastest,weather(year[y],grand_prix[j],'fp2').w,fp2_inc,drivers_lista[i].fp3_quali_mean,drivers_lista[i].fp3_quali,drivers_lista[i].fp3_race_mean,drivers_lista[i].fp3_race,drivers_lista[i].fp3_fastest,weather(year[y],grand_prix[j],'fp3').w,fp3_inc,drivers_lista[i].quali,drivers_lista[i].quali_laps,drivers_lista[i].quali_fastest,weather(year[y],grand_prix[j],'quali').w,quali_inc,drivers_lista[i].race,drivers_lista[i].race_laps,drivers_lista[i].race_fastest,drivers_lista[i].race_stops,weather(year[y],grand_prix[j],'race').w,race_inc,drivers_lista[i].raceResult])
 
 
+
+### GENERATE THE WARNING FILE ###
+warning = open('/Users/migue/Documents/F1 Data Center/'+'WARNING.txt','w+')
+for w in w_list:
+    warning.write(w)
 
 #Generate all data availble from sesiones
 #rows format: [['a','b'], ['c','d']]
-
 #Return to directory where data.csv is:
 path = "/Users/migue/Documents/F1 Data Center/Datos/"
 os.chdir(path)

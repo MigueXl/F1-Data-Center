@@ -2,7 +2,10 @@ import multidata
 import PyPDF2 as p2
 import re
 from tqdm import tqdm
-
+from result import raceResult
+import os
+import sys
+import numpy as np
 
 #regex to find numbers
 num = re.compile("\d")
@@ -33,6 +36,9 @@ class gp:
         self.fp3_name = self.lista[7]
         self.quali_name = self.lista[8]
         self.race_name = self.lista[9]
+        self.stops = (self.lista[10], self.race_name)
+        self.race_result = raceResult(self.race_name).result
+        
     
     def noName(self):
         return ["NO DRIVER" for _ in range(20)]
@@ -59,6 +65,9 @@ class gp:
             for i in range(len(drivers)):
                 for _ in range(20):
                     drivers[i].append([])
+
+            #Drivers RACE STOPS
+            stops = [0 for _ in range(20)]
 
             for sesion in range(len(lista_sesiones)):
                 #Important later this driv = -1
@@ -100,6 +109,8 @@ class gp:
                                     else:
                                         pit_time = time[sesion][j][-1]
                                         drivers[sesion][driv].append(pit_time)
+                                        if sesion == 4 and self.itemSecs(pit_time) < 300000: #LESS THAN 5 MINS TO AVOID CONSIDERING RED FLAGS AS BOX
+                                            stops[driv] += 1
 
                 
                 #If lista_sesiones = "" (Does not exist)                    
@@ -111,7 +122,9 @@ class gp:
                     for i in range(len(drivers[sesion])):
                         drivers[sesion][i].append(0)
                     
-                
+                    if sesion == 4:
+                        stops = ['NO DATA' for _ in range(20)]
+                    
             fp1 = drivers[0]
             fp1.append([0]) #Ghost driver
             fp2 = drivers[1]
@@ -133,8 +146,21 @@ class gp:
             quali_name.append("NO DRIVER") #Ghost driver
             race_name = drivers_name[4] 
             race_name.append("NO DRIVER") #Ghost driver
-                        
-            return(fp1,fp2,fp3,quali,race,fp1_name,fp2_name,fp3_name,quali_name,race_name)
+            
+            return(fp1,fp2,fp3,quali,race,fp1_name,fp2_name,fp3_name,quali_name,race_name,stops)
+    
+    def itemSecs(self, elem):
+        """Convert x:yy:zzz to seconds (ONLY FOR 1 ELEM)"""
+        if ':' in elem[0:1] or ':' in elem[2:4] or ':' in elem[5:8]:
+            return sys.maxsize  #NOT THE CORRECT FORMAT; NOT CONSIDER THIS TIME
+
+        suma = 0
+        mins = int(elem[0:1])*60*1000
+        sec = int(elem[2:4])*1000
+        mil = int(elem[5:8])
+        suma = mins + sec + mil
+            
+        return(suma)
         
     def get_sec(self,lista):
         """Convert x:yy:zzz to seconds"""

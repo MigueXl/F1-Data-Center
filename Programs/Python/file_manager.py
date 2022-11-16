@@ -74,6 +74,39 @@ class fase2:
         
         self.printMessage()
 
+class faseRename:
+    '''Renames every provisional clasification file into result.pdf'''
+    def __init__(self, gps: list, year: int or str):
+        self.gps = gps
+        self.year = year    
+        self.path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"
+        self.oldName = []
+    
+    def findResult(self,dirFiles):
+        all = os.listdir(dirFiles)
+        for f in all:
+            if 'provisional' in f:
+                os.chdir(dirFiles)
+                self.oldName.append(f[:10])
+                os.rename(f, 'result.pdf')
+                #CREATE THE CORRESPONDING result.txt to insert the data
+                open('result.txt','w+')
+    
+    def printMessage(self):
+        text = ''
+        for i in self.oldName:
+            text += str(i) + ' file has been renamed in its appropiate format\n'
+        print(text)
+
+    def renameFile(self):
+        all = os.listdir(self.path)
+        for f in all:
+            dirFiles = os.path.join(self.path,f)
+            if os.path.isdir(dirFiles):                
+                self.findResult(dirFiles)
+        
+        self.printMessage()
+
 class fase3:
     '''Create a copy of .txt if any information is readable regarding this folder'''
     def __init__(self, gps: list, year: int or str):
@@ -147,17 +180,17 @@ class fase4:
         return pdf, txt
     
     def returnPossPDF(self,posFixed):
-        possible =  ["fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
-        possiblePDF = ['_p1_','_p2_','_p3_','_q0_', '_r0_']
+        possible =  ["fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt",'result.txt']
+        possiblePDF = ['_p1_','_p2_','_p3_','_q0_', '_r0_','result.pdf']
 
         PDFFixed = [possiblePDF[possible.index(i)] for i in posFixed if i in possible]
-
+        
         return PDFFixed
 
     def whatFault(self,dirFiles):
         os.chdir(dirFiles)
-        possible =  ["fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
-        possiblePDF = ['_p1_','_p2_','_p3_','_q0_', '_r0_']
+        possible =  ["fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt",'result.txt']
+        possiblePDF = ['_p1_','_p2_','_p3_','_q0_', '_r0_','result.pdf']
         new = []
 
         #AFTER THE CREATION OF EVERY TXT FILES; A DONE FILE WILL BE INCLUDED TO AVOID ENTERING AGAIN IN THE FOLDER
@@ -299,6 +332,11 @@ class updateALL:
         for y in years: 
             f3 = fase3(multidata.f1_calendar(y).calendar, y)
             f3.creatingFault()
+        
+        #FASE RENAME: RENAME INTO RESULT.PDF
+        for y in years: 
+            fr = faseRename(multidata.f1_calendar(y).calendar, y)
+            fr.renameFile()
 
         #FASE 4: OBTAIN THE .TXT FILE WITH THE CORRECT INFORMATION INSIDE
         for y in tqdm(years, desc = 'Year Progress Bar'):
@@ -310,6 +348,8 @@ class updateALL:
             chck = returnFault(multidata.f1_calendar(y).calendar, y)
             chck.lookingFault()
 
+
+
 auto = False #TO AVOID DOUBLE EXECUTION WHILE CSV GENERATES DATA 
 #(USE BETTER CSV GENERATOR BECAUSE IT UPDATES THE CSV, BUT IF IT TAKES A LOT BECAUSE THE LECTURE OF THE .TXT, USE THIS FILE DIRECTLY)
 if auto:
@@ -317,9 +357,10 @@ if auto:
         return [y for y in range(inicio,final + 1)]
 
     upYears = createListYear(2018,2022)
-    # years = ['TestYear']
-    correctYears = createListYear(2018,2021)
-    for gY in correctYears:
-        upYears.remove(gY)
+    # upYears = ['TestYear']
+    if upYears != ['TestYear']:
+        correctYears = createListYear(2018,2021)
+        for gY in correctYears:
+            upYears.remove(gY)
 
     updateALL(upYears)
