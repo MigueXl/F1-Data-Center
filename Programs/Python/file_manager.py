@@ -39,6 +39,47 @@ class fase1:
 
         self.printMessage()
 
+class faseCorrect:
+    '''Create the folders in the corresponding year and introduce a false name_gp.txt file inside each of them'''
+    def __init__(self, gps: list, year: int or str):
+        self.gps = gps
+        self.year = year    
+        self.mainPath = "/Users/migue/Documents/F1 Data Center/"
+        self.path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"
+        self.newDirs = []
+    
+    def modifyGP(self,dirFiles):
+        os.chdir(dirFiles)
+        interest = ["fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
+        totFiles = os.listdir(dirFiles)
+        for f in totFiles:
+            if os.path.exists(f) and f in interest:
+                txt = open(f,'r', encoding='utf-8')
+                all = txt.readlines()
+                correctName = all[-2] + ' -' #PENULTIMA LINEA 
+                correctName = correctName.replace('\n','')
+                txt.close() #CLOSE THE FILE, WE WILL NOT NEED IT ANY MORE
+
+                with  open('name_gp.txt','w', encoding='utf-8') as nameGP:
+                    nameGP.write(correctName)
+                
+                self.newDirs.append(dirFiles)
+                break #WE DO NOT NEED TO ITERATE ANY MORE ON THE LOOP
+
+    def printMessage(self):
+        text = ''
+        for i in self.newDirs:
+            text += str(i) + ' directory has nameGP.txt fixed\n'
+        print(text)
+    
+    def correctFile(self):
+        totFiles = os.listdir(self.path)
+        for f in totFiles:
+            dirFiles = os.path.join(self.path,f)
+            if os.path.isdir(dirFiles):                
+                self.modifyGP(dirFiles)
+
+        self.printMessage()
 
 class fase2:
     '''Introduce each file in its respective directory'''
@@ -322,6 +363,11 @@ class updateALL:
         for y in years: 
             f1 = fase1(multidata.f1_calendar(y).calendar, y)
             f1.createFolder()
+        
+        #FASE CORRECT: CORRECT NAME_GP.TXT FILE
+        for y in years: 
+            fc = faseCorrect(multidata.f1_calendar(y).calendar, y)
+            fc.correctFile()
 
         #FASE 2: APPEND FILES IN THE CORRESPONDING DIRECTORY
         for y in years: 

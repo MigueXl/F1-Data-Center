@@ -183,38 +183,5 @@ with open('race.txt', "r", encoding='utf-8') as invoice:
     text = invoice.readlines()
 
 #Split text if enter occurs
-for row in text:
-    if drivers_sn.search(row) != None:
-        todo = drivers_sn.search(row).group()
-        sp = todo.split()
-        if sp[-1] not in drivers_apellido:
-            drivers_apellido.append(sp[-1])
+print(text[-2])
     
-    #Get numbers from each row 
-    if num.search(row) != None:
-        n = num.search(row).group()
-    else:
-        n = "0"
-    #If row starts with number, we split row if " " occurs but sentences stays in the same list. 
-    if row.startswith(n):
-        time.append(row.split())
-
-
-for j in range(len(time)):
-    #If the last element in the list(surname) is in drivers_apellido list, we append his name to drivers_name of each season
-    if time[j][-1] in drivers_apellido:
-        drivers_name.append(time[j][1]+" "+time[j][-1])
-        driv += 1  #We have find a driver, then we can to the next one
-    else:
-        #Here we add times to each driver
-        for z in range(len(time[j])):
-            if ":" in time[j][z]:
-                if 'P' not in time[j]: 
-                    drivers[driv].append(time[j][z])
-                else:
-                    pit_time = time[j][-1]
-                    drivers[driv].append(pit_time)
-                    if get_sec(pit_time) < 300000:
-                        stops[driv] += 1
-
-print(stops)

@@ -9,7 +9,7 @@ import time
 
 inicio_t = time.time()
 
-grand_prix = 'Austria'
+grand_prix = 'Alemania'
 year = 2019
 
 path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"+grand_prix+"_"+str(year)
