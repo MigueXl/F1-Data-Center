@@ -206,7 +206,7 @@ ggcorr(data, label = T,label_alpha=T,nbreaks = 4)
 
 Teams Colors
 ```{r}
-fer = '#9f121d'
+fer = '#cc0000'
 rb = '#340db0'
 mer = '#25b8a1'
 am = '#185d5b'

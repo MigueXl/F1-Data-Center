@@ -12,7 +12,8 @@ num = re.compile("\d")
 #regex to find drivers surname
 zho = 'ZHOU Guanyu'
 dev = 'Nyck DE VRIES'
-drivers_sn = re.compile("\d+\s("+dev+"|[A-Z][a-z]+\s[A-Z]+|"+zho+")\n")
+owa = "Patricio O'WARD"
+drivers_sn = re.compile("\d+\s("+dev+"|[A-Z][a-z]+\s[A-Z]+|"+zho+"|"+owa+")\n")
 
 class gp:
     def __init__(self, lista_sesiones, gp, bar = False, laps=None):

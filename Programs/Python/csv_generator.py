@@ -484,7 +484,7 @@ def createListYear(inicio,final):
 
 upYears = createListYear(2018,2022)
 # years = ['TestYear']
-correctYears = createListYear(2018,2021)
+correctYears = createListYear(2018,2022)
 for gY in correctYears:
     upYears.remove(gY)
 

@@ -46,30 +46,33 @@ def max_5_sesions(sesions):
     
     return sesions
 
-year = 2022
-grand_prix = 'Brasil'
+points = [25,18,15,12,10,8,6,4,2,1,0,0,0,0,0,0,0,0,0,0]
 
-path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"+grand_prix+"_"+str(year)
-os.chdir(path)
+print(np.amax(points))
 
-sesiones = []
-p_sesion = ["fp1.pdf","fp2.pdf","fp3.pdf","quali.pdf","race.pdf","fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
-for i in range(len(p_sesion)):
-    path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"+grand_prix+"_"+str(year)+"/"+p_sesion[i]
-    if os.path.exists(path):
-        sesiones.append(p_sesion[i])
-    else:
-        sesiones.append("")
+# year = 2022
+# grand_prix = 'Brasil'
 
-#Generate all data availble from sesiones
-sesiones = max_5_sesions(sesiones)
-if pdfInSesions(sesiones):
-    datos = gp.gp(sesiones, grand_prix)
-else:
-    datos = gp_txt.gp(sesiones, grand_prix)
+# path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"+grand_prix+"_"+str(year)
+# os.chdir(path)
+
+# sesiones = []
+# p_sesion = ["fp1.pdf","fp2.pdf","fp3.pdf","quali.pdf","race.pdf","fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
+# for i in range(len(p_sesion)):
+#     path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"+grand_prix+"_"+str(year)+"/"+p_sesion[i]
+#     if os.path.exists(path):
+#         sesiones.append(p_sesion[i])
+#     else:
+#         sesiones.append("")
+
+# #Generate all data availble from sesiones
+# sesiones = max_5_sesions(sesiones)
+# if pdfInSesions(sesiones):
+#     datos = gp.gp(sesiones, grand_prix)
+# else:
+#     datos = gp_txt.gp(sesiones, grand_prix)
 
 
-print(datos.stops)
 # print(datos.race_name)
 # print(datos.race_result)
 ### PDF VERSION ###
@@ -130,58 +133,58 @@ print(datos.stops)
 # print(time.time() - inicio)
 
 
-resPatern = re.compile('\d+\s+\d+\s+'+'([A-Z][a-z]+\s[A-Z]+ |'+zho+'|'+ dev + ')' )
+# resPatern = re.compile('\d+\s+\d+\s+'+'([A-Z][a-z]+\s[A-Z]+ |'+zho+'|'+ dev + ')' )
 
-row = '1       44      Lewis HAMILTON  MERCEDES        61      1:51:11.611     25'
+# row = '1       44      Lewis HAMILTON  MERCEDES        61      1:51:11.611     25'
 
-if resPatern.search(row) != None:
-    todo = resPatern.search(row).group()
-    sp = todo.split()
-
-
-
-#regex to find numbers
-num = re.compile("\d")
-#regex to find drivers surname
-zho = 'ZHOU Guanyu'
-dev = 'Nyck DE VRIES'
-drivers_sn = re.compile("\d+\s("+dev+"|[A-Z][a-z]+\s[A-Z]+|"+zho+")\n")
+# if resPatern.search(row) != None:
+#     todo = resPatern.search(row).group()
+#     sp = todo.split()
 
 
-drivers_apellido = []
+
+# #regex to find numbers
+# num = re.compile("\d")
+# #regex to find drivers surname
+# zho = 'ZHOU Guanyu'
+# dev = 'Nyck DE VRIES'
+# drivers_sn = re.compile("\d+\s("+dev+"|[A-Z][a-z]+\s[A-Z]+|"+zho+")\n")
+
+
+# drivers_apellido = []
             
-#For each sesion, 20 drivers name
-drivers_name = []
+# #For each sesion, 20 drivers name
+# drivers_name = []
 
-#1 time for each season               
-time = []
+# #1 time for each season               
+# time = []
 
-#For each sesion, 20 drivers time (Each time is a list containing each time available)
-drivers = []
+# #For each sesion, 20 drivers time (Each time is a list containing each time available)
+# drivers = []
 
-#Stops 
-stops = np.zeros(20, dtype= np.int64)
+# #Stops 
+# stops = np.zeros(20, dtype= np.int64)
 
-def get_sec(elem):
-    """Convert x:yy:zzz to seconds"""
-    if ':' in elem[0:1] or ':' in elem[2:4] or ':' in elem[5:8]:
-        return sys.maxsize  #NOT THE CORRECT FORMAT; NOT CONSIDER THIS TIME
+# def get_sec(elem):
+#     """Convert x:yy:zzz to seconds"""
+#     if ':' in elem[0:1] or ':' in elem[2:4] or ':' in elem[5:8]:
+#         return sys.maxsize  #NOT THE CORRECT FORMAT; NOT CONSIDER THIS TIME
 
-    suma = 0
-    mins = int(elem[0:1])*60*1000
-    sec = int(elem[2:4])*1000
-    mil = int(elem[5:8])
-    suma = mins + sec + mil
+#     suma = 0
+#     mins = int(elem[0:1])*60*1000
+#     sec = int(elem[2:4])*1000
+#     mil = int(elem[5:8])
+#     suma = mins + sec + mil
         
-    return(suma)
+#     return(suma)
 
-for _ in range(20):
-    drivers.append([])
+# for _ in range(20):
+#     drivers.append([])
 
-driv = -1
-with open('race.txt', "r", encoding='utf-8') as invoice:
-    text = invoice.readlines()
+# driv = -1
+# with open('race.txt', "r", encoding='utf-8') as invoice:
+#     text = invoice.readlines()
 
-#Split text if enter occurs
-print(text[-2])
+# #Split text if enter occurs
+# print(text[-2])
     

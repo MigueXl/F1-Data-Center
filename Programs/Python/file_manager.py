@@ -39,48 +39,6 @@ class fase1:
 
         self.printMessage()
 
-class faseCorrect:
-    '''Create the folders in the corresponding year and introduce a false name_gp.txt file inside each of them'''
-    def __init__(self, gps: list, year: int or str):
-        self.gps = gps
-        self.year = year    
-        self.mainPath = "/Users/migue/Documents/F1 Data Center/"
-        self.path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"
-        self.newDirs = []
-    
-    def modifyGP(self,dirFiles):
-        os.chdir(dirFiles)
-        interest = ["fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
-        totFiles = os.listdir(dirFiles)
-        for f in totFiles:
-            if os.path.exists(f) and f in interest:
-                txt = open(f,'r', encoding='utf-8')
-                all = txt.readlines()
-                correctName = all[-2] + ' -' #PENULTIMA LINEA 
-                correctName = correctName.replace('\n','')
-                txt.close() #CLOSE THE FILE, WE WILL NOT NEED IT ANY MORE
-
-                with  open('name_gp.txt','w', encoding='utf-8') as nameGP:
-                    nameGP.write(correctName)
-                
-                self.newDirs.append(dirFiles)
-                break #WE DO NOT NEED TO ITERATE ANY MORE ON THE LOOP
-
-    def printMessage(self):
-        text = ''
-        for i in self.newDirs:
-            text += str(i) + ' directory has nameGP.txt fixed\n'
-        print(text)
-    
-    def correctFile(self):
-        totFiles = os.listdir(self.path)
-        for f in totFiles:
-            dirFiles = os.path.join(self.path,f)
-            if os.path.isdir(dirFiles):                
-                self.modifyGP(dirFiles)
-
-        self.printMessage()
-
 class fase2:
     '''Introduce each file in its respective directory'''
     def __init__(self, gps: list, year: int or str):
@@ -176,7 +134,7 @@ class fase3:
                     index = possiblePDF.index(p)
 
                     new.append(possible[index])
-                    open(possible[index],'w+')
+                    open(possible[index],'w+') #CREATES A TXT NAMED AS THE CORRESPONDING SESSION
 
                     possible.pop(index)
                     possiblePDF.pop(index)
@@ -301,6 +259,60 @@ class fase4:
         
         self.printMessage()
         
+class faseCorrect:
+    '''Create the folders in the corresponding year and introduce a false name_gp.txt file inside each of them'''
+    def __init__(self, gps: list, year: int or str):
+        self.gps = gps
+        self.year = year    
+        self.mainPath = "/Users/migue/Documents/F1 Data Center/"
+        self.path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"
+        self.newDirs = []
+    
+    def modifyGP(self,dirFiles):
+        os.chdir(dirFiles)
+        interest = ["fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
+        totFiles = os.listdir(dirFiles)
+        #CHECK THAT NAME_GP.TXT HAS NOT BEEN RENAMED EARLIER
+        if 'DONE.txt' in totFiles:
+            with open('DONE.txt', 'r') as check:
+                result = check.readlines()    
+                resCorrect = [ r.replace('\n','') for r in result]
+                if 'name_gp.txt' in resCorrect:
+                    return #BREAK THIS MODULE
+
+        for f in totFiles:
+            if os.path.exists(f) and f in interest:
+                txt = open(f,'r', encoding='utf-8')
+                all = txt.readlines()
+                correctName = all[-2] + ' -' #PENULTIMA LINEA 
+                correctName = correctName.replace('\n','')
+                txt.close() #CLOSE THE FILE, WE WILL NOT NEED IT ANY MORE
+
+                with  open('name_gp.txt','w', encoding='utf-8') as nameGP:
+                    nameGP.write(correctName)
+                
+                self.newDirs.append(dirFiles)
+
+                #APPEND NEW TO DONE.TXT 
+                with open('DONE.txt', 'a+') as done:
+                    done.writelines('name_gp.txt'+'\n')
+                break #WE DO NOT NEED TO ITERATE ANY MORE ON THE LOOP
+
+    def printMessage(self):
+        text = ''
+        for i in self.newDirs:
+            text += str(i) + ' directory has nameGP.txt fixed\n'
+        print(text)
+    
+    def correctFile(self):
+        totFiles = os.listdir(self.path)
+        for f in totFiles:
+            dirFiles = os.path.join(self.path,f)
+            if os.path.isdir(dirFiles):                
+                self.modifyGP(dirFiles)
+
+        self.printMessage()
+
 
 class returnFault:
     '''Will return every file which fault in each directory'''
@@ -396,7 +408,7 @@ class updateALL:
 
 
 
-auto = False #TO AVOID DOUBLE EXECUTION WHILE CSV GENERATES DATA 
+auto = False  #TO AVOID DOUBLE EXECUTION WHILE CSV GENERATES DATA 
 #(USE BETTER CSV GENERATOR BECAUSE IT UPDATES THE CSV, BUT IF IT TAKES A LOT BECAUSE THE LECTURE OF THE .TXT, USE THIS FILE DIRECTLY)
 if auto:
     def createListYear(inicio,final):

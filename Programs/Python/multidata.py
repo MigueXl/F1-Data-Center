@@ -1,35 +1,58 @@
 class f1_teams:
     def __init__(self,drivers,year,gp,sesion = ''):
         self.equipos = self.get_teams(drivers,year,gp, sesion)
+        self.color = self.get_teams(drivers,year,gp, sesion, color = True)
     
-    def get_teams(self,names, year, gp, sesion):
+    def get_teams(self,names, year, gp, sesion, color = False):
         teams = []
+        colorList = []
         ##################################################################################
         #2018Season
         ##################################################################################
         if year == 2018:
             for i in range(len(names)):
                 if names[i]== 'Fernando ALONSO' or names[i] == 'Stoffel VANDOORNE' or names[i] == 'Lando NORRIS':
+                    if color: colorList.append('#fe8000')
                     teams.append("McLaren F1 Team")
+
                 elif names[i]== 'Sergio PEREZ' or names[i] == 'Esteban OCON' or names[i] == 'Nicholas LATIFI':
+                    if color: colorList.append('#ee99c5')
                     teams.append("Sahara Force India F1 Team")
+
                 elif names[i]== 'Sergey SIROTKIN' or names[i] == 'Lance STROLL' or names[i] == 'Robert KUBICA':
+                    if color: colorList.append('#feffff')
                     teams.append("Williams Racing")
+
                 elif names[i]== 'Marcus ERICSSON' or names[i] == 'Charles LECLERC' or names[i] == 'Antonio GIOVINAZZI':
+                    if color: colorList.append('#6b101b')
                     teams.append("Alfa Romeo Sauber F1 Team")
+
                 elif names[i]== 'Romain GROSJEAN' or names[i] == 'Kevin MAGNUSSEN':
+                    if color: colorList.append('#5a5b60')
                     teams.append("Haas F1 Team")
+
                 elif names[i]== 'Pierre GASLY' or names[i] == 'Brendon HARTLEY' or names[i] == 'Sean GELAEL':
+                    if color: colorList.append('#3364b5')
                     teams.append("Red Bull Toro Rosso Honda")
+
                 elif names[i]== 'Daniel RICCIARDO' or names[i] == 'Max VERSTAPPEN':
+                    if color: colorList.append('#340db0')
                     teams.append("Aston Martin Red Bull Racing")
+
                 elif names[i]== 'Carlos SAINZ' or names[i] == 'Nico HULKENBERG' or names[i] == 'Artem MARKELOV':
+                    if color: colorList.append('#f4f237')
                     teams.append("Renault Sport Formula One Team")
+
                 elif names[i]== 'Sebastian VETTEL' or names[i] == 'Kimi RAIKKONEN':
+                    if color: colorList.append('#cc0000')
                     teams.append("Scuderia Ferrari")
+
                 elif names[i]== 'Valtteri BOTTAS' or names[i] == 'Lewis HAMILTON':
+                    if color: colorList.append('#25b8a1')
                     teams.append("Mercedes AMG Petronas Motorsport")
+
                 else:
+                    if color: colorList.append('#000000')
                     teams.append("NO TEAM")
         ##################################################################################
         #2019Season
@@ -41,26 +64,47 @@ class f1_teams:
                     gaslyTR, albonRB = False, False
 
                 if names[i]== 'Carlos SAINZ' or names[i] == 'Lando NORRIS':
+                    if color: colorList.append('#fe8000')
                     teams.append("McLaren F1 Team")
+
                 elif names[i]== 'Sergio PEREZ' or names[i] == 'Lance STROLL':
+                    if color: colorList.append('#ee99c5')
                     teams.append("SportPesa Racing Point F1 Team ")
+
                 elif names[i]== 'Robert KUBICA' or names[i] == 'George RUSSELL' or names[i] == 'Nicholas LATIFI':
+                    if color: colorList.append('#feffff')
                     teams.append(" ROKiT Williams Racing ")
+
                 elif names[i]== 'Kimi RAIKKONEN' or names[i] == 'Antonio GIOVINAZZI':
+                    if color: colorList.append('#6b101b')
                     teams.append("Alfa Romeo Sauber F1 Team")
+
                 elif names[i]== 'Romain GROSJEAN' or names[i] == 'Kevin MAGNUSSEN':
+                    if color: colorList.append('#eed899')
                     teams.append("Haas F1 Team")
+
                 elif (names[i] == 'Alexander ALBON' and not albonRB) or names[i] == 'Daniil KVYAT' or (names[i]== 'Pierre GASLY' and  gaslyTR) or names[i] == 'Naoki YAMAMOTO':
+                    if color: colorList.append('#3364b5')
                     teams.append("Red Bull Toro Rosso Honda")
+
                 elif (names[i]== 'Pierre GASLY' and not gaslyTR) or names[i] == 'Max VERSTAPPEN' or (names[i] == 'Alexander ALBON' and albonRB):
+                    if color: colorList.append('#340db0')
                     teams.append("Aston Martin Red Bull Racing")
+
                 elif names[i]== 'Daniel RICCIARDO' or names[i] == 'Nico HULKENBERG':
+                    if color: colorList.append('#f4f237')
                     teams.append("Renault F1 Team")
+
                 elif names[i]== 'Sebastian VETTEL' or names[i] == 'Charles LECLERC':
+                    if color: colorList.append('#cc0000')
                     teams.append("Scuderia Ferrari")
+
                 elif names[i]== 'Valtteri BOTTAS' or names[i] == 'Lewis HAMILTON':
+                    if color: colorList.append('#25b8a1')
                     teams.append("Mercedes AMG Petronas Motorsport")
+
                 else:
+                    if color: colorList.append('#000000')
                     teams.append("NO TEAM")
         ##################################################################################
         #2020Season
@@ -72,26 +116,47 @@ class f1_teams:
                     rusMER = True
 
                 if names[i]== 'Carlos SAINZ' or names[i] == 'Lando NORRIS':
+                    if color: colorList.append('#fe8000')                   
                     teams.append("McLaren F1 Team")
+
                 elif names[i]== 'Sergio PEREZ' or names[i] == 'Lance STROLL' or names[i] == 'Nico HULKENBERG' or names[i] == 'Mick SCHUMACHER':
+                    if color: colorList.append('#ee99c5')
                     teams.append("BWT Racing Point F1 Team")
+
                 elif names[i]== 'Nicholas LATIFI' or names[i] == 'George RUSSELL' or names[i] == 'Jack AITKEN' or names[i] == 'Roy NISSANY':
+                    if color: colorList.append('#1071d1')
                     teams.append("Williams Racing")
+
                 elif names[i]== 'Kimi RAIKKONEN' or names[i] == 'Antonio GIOVINAZZI' or names[i] == 'Robert KUBICA':
+                    if color: colorList.append('#6b101b')
                     teams.append("Alfa Romeo Racing ORLEN")
+
                 elif names[i]== 'Romain GROSJEAN' or names[i] == 'Kevin MAGNUSSEN' or names[i] == 'Callum ILOTT' or names[i] == 'Pietro FITTIPALDI':
+                    if color: colorList.append('#2b2b33')
                     teams.append("Haas F1 Team")
+
                 elif names[i] == 'Daniil KVYAT' or names[i] == 'Pierre GASLY':
+                    if color: colorList.append('#dfdfe6')
                     teams.append("Scuderia AlphaTauri Honda")
+
                 elif names[i] == 'Max VERSTAPPEN' or names[i] == 'Alexander ALBON':
+                    if color: colorList.append('#340db0')
                     teams.append("Aston Martin Red Bull Racing")
+
                 elif names[i]== 'Daniel RICCIARDO' or names[i] == 'Esteban OCON':
+                    if color: colorList.append('#f4f237')
                     teams.append("Renault DP World F1 Team")
+
                 elif names[i]== 'Sebastian VETTEL' or names[i] == 'Charles LECLERC':
+                    if color: colorList.append('#cc0000')
                     teams.append("Scuderia Ferrari")
+
                 elif names[i]== 'Valtteri BOTTAS' or names[i] == 'Lewis HAMILTON' or (names[i] == 'George RUSSELL' and rusMER):
+                    if color: colorList.append('#25b8a1')
                     teams.append("Mercedes-AMG Petronas F1 Team")
+
                 else:
+                    if color: colorList.append('#000000')
                     teams.append("NO TEAM")
         ##################################################################################
         #2021Season
@@ -99,69 +164,115 @@ class f1_teams:
         elif year == 2021:
             for i in range(len(names)):
                 if names[i]== 'Daniel RICCIARDO' or names[i] == 'Lando NORRIS':
+                    if color: colorList.append('#fe8000')
                     teams.append("McLaren F1 Team")
+
                 elif names[i]== 'Sebastian VETTEL' or names[i] == 'Lance STROLL':
+                    if color: colorList.append('#185d5b')
                     teams.append("Aston Martin Cognizant F1 Team")
+
                 elif names[i]== 'Nicholas LATIFI' or names[i] == 'Jack AITKEN'or names[i] == 'Roy NISSANY' or names[i] == 'George RUSSELL':
+                    if color: colorList.append('#1e52b8')
                     teams.append("Williams Racing")
+
                 elif names[i]== 'Kimi RAIKKONEN' or names[i] == 'Antonio GIOVINAZZI'or names[i] == 'Robert KUBICA'or names[i] == 'Callum ILOTT':
+                    if color: colorList.append('#6b101b')
                     teams.append("Alfa Romeo Racing ORLEN")
+
                 elif names[i]== 'Nikita MAZEPIN' or names[i] == 'Mick SCHUMACHER':
+                    if color: colorList.append('#f0eff2')
                     teams.append("Uralkali Haas F1 Team")
+
                 elif names[i]== 'Pierre GASLY' or names[i] == 'Yuki TSUNODA':
+                    if color: colorList.append('#2d3c4f')
                     teams.append("Scuderia AlphaTauri Honda")
+
                 elif names[i]== 'Sergio PEREZ' or names[i] == 'Max VERSTAPPEN':
+                    if color: colorList.append('#340db0')
                     teams.append("Red Bull Racing Honda")
+
                 elif names[i]== 'Fernando ALONSO' or names[i] == 'Esteban OCON'or names[i] == 'Guanyu ZHOU':
+                    if color: colorList.append('#2180c3')
                     teams.append("Alpine F1 Team")
+
                 elif names[i]== 'Charles LECLERC' or names[i] == 'Carlos SAINZ':
+                    if color: colorList.append('#cc0000')
                     teams.append("Scuderia Ferrari Mission Winnow")
+
                 elif names[i]== 'Valtteri BOTTAS' or names[i] == 'Lewis HAMILTON':
+                    if color: colorList.append('#25b8a1')
                     teams.append("Mercedes-AMG Petronas F1 Team")
+
                 else:
+                    if color: colorList.append('#000000')
                     teams.append("NO TEAM")
 
         ##################################################################################
         #2022Season
         ##################################################################################
-
         elif year == 2022 or year == 'TestYear':
             for i in range(len(names)):
                 vries_m, vries_w, vries_am = False, False, False
+                lawson_rb = False
                 if gp == 'Francia' or 'Mexico':
                     vries_m = True
                 elif gp == 'Italia' and sesion == 'fp1':
                     vries_am = True
                 else:
                     vries_w = True
+                
+                if gp == 'AbuDhabi':
+                    lawson_rb = True
                         
-                if names[i]== 'Daniel RICCIARDO' or names[i] == 'Lando NORRIS' or names[i] == 'Alex PALOU':
+                if names[i]== 'Daniel RICCIARDO' or names[i] == 'Lando NORRIS' or names[i] == 'Alex PALOU' or names[i] == "Patricio O'WARD":
+                    if color: colorList.append('#fe8000')
                     teams.append("McLaren F1 Team")
-                elif names[i]== 'Sebastian VETTEL' or names[i] == 'Lance STROLL' or names[i] == 'Nico HULKENBERG' or (names[i] == 'Nyck VRIES' and vries_am):
+
+                elif names[i]== 'Sebastian VETTEL' or names[i] == 'Lance STROLL' or names[i] == 'Nico HULKENBERG' or (names[i] == 'Nyck VRIES' and vries_am) or names[i] == 'Felipe DRUGOVICH':
+                    if color: colorList.append('#185d5b')
                     teams.append("Aston Martin Cognizant F1 Team")
-                elif names[i]== 'Nicholas LATIFI' or names[i] == 'Jack AITKEN'or names[i] == 'Roy NISSANY' or names[i] == 'Alexander ALBON' or (names[i] == 'Nyck VRIES' and vries_w) or names[i] == 'Logan SARGEANT':
+
+                elif names[i]== 'Nicholas LATIFI' or names[i] == 'Jack AITKEN' or names[i] == 'Roy NISSANY' or names[i] == 'Alexander ALBON' or (names[i] == 'Nyck VRIES' and vries_w) or names[i] == 'Logan SARGEANT':
+                    if color: colorList.append('#041e42')
                     teams.append("Williams Racing")
+
                 elif names[i]== 'Valtteri BOTTAS' or names[i] == 'Robert KUBICA'or names[i] == 'Callum ILOTT'or names[i] == 'ZHOU Guanyu' or names[i] == 'Guanyu ZHOU' or names[i] == 'Theo POURCHAIRE':
+                    if color: colorList.append('#6b101b')
                     teams.append('Alfa Romeo F1 Team ORLEN')
+
                 elif names[i]== 'Kevin MAGNUSSEN' or names[i] == 'Mick SCHUMACHER' or names[i] == 'Antonio GIOVINAZZI' or names[i] =='Pietro FITTIPALDI':
+                    if color: colorList.append('#f0eff2')
                     teams.append("Haas F1 Team")
+
                 elif names[i]== 'Pierre GASLY' or names[i] == 'Yuki TSUNODA' or names[i] == 'Liam LAWSON':
+                    if color: colorList.append('#022947')
                     teams.append("Scuderia AlphaTauri")
-                elif names[i]== 'Sergio PEREZ' or names[i] == 'Max VERSTAPPEN' or names[i] == 'Juri VIPS':
+
+                elif names[i]== 'Sergio PEREZ' or names[i] == 'Max VERSTAPPEN' or names[i] == 'Juri VIPS' or (names[i] == 'Liam LAWSON' and lawson_rb):
+                    if color: colorList.append('#340db0')
                     teams.append("Oracle Red Bull Racing")
+
                 elif names[i]== 'Fernando ALONSO' or names[i] == 'Esteban OCON' or names[i] == 'Jack DOOHAN':
+                    if color: colorList.append('#2180c3')
                     teams.append("BWT Alpine F1 Team")
+
                 elif names[i]== 'Charles LECLERC' or names[i] == 'Carlos SAINZ' or names[i] == 'Robert SHWARTZMAN':
+                    if color: colorList.append('#cc0000')
                     teams.append("Scuderia Ferrari")
+
                 elif names[i]== 'George RUSSELL' or names[i] == 'Lewis HAMILTON' or (names[i] == 'Nyck VRIES' and vries_m):
+                    if color: colorList.append('#25b8a1')
                     teams.append("Mercedes-AMG Petronas F1 Team")
+
                 else:
+                    if color: colorList.append('#000000')
                     teams.append("NO TEAM")
         
         else: 
             raise NameError('The year introduced is not correct')
         
-        return teams
+        if color: return colorList
+        else: return teams
 
 class f1_calendar:
 
@@ -243,10 +354,10 @@ class driversAGE:
             elif names[i]== 'Lance STROLL' or names[i] == 'George RUSSELL' or names[i] == 'Callum ILOTT':
                 born = 1998
                 age.append(year - born)
-            elif names[i]== 'Nikita MAZEPIN' or names[i] == 'Mick SCHUMACHER'or names[i] == 'Guanyu ZHOU' or names[i]== 'Lando NORRIS' or names[i] == 'ZHOU Guanyu' or names[i]== 'Robert SHWARTZMAN':
+            elif names[i]== 'Nikita MAZEPIN' or names[i] == 'Mick SCHUMACHER'or names[i] == 'Guanyu ZHOU' or names[i]== 'Lando NORRIS' or names[i] == 'ZHOU Guanyu' or names[i]== 'Robert SHWARTZMAN' or names[i] == "Patricio O'WARD":
                 born = 1999
                 age.append(year - born)
-            elif names[i] == 'Yuki TSUNODA' or names[i] == 'Juri VIPS' or names[i] == 'Logan SARGEANT':
+            elif names[i] == 'Yuki TSUNODA' or names[i] == 'Juri VIPS' or names[i] == 'Logan SARGEANT' or names[i] == 'Felipe DRUGOVICH':
                 born = 2000
                 age.append(year - born)
             elif names[i] == 'Liam LAWSON':
@@ -503,3 +614,4 @@ class getWEATHER:
         
         else:
             return 'D'
+
