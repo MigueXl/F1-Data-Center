@@ -17,7 +17,7 @@ class raceResult:
 
             zho = 'ZHOU Guanyu'
             dev = 'Nyck DE VRIES'
-            resPatern = re.compile('\d+\s+\d+\s+'+'([A-Z][a-z]+\s[A-Z]+ |'+zho+'|'+ dev + ')' )
+            resPatern = re.compile('\d+\s+\d+\s+('+dev+'|'+zho+'|[A-Z][a-z]+\s[A-Z]+)' )
 
             if os.path.exists('result.txt'):
                 with open('result.txt', "r", encoding='utf-8') as invoice:

@@ -12,6 +12,9 @@ class fase1:
         self.gps = gps
         self.year = year    
         self.mainPath = "/Users/migue/Documents/F1 Data Center/"
+        dirs = os.listdir(self.mainPath)
+        if str(self.year) not in dirs:
+            os.mkdir(self.mainPath + str(self.year))
         self.path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"
         self.newDirs = []
     
@@ -414,10 +417,10 @@ if auto:
     def createListYear(inicio,final):
         return [y for y in range(inicio,final + 1)]
 
-    upYears = createListYear(2018,2022)
+    upYears = createListYear(2018,2023)
     # upYears = ['TestYear']
     if upYears != ['TestYear']:
-        correctYears = createListYear(2018,2021)
+        correctYears = createListYear(2018,2022)
         for gY in correctYears:
             upYears.remove(gY)
 

@@ -109,8 +109,8 @@ class gp:
                                         drivers[sesion][driv].append(time[sesion][j][z])
                                     else:
                                         pit_time = time[sesion][j][-1]
-                                        drivers[sesion][driv].append(pit_time)
                                         if sesion == 4 and self.itemSecs(pit_time) < 300000: #LESS THAN 5 MINS TO AVOID CONSIDERING RED FLAGS AS BOX
+                                            drivers[sesion][driv].append(pit_time)
                                             stops[driv] += 1
 
                 

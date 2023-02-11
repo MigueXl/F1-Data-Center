@@ -15,6 +15,7 @@ os.chdir(path)
 
 sys.path.append(path)
 import gp, gp_txt
+import multidata
 
 file = 'result.pdf'
 file_txt = 'result.txt'
@@ -48,7 +49,9 @@ def max_5_sesions(sesions):
 
 points = [25,18,15,12,10,8,6,4,2,1,0,0,0,0,0,0,0,0,0,0]
 
-print(np.amax(points))
+import random
+
+print(points[0,2,1])
 
 # year = 2022
 # grand_prix = 'Brasil'
@@ -187,4 +190,4 @@ print(np.amax(points))
 
 # #Split text if enter occurs
 # print(text[-2])
-    
+

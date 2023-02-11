@@ -5,8 +5,7 @@ Diferencia en Quali y Ritmo de carrera entre pilotos del mismo equipo(Por año)
 Clasificacion por edad (Edad y Media Puntos Conseguidos Quali/Carrera, ALL)
 Clasificacion por mes cada piloto (Puntos Conseguidos Quali/Carrera, ALL)
 Clasificacion por circuito cada piloto (Puntos Conseguidos Quali/Carrera, ALL)
-Contar el número de sesiones que ha lluvido por año 
+Contar el número de puntos por tipo de sesion que ha lluvido ALL
 Pilotos que más han quedado en cada posicion ALL
-Pilotos con más DNF en carrera
-Evolucion de las paradas por año 
-Equipos que hacen más paradas de media o menos
+Pilotos con más DNF en carrera ALL
+Equipos que hacen más paradas de media o menos de media ALL

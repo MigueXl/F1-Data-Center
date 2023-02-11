@@ -20,7 +20,7 @@ class f1_teams:
                     teams.append("Sahara Force India F1 Team")
 
                 elif names[i]== 'Sergey SIROTKIN' or names[i] == 'Lance STROLL' or names[i] == 'Robert KUBICA':
-                    if color: colorList.append('#feffff')
+                    if color: colorList.append('#FFFFFF')
                     teams.append("Williams Racing")
 
                 elif names[i]== 'Marcus ERICSSON' or names[i] == 'Charles LECLERC' or names[i] == 'Antonio GIOVINAZZI':
@@ -123,7 +123,7 @@ class f1_teams:
                     if color: colorList.append('#ee99c5')
                     teams.append("BWT Racing Point F1 Team")
 
-                elif names[i]== 'Nicholas LATIFI' or names[i] == 'George RUSSELL' or names[i] == 'Jack AITKEN' or names[i] == 'Roy NISSANY':
+                elif names[i]== 'Nicholas LATIFI' or (names[i] == 'George RUSSELL' and not rusMER) or names[i] == 'Jack AITKEN' or names[i] == 'Roy NISSANY':
                     if color: colorList.append('#1071d1')
                     teams.append("Williams Racing")
 
@@ -132,11 +132,11 @@ class f1_teams:
                     teams.append("Alfa Romeo Racing ORLEN")
 
                 elif names[i]== 'Romain GROSJEAN' or names[i] == 'Kevin MAGNUSSEN' or names[i] == 'Callum ILOTT' or names[i] == 'Pietro FITTIPALDI':
-                    if color: colorList.append('#2b2b33')
+                    if color: colorList.append('#000000')
                     teams.append("Haas F1 Team")
 
                 elif names[i] == 'Daniil KVYAT' or names[i] == 'Pierre GASLY':
-                    if color: colorList.append('#dfdfe6')
+                    if color: colorList.append('#5b5b64')
                     teams.append("Scuderia AlphaTauri Honda")
 
                 elif names[i] == 'Max VERSTAPPEN' or names[i] == 'Alexander ALBON':
@@ -180,7 +180,7 @@ class f1_teams:
                     teams.append("Alfa Romeo Racing ORLEN")
 
                 elif names[i]== 'Nikita MAZEPIN' or names[i] == 'Mick SCHUMACHER':
-                    if color: colorList.append('#f0eff2')
+                    if color: colorList.append('#FFFFFF')
                     teams.append("Uralkali Haas F1 Team")
 
                 elif names[i]== 'Pierre GASLY' or names[i] == 'Yuki TSUNODA':
@@ -206,7 +206,6 @@ class f1_teams:
                 else:
                     if color: colorList.append('#000000')
                     teams.append("NO TEAM")
-
         ##################################################################################
         #2022Season
         ##################################################################################
@@ -214,16 +213,16 @@ class f1_teams:
             for i in range(len(names)):
                 vries_m, vries_w, vries_am = False, False, False
                 lawson_rb = False
-                if gp == 'Francia' or 'Mexico':
+                if gp == 'Francia' or  gp == 'Mexico':
                     vries_m = True
                 elif gp == 'Italia' and sesion == 'fp1':
                     vries_am = True
                 else:
                     vries_w = True
-                
+                    
                 if gp == 'AbuDhabi':
                     lawson_rb = True
-                        
+                
                 if names[i]== 'Daniel RICCIARDO' or names[i] == 'Lando NORRIS' or names[i] == 'Alex PALOU' or names[i] == "Patricio O'WARD":
                     if color: colorList.append('#fe8000')
                     teams.append("McLaren F1 Team")
@@ -241,10 +240,10 @@ class f1_teams:
                     teams.append('Alfa Romeo F1 Team ORLEN')
 
                 elif names[i]== 'Kevin MAGNUSSEN' or names[i] == 'Mick SCHUMACHER' or names[i] == 'Antonio GIOVINAZZI' or names[i] =='Pietro FITTIPALDI':
-                    if color: colorList.append('#f0eff2')
+                    if color: colorList.append('#FFFFFF')
                     teams.append("Haas F1 Team")
 
-                elif names[i]== 'Pierre GASLY' or names[i] == 'Yuki TSUNODA' or names[i] == 'Liam LAWSON':
+                elif names[i]== 'Pierre GASLY' or names[i] == 'Yuki TSUNODA' or (names[i] == 'Liam LAWSON' and not lawson_rb):
                     if color: colorList.append('#022947')
                     teams.append("Scuderia AlphaTauri")
 
@@ -266,8 +265,55 @@ class f1_teams:
 
                 else:
                     if color: colorList.append('#000000')
+                    teams.append("NO TEAM")    
+        ##################################################################################
+        #2023Season
+        ##################################################################################
+        elif year == 2023:
+            for i in range(len(names)):
+                if names[i]== 'Oscar PIASTRI' or names[i] == 'Lando NORRIS' or names[i] == 'Alex PALOU' or names[i] == "Patricio O'WARD":
+                    if color: colorList.append('#fe8000')
+                    teams.append("McLaren F1 Team")
+
+                elif names[i]== 'Fernando ALONSO' or names[i] == 'Lance STROLL' or names[i] == 'Felipe DRUGOVICH':
+                    if color: colorList.append('#185d5b')
+                    teams.append("Aston Martin Cognizant F1 Team")
+
+                elif names[i] == 'Jack AITKEN' or names[i] == 'Roy NISSANY' or names[i] == 'Alexander ALBON' or names[i] == 'Logan SARGEANT':
+                    if color: colorList.append('#041e42')
+                    teams.append("Williams Racing")
+
+                elif names[i]== 'Valtteri BOTTAS' or names[i] == 'Robert KUBICA' or names[i] == 'Callum ILOTT' or names[i] == 'ZHOU Guanyu' or names[i] == 'Guanyu ZHOU' or names[i] == 'Theo POURCHAIRE':
+                    if color: colorList.append('#6b101b')
+                    teams.append('Alfa Romeo F1 Team ORLEN')
+
+                elif names[i]== 'Kevin MAGNUSSEN' or names[i] == 'Antonio GIOVINAZZI' or names[i] =='Pietro FITTIPALDI' or names[i] == 'Nico HULKENBERG':
+                    if color: colorList.append('#f0eff2')
+                    teams.append("MoneyGram Haas F1 Team")
+
+                elif names[i] == 'Yuki TSUNODA' or names[i] == 'Liam LAWSON' or names[i] == 'Nyck VRIES':
+                    if color: colorList.append('#022947')
+                    teams.append("Scuderia AlphaTauri")
+
+                elif names[i]== 'Sergio PEREZ' or names[i] == 'Max VERSTAPPEN':
+                    if color: colorList.append('#340db0')
+                    teams.append("Oracle Red Bull Racing")
+
+                elif names[i]== 'Pierre GASLY' or names[i] == 'Esteban OCON' or names[i] == 'Jack DOOHAN':
+                    if color: colorList.append('#2180c3')
+                    teams.append("BWT Alpine F1 Team")
+
+                elif names[i]== 'Charles LECLERC' or names[i] == 'Carlos SAINZ' or names[i] == 'Robert SHWARTZMAN':
+                    if color: colorList.append('#cc0000')
+                    teams.append("Scuderia Ferrari")
+
+                elif names[i]== 'George RUSSELL' or names[i] == 'Lewis HAMILTON':
+                    if color: colorList.append('#25b8a1')
+                    teams.append("Mercedes-AMG Petronas F1 Team")
+
+                else:
+                    if color: colorList.append('#000000')
                     teams.append("NO TEAM")
-        
         else: 
             raise NameError('The year introduced is not correct')
         
@@ -293,6 +339,8 @@ class f1_calendar:
             calendar = ['Bahrein', 'Imola', 'Portugal', 'España', 'Monaco', 'Azerbaiyan','Francia', 'Austria1', 'Austria2',  'GB', 'Hungria', 'Belgica', 'Holanda', 'Italia', 'Rusia', 'Turquia','EEUU', 'Mexico', 'Brasil', 'Qatar', 'Saudi',  'AbuDhabi']
         elif year == 2022:
             calendar = ['Bahrein', 'Saudi', 'Australia', 'Imola', 'Miami', 'España','Monaco','Azerbaiyan','Canada','GB','Austria','Francia','Hungria','Belgica','Holanda','Italia','Singapur','Japon','EEUU','Mexico','Brasil','AbuDhabi']
+        elif year == 2023:
+            calendar = ['Bahrein', 'Saudi', 'Australia', 'Azerbaiyan', 'Miami', 'Imola', 'Monaco', 'España', 'Canada', 'Austria', 'GB', 'Hungria','Belgica','Holanda','Italia','Singapur','Japon','Qatar','EEUU','Mexico','Brasil','Vegas','AbuDhabi']
         else: 
             raise NameError('The year introduced is not correct')
         
@@ -357,8 +405,11 @@ class driversAGE:
             elif names[i]== 'Nikita MAZEPIN' or names[i] == 'Mick SCHUMACHER'or names[i] == 'Guanyu ZHOU' or names[i]== 'Lando NORRIS' or names[i] == 'ZHOU Guanyu' or names[i]== 'Robert SHWARTZMAN' or names[i] == "Patricio O'WARD":
                 born = 1999
                 age.append(year - born)
-            elif names[i] == 'Yuki TSUNODA' or names[i] == 'Juri VIPS' or names[i] == 'Logan SARGEANT' or names[i] == 'Felipe DRUGOVICH':
+            elif names[i] == 'Yuki TSUNODA' or names[i] == 'Juri VIPS' or names[i] == 'Logan SARGEANT' or names[i] == 'Felipe DRUGOVICH' or names[i] == 'Logan SARGEANT':
                 born = 2000
+                age.append(year - born)
+            elif names[i] == 'Oscar PIASTRI':
+                born = 2001
                 age.append(year - born)
             elif names[i] == 'Liam LAWSON':
                 born = 2003
@@ -406,7 +457,7 @@ class raceMONTH:
         ##################################################################################
         #2019Season
         ##################################################################################
-        if year == 2019:
+        elif year == 2019:
             for i in range(len(grand_prix)):
                 if grand_prix[i]== 'Australia' or grand_prix[i]== 'Bahrein':
                     month.append("MAR")
@@ -434,7 +485,7 @@ class raceMONTH:
         ##################################################################################
         #2020Season
         ##################################################################################
-        if year == 2020:
+        elif year == 2020:
             for i in range(len(grand_prix)):
                 if grand_prix[i]== 'Austria1' or grand_prix[i]== 'Austria2' or grand_prix[i]== 'Hungria':
                     month.append("JUL")
@@ -454,7 +505,7 @@ class raceMONTH:
         ##################################################################################
         #2021Season
         ##################################################################################
-        if year == 2021:
+        elif year == 2021:
             for i in range(len(grand_prix)):
                 if grand_prix[i]== 'Bahrein':
                     month.append("MAR")
@@ -483,7 +534,7 @@ class raceMONTH:
         #2022Season
         ##################################################################################
 
-        if year == 2022:
+        elif year == 2022:
             for i in range(len(grand_prix)):
                 if grand_prix[i]== 'Bahrein' or  grand_prix[i]== 'Saudi':
                     month.append("MAR")
@@ -506,6 +557,36 @@ class raceMONTH:
                 else:
                     month.append("NO MONTH")
         
+        ##################################################################################
+        #2023Season
+        ##################################################################################
+
+        elif year == 2023:
+            for i in range(len(grand_prix)):
+                if grand_prix[i]== 'Bahrein' or  grand_prix[i]== 'Saudi':
+                    month.append("MAR")
+                elif grand_prix[i]== 'Azerbaiyan' or grand_prix[i]== 'Australia':
+                    month.append("APR")
+                elif grand_prix[i]== 'Miami' or grand_prix[i] == 'Imola' or grand_prix[i] == 'Monaco':
+                    month.append("MAY")
+                elif grand_prix[i]== 'España' or grand_prix[i] == 'Canada':
+                    month.append("JUN")
+                elif grand_prix[i]== 'Austria' or grand_prix[i] == 'GB'  or grand_prix[i]== 'Hungria':
+                    month.append("JUL")
+                elif grand_prix[i] == 'Belgica' or grand_prix[i]== 'Holanda':
+                    month.append("AUG")
+                elif grand_prix[i] == 'Italia' or grand_prix[i]== 'Singapur' or grand_prix[i] == 'Japon':
+                    month.append("SEP")
+                elif grand_prix[i] == 'EEUU' or  grand_prix[i]== 'Mexico' or grand_prix[i]== 'Qatar':
+                    month.append("OCT")
+                elif grand_prix[i] == 'Brasil' or grand_prix[i] == 'AbuDhabi' or grand_prix[i] == 'Vegas':
+                    month.append("NOV")
+                else:
+                    month.append("NO MONTH")
+        
+        else: 
+            raise NameError('The year introduced is not correct')
+
         return month
 
 
@@ -611,7 +692,147 @@ class getWEATHER:
                 return 'D/I'
             else:
                 return 'D'
+            
+        ##################################################################################
+        #2023Season
+        ##################################################################################    
+        elif year == 2023:
+            return 'D'
         
         else:
             return 'D'
+
+class weekendFormat:
+    def __init__(self, year: int, circuit: str):
+        self.f = self.format(year,circuit)
+
+    def format(self, year, circuit):
+        '''Posible outputs: Normal and Sprint'''
+        ##################################################################################
+        #2021Season
+        ##################################################################################
+        if year == 2021:
+            if circuit == 'GB':
+                return 'Sprint'
+            elif circuit == 'Italia':
+                return 'Sprint'
+            elif circuit == 'Brasil':
+                return 'Sprint'
+            else:
+                return 'Normal'
+        ##################################################################################
+        #2022Season
+        ##################################################################################
+        elif year == 2022:
+            if circuit == 'Imola':
+                return 'Sprint'
+            elif circuit == 'Austria':
+                return 'Sprint'
+            elif circuit == 'Brasil':
+                return 'Sprint'
+            else:
+                return 'Normal'
+        ##################################################################################
+        #2023Season
+        ##################################################################################
+        elif year == 2023:
+            if circuit == 'Azerbaiyan':
+                return 'Sprint'
+            elif circuit == 'Austria':
+                return 'Sprint'
+            elif circuit == 'Belgica':
+                return 'Sprint'
+            elif circuit == 'Qatar':
+                return 'Sprint'
+            elif circuit == 'EEUU':
+                return 'Sprint'
+            elif circuit == 'Brasil':
+                return 'Sprint'
+            else:
+                return 'Normal'
+        else:
+            return 'Normal'
+
+class renameGP:
+    def __init__(self, year: int, circuit: str):
+        self.circuitName = self.rename(year,circuit)
+
+    def rename(self, year, circuit):
+        '''Rename it by "circuit" '''
+        ##################################################################################
+        #2020Season
+        ##################################################################################
+        if year == 2020:
+            if circuit == 'Austria1' or circuit == 'Austria2':
+                return 'Austria'
+            elif circuit == 'GB1' or circuit == 'GB2':
+                return 'GB'
+            elif circuit == 'Alemania':
+                return 'Nurburgring'
+            else:
+                raise NameError('GP Name Problem')
+        ##################################################################################
+        #2021Season
+        ##################################################################################
+        if year == 2021:
+            if circuit == 'GB1' or circuit == 'GB2':
+                return 'GB'
+            else:
+                raise NameError('GP Name Problem')
+
+        else:
+            raise NameError('The year introduced is not correct')
+
+class lastTeamName:
+    def __init__(self, teams: list):
+        self.correct = self.getShortNames(teams)
+    
+    def getShortNames(self,teams):
+        '''Return a shorter version of the name and regarding the final team is in the grid. 
+        For example Renault became Alpine because in the grid they are called Alpine in the last year of the dataset
+        '''
+        for i,t in enumerate(teams):
+            if 'McLaren' in t:
+                teams[i] = 'McLaren'
+            elif 'Force India' in t or 'Racing Point' in t or ('Aston Martin' in t and not 'Red Bull' in t):
+                teams[i] = 'Aston Martin'
+            elif 'Williams' in  t:
+                teams[i] = 'Williams'
+            elif 'Alfa Romeo' in  t:
+                teams[i] = 'Alfa Romeo'
+            elif 'Haas' in  t:
+                teams[i] = 'Haas'
+            elif 'Toro Rosso' in t or 'AlphaTauri' in t:
+                teams[i] = 'AlphaTauri'
+            elif 'Red Bull' in  t and not 'Toro Rosso' in t:
+                teams[i] = 'Red Bull'
+            elif 'Renault' in  t  or 'Alpine' in t:
+                teams[i] = 'Alpine'
+            elif 'Ferrari' in  t:
+                teams[i] = 'Ferrari'
+            elif 'Mercedes' in  t:
+                teams[i] = 'Mercedes'
+        
+        return teams
+
+# class plotColors:
+#     def __init__(self, year: int):
+#         self.color = self.getColors(year)
+    
+#     def getColors(self, year):
+#         if year == 2018:
+#             back, lgnd = '#DFF0FF', '#DFF0FF'
+#         elif year == 2019:
+#             back, lgnd = '#DFF0FF', '#DFF0FF'
+#         elif year == 2020:
+#             back, lgnd = '#DFF0FF', '#DFF0FF'
+#         elif year == 2021:
+#             back, lgnd = '#DFF0FF', '#DFF0FF'
+#         elif year == 2022:
+#             back, lgnd = '#DFF0FF', '#DFF0FF'
+#         elif year == 2023:
+#             back, lgnd = '#DFF0FF', '#DFF0FF'
+#         else:
+#             raise NameError('The year introduced is not correct')
+#         return back, lgnd
 

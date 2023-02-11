@@ -423,39 +423,7 @@ def getLongest(sesiones:list):
         lengths.append(len(l))
     return  max(lengths)  
 
-            
-def getShortNames(teams):
-    '''Return a shorter version of the name and regarding the final team is in the grid. 
-    For example Renault became Alpine because in the grid they are called Alpine in the last year of the dataset
-    '''
-    for i,t in enumerate(teams):
-        if 'McLaren' in t:
-            teams[i] = 'McLaren'
-        elif 'Force India' in t or 'Racing Point' in t or ('Aston Martin' in t and not 'Red Bull' in t):
-            teams[i] = 'Aston Martin'
-        elif 'Williams' in  t:
-            teams[i] = 'Williams'
-        elif 'Alfa Romeo' in  t:
-            teams[i] = 'Alfa Romeo'
-        elif 'Haas' in  t:
-            teams[i] = 'Haas'
-        elif 'Toro Rosso' in t or 'AlphaTauri' in t:
-            teams[i] = 'AlphaTauri'
-        elif 'Red Bull' in  t and not 'Toro Rosso' in t:
-            teams[i] = 'Red Bull'
-        elif 'Renault' in  t  or 'Alpine' in t:
-            teams[i] = 'Alpine'
-        elif 'Ferrari' in  t:
-            teams[i] = 'Ferrari'
-        elif 'Mercedes' in  t:
-            teams[i] = 'Mercedes'
-    
-    return teams
-        
-
-
-
-
+                    
 
 
 
@@ -482,7 +450,7 @@ def getShortNames(teams):
 def createListYear(inicio,final):
     return [y for y in range(inicio,final + 1)]
 
-upYears = createListYear(2018,2022)
+upYears = createListYear(2018,2023)
 # years = ['TestYear']
 correctYears = createListYear(2018,2022)
 for gY in correctYears:
@@ -494,7 +462,7 @@ time.sleep(0.5)
 
 
 #### LISTAS ####
-data = [['Driver', 'Team', 'Age', 'Year', 'Month', 'GP', 'GP_ID','fp1_quali_Pace', 'fp1_quali_Laps', 'fp1_race_Pace', 'fp1_race_Laps', 'fp1_fastest_lap', 'fp1_Weather', 'fp1_Incident', 'fp2_quali_Pace', 'fp2_quali_Laps', 'fp2_race_Pace', 'fp2_race_Laps', 'fp2_fastest_lap', 'fp2_Weather', 'fp2_Incident', 'fp3_quali_Pace', 'fp3_quali_Laps', 'fp3_race_Pace', 'fp3_race_Laps', 'fp3_fastest_lap', 'fp3_Weather', 'fp3_Incident', 'quali_Pace', 'quali_Laps', 'quali_fastest_lap', 'quali_Weather', 'quali_Incident', 'race_Pace', 'race_Laps', 'race_fastest_lap', 'race_Stops', 'race_Weather', 'race_Incident','race_Result']]
+data = [['Driver', 'Team', 'Age', 'Year', 'Month', 'GP', 'GP_ID', 'GP_Format', 'fp1_quali_Pace', 'fp1_quali_Laps', 'fp1_race_Pace', 'fp1_race_Laps', 'fp1_fastest_lap', 'fp1_Weather', 'fp1_Incident', 'fp2_quali_Pace', 'fp2_quali_Laps', 'fp2_race_Pace', 'fp2_race_Laps', 'fp2_fastest_lap', 'fp2_Weather', 'fp2_Incident', 'fp3_quali_Pace', 'fp3_quali_Laps', 'fp3_race_Pace', 'fp3_race_Laps', 'fp3_fastest_lap', 'fp3_Weather', 'fp3_Incident', 'quali_Pace', 'quali_Laps', 'quali_fastest_lap', 'quali_Weather', 'quali_Incident', 'race_Pace', 'race_Laps', 'race_fastest_lap', 'race_Stops', 'race_Weather', 'race_Incident','race_Result']]
 w_list = []
 
 ############ INPUT YEARS #############
@@ -582,7 +550,7 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
         ##################################################################################
 
         teams = multidata.f1_teams(names,year[y],grand_prix[j]).equipos
-        teams = getShortNames(teams)
+        teams = multidata.lastTeamName(teams).correct
         age = multidata.driversAGE(names,year[y]).age
         month = multidata.raceMONTH(year[y], grand_prix).month
 
@@ -646,7 +614,7 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
             #     for i in lred:
             #         debug.write(str(i)+'\n')
 
-            data.append([drivers_lista[i].name,drivers_lista[i].team,drivers_lista[i].age,year[y],month[j],grand_prix[j],j,drivers_lista[i].fp1_quali_mean,drivers_lista[i].fp1_quali,drivers_lista[i].fp1_race_mean,drivers_lista[i].fp1_race,drivers_lista[i].fp1_fastest,weather(year[y],grand_prix[j],'fp1').w,fp1_inc,drivers_lista[i].fp2_quali_mean,drivers_lista[i].fp2_quali,drivers_lista[i].fp2_race_mean,drivers_lista[i].fp2_race,drivers_lista[i].fp2_fastest,weather(year[y],grand_prix[j],'fp2').w,fp2_inc,drivers_lista[i].fp3_quali_mean,drivers_lista[i].fp3_quali,drivers_lista[i].fp3_race_mean,drivers_lista[i].fp3_race,drivers_lista[i].fp3_fastest,weather(year[y],grand_prix[j],'fp3').w,fp3_inc,drivers_lista[i].quali,drivers_lista[i].quali_laps,drivers_lista[i].quali_fastest,weather(year[y],grand_prix[j],'quali').w,quali_inc,drivers_lista[i].race,drivers_lista[i].race_laps,drivers_lista[i].race_fastest,drivers_lista[i].race_stops,weather(year[y],grand_prix[j],'race').w,race_inc,drivers_lista[i].raceResult])
+            data.append([drivers_lista[i].name,drivers_lista[i].team,drivers_lista[i].age,year[y],month[j],grand_prix[j],j,multidata.weekendFormat(year[y],grand_prix[j]).f,drivers_lista[i].fp1_quali_mean,drivers_lista[i].fp1_quali,drivers_lista[i].fp1_race_mean,drivers_lista[i].fp1_race,drivers_lista[i].fp1_fastest,weather(year[y],grand_prix[j],'fp1').w,fp1_inc,drivers_lista[i].fp2_quali_mean,drivers_lista[i].fp2_quali,drivers_lista[i].fp2_race_mean,drivers_lista[i].fp2_race,drivers_lista[i].fp2_fastest,weather(year[y],grand_prix[j],'fp2').w,fp2_inc,drivers_lista[i].fp3_quali_mean,drivers_lista[i].fp3_quali,drivers_lista[i].fp3_race_mean,drivers_lista[i].fp3_race,drivers_lista[i].fp3_fastest,weather(year[y],grand_prix[j],'fp3').w,fp3_inc,drivers_lista[i].quali,drivers_lista[i].quali_laps,drivers_lista[i].quali_fastest,weather(year[y],grand_prix[j],'quali').w,quali_inc,drivers_lista[i].race,drivers_lista[i].race_laps,drivers_lista[i].race_fastest,drivers_lista[i].race_stops,weather(year[y],grand_prix[j],'race').w,race_inc,drivers_lista[i].raceResult])
 
 
 
@@ -664,5 +632,4 @@ os.chdir(path)
 with open('data.csv','w+', newline= '') as file:
     writer = csv.writer(file,delimiter=';')
     writer.writerows(data)
-
 
