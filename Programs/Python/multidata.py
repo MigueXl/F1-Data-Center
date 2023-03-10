@@ -1,4 +1,15 @@
+import numpy as np
+import os
+import re
+from result import raceResult
+
 class f1_teams:
+    '''Returns a `List` containing every F1 Team corresponding to each driver and it's color if necessary.
+    - drivers: List containing every F1 Driver
+    - year: Integer corresponding to season's year
+    - gp: String corresponding to the Grand Prix Name
+    - sesion (Optional): String corresponding to the F1 Session
+    '''
     def __init__(self,drivers,year,gp,sesion = ''):
         self.equipos = self.get_teams(drivers,year,gp, sesion)
         self.color = self.get_teams(drivers,year,gp, sesion, color = True)
@@ -285,13 +296,13 @@ class f1_teams:
 
                 elif names[i]== 'Valtteri BOTTAS' or names[i] == 'Robert KUBICA' or names[i] == 'Callum ILOTT' or names[i] == 'ZHOU Guanyu' or names[i] == 'Guanyu ZHOU' or names[i] == 'Theo POURCHAIRE':
                     if color: colorList.append('#6b101b')
-                    teams.append('Alfa Romeo F1 Team ORLEN')
+                    teams.append('Alfa Romeo F1 Team Stake')
 
                 elif names[i]== 'Kevin MAGNUSSEN' or names[i] == 'Antonio GIOVINAZZI' or names[i] =='Pietro FITTIPALDI' or names[i] == 'Nico HULKENBERG':
                     if color: colorList.append('#f0eff2')
                     teams.append("MoneyGram Haas F1 Team")
 
-                elif names[i] == 'Yuki TSUNODA' or names[i] == 'Liam LAWSON' or names[i] == 'Nyck VRIES':
+                elif names[i] == 'Yuki TSUNODA' or names[i] == 'Liam LAWSON' or names[i] == 'Nyck VRIES' or names[i] == 'Nyck DE VRIES':
                     if color: colorList.append('#022947')
                     teams.append("Scuderia AlphaTauri")
 
@@ -320,13 +331,180 @@ class f1_teams:
         if color: return colorList
         else: return teams
 
+class numberToNames:
+    """Tranforms Driver's Number into his corresponding Name.
+    - year: Integer corresponding to season's year
+    - number: String/Integer corresponding to Driver's Number
+    """
+    def __init__(self, year: int, number):
+        self.name = self.get_names(year,number)
+
+    def get_names(self, year: int, number):
+        number = int(number)
+        ##################################################################################
+        #2020Season
+        ##################################################################################
+        if year == 2020:
+            if number == 3: return 'Daniel RICCIARDO'              
+            elif number == 4: return 'Lando NORRIS'             
+            elif number == 5: return 'Sebastian VETTEL'             
+            elif number == 6: return 'Nicholas LATIFI'               
+            elif number == 7: return 'Kimi RAIKKONEN'               
+            elif number == 8: return 'Romain GROSJEAN'               
+            elif number == 10: return 'Pierre GASLY'               
+            elif number == 11: return 'Sergio PEREZ'                
+            elif number == 16: return 'Charles LECLERC'               
+            elif number == 18: return 'Lance STROLL'                
+            elif number == 20: return 'Kevin MAGNUSSEN'               
+            elif number == 23: return 'Alexander ALBON'               
+            elif number == 26: return 'Daniil KVYAT'               
+            elif number == 31: return 'Esteban OCON'                
+            elif number == 33: return 'Max VERSTAPPEN'               
+            elif number == 40: return 'Roy NISSANY'                
+            elif number == 44: return 'Lewis HAMILTON'               
+            elif number == 55: return 'Carlos SAINZ'  
+            elif number == 63: return 'George RUSSELL'             
+            elif number == 77: return 'Valtteri BOTTAS'  
+            elif number == 88: return 'Robert KUBICA'
+            elif number == 99: return 'Antonio GIOVINAZZI'
+            else:  raise NameError(f'Number {number} is not found for year {year}')
+        ##################################################################################
+        #2021Season
+        ##################################################################################
+        elif year == 2021:
+            if number == 3: return 'Daniel RICCIARDO'              
+            elif number == 4: return 'Lando NORRIS'             
+            elif number == 5: return 'Sebastian VETTEL'             
+            elif number == 6: return 'Nicholas LATIFI'               
+            elif number == 7: return 'Kimi RAIKKONEN'               
+            elif number == 8: return 'Romain GROSJEAN'  
+            elif number == 9: return 'Nikita MAZEPIN'               
+            elif number == 10: return 'Pierre GASLY'               
+            elif number == 11: return 'Sergio PEREZ' 
+            elif number == 14: return 'Fernando ALONSO'                               
+            elif number == 16: return 'Charles LECLERC'               
+            elif number == 18: return 'Lance STROLL'                
+            elif number == 20: return 'Kevin MAGNUSSEN'   
+            elif number == 22: return 'Yuki TSUNODA'                           
+            elif number == 23: return 'Alexander ALBON'
+            elif number == 24: return 'ZHOU Guanyu'                
+            elif number == 26: return 'Daniil KVYAT'  
+            elif number == 27: return 'Nico HULKENBERG'              
+            elif number == 31: return 'Esteban OCON'                
+            elif number == 33: return 'Max VERSTAPPEN'                              
+            elif number == 44: return 'Lewis HAMILTON'   
+            elif number == 45: return 'Roy NISSANY' 
+            elif number == 47: return 'Mick SCHUMACHER'             
+            elif number == 55: return 'Carlos SAINZ'   
+            elif number == 63: return 'George RUSSELL'               
+            elif number == 77: return 'Valtteri BOTTAS'  
+            elif number == 88: return 'Robert KUBICA'
+            elif number == 99: return 'Antonio GIOVINAZZI'
+            else:  raise NameError(f'Number {number} is not found for year {year}')
+        ##################################################################################
+        #2022Season
+        ##################################################################################
+        elif year == 2022:
+            if number == 1: return 'Max VERSTAPPEN'
+            elif number == 3: return 'Daniel RICCIARDO'              
+            elif number == 4: return 'Lando NORRIS'             
+            elif number == 5: return 'Sebastian VETTEL'             
+            elif number == 6: return 'Nicholas LATIFI'               
+            elif number == 7: return 'Kimi RAIKKONEN'               
+            elif number == 8: return 'Romain GROSJEAN'  
+            elif number == 9: return 'Nikita MAZEPIN'               
+            elif number == 10: return 'Pierre GASLY'               
+            elif number == 11: return 'Sergio PEREZ' 
+            elif number == 14: return 'Fernando ALONSO'                               
+            elif number == 16: return 'Charles LECLERC'               
+            elif number == 18: return 'Lance STROLL'                
+            elif number == 20: return 'Kevin MAGNUSSEN'
+            elif number == 21: return 'Nyck VRIES'    
+            elif number == 22: return 'Yuki TSUNODA'                           
+            elif number == 23: return 'Alexander ALBON'
+            elif number == 24: return 'ZHOU Guanyu'                
+            elif number == 26: return 'Daniil KVYAT'  
+            elif number == 27: return 'Nico HULKENBERG'              
+            elif number == 31: return 'Esteban OCON'                
+            elif number == 33: return 'Max VERSTAPPEN'  
+            elif number == 34: return 'Felipe DRUGOVICH'             
+            elif number == 40: return 'Roy NISSANY'                
+            elif number == 44: return 'Lewis HAMILTON'   
+            elif number == 47: return 'Mick SCHUMACHER' 
+            elif number == 51: return 'Pietro FITTIPALDI'            
+            elif number == 55: return 'Carlos SAINZ'     
+            elif number == 63: return 'George RUSSELL'             
+            elif number == 77: return 'Valtteri BOTTAS'  
+            elif number == 81: return 'Oscar PIASTRI'
+            elif number == 88: return 'Robert KUBICA'
+            elif number == 99: return 'Antonio GIOVINAZZI'
+            else:  raise NameError(f'Number {number} is not found for year {year}')
+        ##################################################################################
+        #2023Season
+        ##################################################################################
+        elif year == 2023:
+            if number == 1: return 'Max VERSTAPPEN'
+            elif number == 2: return 'Logan SARGEANT'
+            elif number == 3: return 'Daniel RICCIARDO'              
+            elif number == 4: return 'Lando NORRIS'             
+            elif number == 5: return 'Sebastian VETTEL'             
+            elif number == 6: return 'Nicholas LATIFI'               
+            elif number == 7: return 'Kimi RAIKKONEN'               
+            elif number == 8: return 'Romain GROSJEAN'  
+            elif number == 9: return 'Nikita MAZEPIN'               
+            elif number == 10: return 'Pierre GASLY'               
+            elif number == 11: return 'Sergio PEREZ' 
+            elif number == 14: return 'Fernando ALONSO'                               
+            elif number == 16: return 'Charles LECLERC'               
+            elif number == 18: return 'Lance STROLL'                
+            elif number == 20: return 'Kevin MAGNUSSEN' 
+            elif number == 21: return 'Nyck VRIES'  
+            elif number == 22: return 'Yuki TSUNODA'                           
+            elif number == 23: return 'Alexander ALBON'
+            elif number == 24: return 'ZHOU Guanyu'                
+            elif number == 26: return 'Daniil KVYAT'  
+            elif number == 27: return 'Nico HULKENBERG'              
+            elif number == 31: return 'Esteban OCON'                
+            elif number == 33: return 'Max VERSTAPPEN'  
+            elif number == 34: return 'Felipe DRUGOVICH'             
+            elif number == 40: return 'Roy NISSANY'                
+            elif number == 44: return 'Lewis HAMILTON'   
+            elif number == 47: return 'Mick SCHUMACHER'             
+            elif number == 55: return 'Carlos SAINZ'   
+            elif number == 63: return 'George RUSSELL'               
+            elif number == 77: return 'Valtteri BOTTAS'  
+            elif number == 81: return 'Oscar PIASTRI'
+            elif number == 88: return 'Robert KUBICA'
+            elif number == 99: return 'Antonio GIOVINAZZI'
+            else:  raise NameError(f'Number {number} is not found for year {year}')
+        else: raise NameError('The year introduced is not correct')
+                
+
+class seasonResult:
+    """Returns the final season results from the corresponding year and driver introduced.
+    - year: Integer corresponding to season's year
+    - driver: Stringcorresponding to Driver's Name
+    """
+    def __init__(self, year: int, driver: str):
+        self.finalResult = self.get_result(year,driver)
+
+    def get_result(self, year: int, driver):
+        path = f'C:\\Users\\migue\\Documents\\F1 Data Center\\{year}'
+        os.chdir(path)
+        result = raceResult(driver, level = 'all').result[0]
+        return result
+
+
 class f1_calendar:
+    """Returns a `List` containing the corresponding F1 Calendar containing the GPs Names.
+    - year: Integer corresponding to season's year
+    """
 
     def __init__(self,year):
         self.calendar = self.getCalendar(year)
     
     def getCalendar(self,year):
-        '''Returns a list with all the gps calendar'''
+        '''Returns a `List` with all the gps calendar'''
         if year == 'TestYear':
             calendar = ['Austria1','Austria2','Japon', 'JaponTxt'] #'Austria1','Austria2',
         elif year == 2018:
@@ -346,7 +524,43 @@ class f1_calendar:
         
         return calendar
 
+class f1_Testing:
+    """Returns a `List` containing the corresponding F1 Calendar containing the GPs Names.
+    - year: Integer corresponding to season's year
+    """
+    def __init__(self,year):
+        path =  f'C:\\Users\\migue\\Documents\\F1 Data Center\\Datos\\fastf1_Testing_Timing_Data\\{year}'
+        os.chdir(path)
+
+        self.testNumber, *self.yearSes = self.totalSes()
+        if year == 2020:
+            self.circuit = 'España'
+        elif year in [2021,2022,2023]:
+            self.circuit = 'Bahrein'
+        else: raise NameError('The year introduced is not correct')
+    
+    def totalSes(self):
+        testNumbers = []
+        sesions = []
+        path = os.getcwd()
+        elems = os.listdir(path)
+        for i in elems:
+            num = re.findall('\d+', i)
+            if int(num[0]) not in testNumbers:
+                testNumbers.append(int(num[0]))
+            if int(num[1]) not in sesions:
+                sesions.append(int(num[1]))
+
+        return max(testNumbers), testNumbers,sesions
+            
+
+
+
 class driversAGE:
+    """Returns a `List` correspoinding to the Drivers's Age.
+    - names: List containing every Driver name
+    - year: Integer corresponding to season's year
+    """
     def __init__(self,names,year):
         self.age = self.get_age(names,year)
 
@@ -405,7 +619,7 @@ class driversAGE:
             elif names[i]== 'Nikita MAZEPIN' or names[i] == 'Mick SCHUMACHER'or names[i] == 'Guanyu ZHOU' or names[i]== 'Lando NORRIS' or names[i] == 'ZHOU Guanyu' or names[i]== 'Robert SHWARTZMAN' or names[i] == "Patricio O'WARD":
                 born = 1999
                 age.append(year - born)
-            elif names[i] == 'Yuki TSUNODA' or names[i] == 'Juri VIPS' or names[i] == 'Logan SARGEANT' or names[i] == 'Felipe DRUGOVICH' or names[i] == 'Logan SARGEANT':
+            elif names[i] == 'Yuki TSUNODA' or names[i] == 'Juri VIPS' or names[i] == 'Logan SARGEANT' or names[i] == 'Felipe DRUGOVICH':
                 born = 2000
                 age.append(year - born)
             elif names[i] == 'Oscar PIASTRI':
@@ -423,6 +637,10 @@ class driversAGE:
         return age
 
 class raceMONTH:
+    """Returns a `List` correspoinding to the month when each GP was celebrated.
+    - year: Integer corresponding to season's year
+    - grand_prix: List containing every Grand Prix corresponding to that year
+    """
     def __init__(self, year: int, grand_prix: list):
         self.month = self.get_month(year,grand_prix)
 
@@ -591,6 +809,11 @@ class raceMONTH:
 
 
 class getWEATHER:
+    """Returns the Weather during that F1 Session. Posible outputs: `D`(Dry), `D/I`(Mixed conditions), `I`(Inter), `I/W`(Mixed wet conditions), `W`(Full Wet).
+    - year: Integer corresponding to season's year
+    - circuit: String corresponding to GP's Name
+    - sesion: Sting corresponding to Session's Name
+    """
     def __init__(self, year: int, circuit: str, sesion: str):
         self.w = self.weather(year,circuit, sesion)
 
@@ -703,6 +926,10 @@ class getWEATHER:
             return 'D'
 
 class weekendFormat:
+    """Returns the Weekend Format that Occurs during that GP. Posible outputs: `Normal` and `Sprint`.
+    - year: Integer corresponding to season's year
+    - circuit: String containing the Grand Prix Name
+    """
     def __init__(self, year: int, circuit: str):
         self.f = self.format(year,circuit)
 
@@ -754,6 +981,10 @@ class weekendFormat:
             return 'Normal'
 
 class renameGP:
+    """Rename a GP by its Circuit Name.
+    - year: Integer corresponding to season's year
+    - circuit: String containing the Grand Prix Name
+    """
     def __init__(self, year: int, circuit: str):
         self.circuitName = self.rename(year,circuit)
 
@@ -784,6 +1015,10 @@ class renameGP:
             raise NameError('The year introduced is not correct')
 
 class lastTeamName:
+    """Return a `List` containing a shorter version of the name and regarding the final team is in the grid. 
+    For example Renault became Alpine because in the grid they are called Alpine in the last year of the dataset
+    - teams: List containing the original F1 Team Name
+    """
     def __init__(self, teams: list):
         self.correct = self.getShortNames(teams)
     

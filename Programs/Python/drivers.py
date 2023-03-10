@@ -11,31 +11,13 @@ class drivers:
         self.quali = self.get_mean(quali)
         self.race = self.get_mean(race)
         self.raceResult = raceResult
-        if fp1[0] != 0:
-            self.fp1_laps = len(fp1)
-        else:
-              self.fp1_laps = 0
-             
-        if fp2[0] != 0:
-            self.fp2_laps = len(fp2)
-        else:
-              self.fp2_laps = 0
-             
-        if fp3[0] != 0:
-            self.fp3_laps = len(fp3)
-        else:
-              self.fp3_laps = 0
-             
-        if quali[0] != 0:
-            self.quali_laps = len(quali)
-        else:
-              self.quali_laps = 0
-             
-        if race[0] != 0:
-            self.race_laps = len(race)
-        else:
-              self.race_laps = 0
         
+        self.fp1_laps = len(fp1)
+        self.fp2_laps = len(fp2)
+        self.fp3_laps = len(fp3)
+        self.quali_laps = len(quali)
+        self.race_laps = len(race)
+
         self.fp1_total = self.fp_quali_race(fp1)
         self.fp2_total = self.fp_quali_race(fp2)
         self.fp3_total = self.fp_quali_race(fp3)
@@ -80,7 +62,7 @@ class drivers:
                 sec_list.append(0)
         else:
             sec_list.append(0)
-            
+        
         return(sec_list)
     
     
@@ -128,14 +110,14 @@ class drivers:
         lista_sec = self.get_sec(lista)
         quali, race = [], []
         minim = min(lista_sec)
-        if lista[0] != 0:
+        if len(lista) > 0 and lista[0] != 0:
             for i in range(len(lista_sec)):
                 x = int((lista_sec[i]*100)/minim)
                 if x <= 102:
                     quali.append(lista[i])
                 else:
                     race.append(lista[i])
-                    
+                        
         quali_len = len(quali)
         race_len = len(race)
             

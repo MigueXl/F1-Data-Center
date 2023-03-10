@@ -1,6 +1,5 @@
 import re
 import os
-import multidata
 
 #regex to find numbers
 num = re.compile("\d")
@@ -9,18 +8,23 @@ zho = 'ZHOU Guanyu'
 dev = 'Nyck DE VRIES'
 
 class raceResult:
-    def __init__(self, orderedList:list):
-        self.result = self.getResult(orderedList)
+    def __init__(self, orderedList:list, level = 'n'):
+        self.result = self.getResult(orderedList, level)
     
-    def getResult(self, orderedList):
+    def getResult(self, orderedList, level):
             """Obtain the results obtained in the corresponding GP"""
 
             zho = 'ZHOU Guanyu'
             dev = 'Nyck DE VRIES'
             resPatern = re.compile('\d+\s+\d+\s+('+dev+'|'+zho+'|[A-Z][a-z]+\s[A-Z]+)' )
 
-            if os.path.exists('result.txt'):
-                with open('result.txt', "r", encoding='utf-8') as invoice:
+            if level == 'n':
+                file = 'result.txt'
+            else:
+                file = 'SeasonResult.txt'
+
+            if os.path.exists(file):
+                with open(file, "r", encoding='utf-8') as invoice:
                     text = invoice.readlines()
 
                 num = []

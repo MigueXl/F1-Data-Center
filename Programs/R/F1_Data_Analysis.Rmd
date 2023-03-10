@@ -65,6 +65,13 @@ library(rpart.plot)
 ```{r}
 setwd("C:/Users/migue/Documents/F1 Data Center/Datos")
 data = read.csv("data.csv", sep= ';')
+
+data$GP_ID = factor(data$GP_ID)
+```
+
+```{r}
+setwd("C:/Users/migue/Documents/F1 Data Center/Datos")
+test = read.csv("testingData.csv", sep= ';')
 ```
 
 #Deal with NULL VALUES('NO TIME')

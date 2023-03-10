@@ -6,6 +6,7 @@ import time
 from tqdm import tqdm
 from file_manager import updateALL
 from multidata import getWEATHER as weather
+from F1testingData import Extractor
 
 inicio = time.time()
 
@@ -450,7 +451,8 @@ def getLongest(sesiones:list):
 def createListYear(inicio,final):
     return [y for y in range(inicio,final + 1)]
 
-upYears = createListYear(2018,2023)
+inicio, final = 2018, 2023
+upYears = createListYear(inicio,final)
 # years = ['TestYear']
 correctYears = createListYear(2018,2022)
 for gY in correctYears:
@@ -466,7 +468,7 @@ data = [['Driver', 'Team', 'Age', 'Year', 'Month', 'GP', 'GP_ID', 'GP_Format', '
 w_list = []
 
 ############ INPUT YEARS #############
-year = createListYear(2018,2022)     #
+year = createListYear(inicio,final)  #
 ######################################
 
 ##################################################################################
@@ -490,14 +492,41 @@ def correctNames(orderedList:list, num_ord: list, previous_name: list, form: str
     
     return correctResult
 
+######### TESTING COLUMN NAMES #############
+colsName = ['Driver', 'Team', 'Year', 'Circuit', 'Test_number', 'Session', 'Total_PitStops', 'Total_Laps', 'Fastest_Lap', 'Fastest_S1', 'Fastest_S2', 'Fastest_S3', 'Ideal_FLap', 
+'Qualy_Times', 'Total_Qualy_Laps', 'Avg_Qualy_Track_Time','Avg_Qualy_Speed1', 'Avg_Qualy_Speed2', 'Avg_Qualy_SpeedFL', 'Avg_Qualy_SpeedST', 'Sector1_Qualy', 'Total_S1Q_Laps', 'Sector2_Qualy', 'Total_S2Q_Laps', 'Sector3_Qualy', 'Total_S3Q_Laps', 
+'Race_Times', 'Total_Race_Laps', 'Avg_Race_Track_Time', 'Avg_Race_Speed1', 'Avg_Race_Speed2', 'Avg_Race_SpeedFL', 'Avg_Race_SpeedST', 'Sector1_Race', 'Total_S1R_Laps', 'Sector2_Race', 'Total_S2R_Laps',
+'Sector3_Race','Total_S3R_Laps', 'FinalSeasonResult']
 
-# for y in range(len(year)):
-for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
+
+os.chdir(f'C:\\Users\\migue\\Documents\\F1 Data Center\\Datos')
+with open('testingData.csv','w+', newline= '') as file:
+    writer = csv.writer(file,delimiter=';')
+    writer.writerow(colsName)
+#############################################
+
+#tqdm(range(len(year)), desc = 'Year Progress Bar')
+yearBar = tqdm(range(len(year)))
+for y in yearBar:
+    yearBar.set_description(f'{year[y]} PROGRESS')
     grand_prix = multidata.f1_calendar(year[y]).calendar
+    
+    path =  f'C:\\Users\\migue\\Documents\\F1 Data Center\\Datos\\fastf1_Testing_Timing_Data\\{year[y]}'
+    if os.path.exists(path):
+        testNumbers, sesions = multidata.f1_Testing(year[y]).yearSes 
+        for tm in testNumbers:
+            for ses in sesions:
+                testdata = Extractor(year[y], tm, ses).data
+                os.chdir(f'C:\\Users\\migue\\Documents\\F1 Data Center\\Datos')
+                with open('testingData.csv','a', newline= '') as file:
+                    writer = csv.writer(file,delimiter=';')
+                    writer.writerows(testdata)
 
-    # for j in range(len(grand_prix)): 
-    for j in tqdm(range(len(grand_prix)), desc = 'GP ' + str(year[y]) +' Progress Bar'):
-        print(grand_prix[j])
+
+    #tqdm(range(len(grand_prix)), desc = 'GP ' + str(year[y]) +' Progress Bar')
+    gpBar = tqdm(range(len(grand_prix)))
+    for j in gpBar:
+        gpBar.set_description(f'LOADING {grand_prix[j]}')
         path = "/Users/migue/Documents/F1 Data Center/"+str(year[y])+"/"+grand_prix[j]+"_"+str(year[y])
         os.chdir(path)
         
@@ -512,7 +541,7 @@ for y in tqdm(range(len(year)), desc = 'Year Progress Bar'):
                 sesiones.append("")
 
         datos = gp_txt.gp(sesiones, grand_prix)       
-
+        
         names = []
         drivers_lista = []
         

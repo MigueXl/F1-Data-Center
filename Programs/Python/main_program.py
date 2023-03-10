@@ -1,4 +1,4 @@
-import gp, gp_txt
+import gp_txt
 import drivers
 import teams as equipo
 import re
@@ -9,13 +9,13 @@ import time
 
 inicio_t = time.time()
 
-grand_prix = 'AbuDhabi'
-year = 2021
+grand_prix = 'Bahrein'
+year = 2023
 
 path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"+grand_prix+"_"+str(year)
 os.chdir(path)
 
-sesion = "quali"
+sesion = "race"
 inicio = 1
 final = None
 laps = [inicio,final]

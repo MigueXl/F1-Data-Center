@@ -1,9 +1,5 @@
-import multidata
-import PyPDF2 as p2
 import re
-from tqdm import tqdm
 from result import raceResult
-import os
 import sys
 import numpy as np
 
@@ -63,6 +59,7 @@ class gp:
             for _ in range(len(lista_sesiones)):
                 drivers.append([])
             
+            #TODO PROBLEM WHEN THE NUMBER OF DRIVERS IS DIFFERENT OF 20
             for i in range(len(drivers)):
                 for _ in range(20):
                     drivers[i].append([])
@@ -127,26 +124,16 @@ class gp:
                         stops = ['NO DATA' for _ in range(20)]
                     
             fp1 = drivers[0]
-            fp1.append([0]) #Ghost driver
             fp2 = drivers[1]
-            fp2.append([0]) #Ghost driver
             fp3 = drivers[2]
-            fp3.append([0]) #Ghost driver
             quali = drivers[3]
-            quali.append([0]) #Ghost driver
             race = drivers[4]
-            race.append([0]) #Ghost driver
             
             fp1_name = drivers_name[0]
-            fp1_name.append("NO DRIVER") #Ghost driver
             fp2_name = drivers_name[1]
-            fp2_name.append("NO DRIVER") #Ghost driver
             fp3_name = drivers_name[2] 
-            fp3_name.append("NO DRIVER") #Ghost driver
             quali_name = drivers_name[3] 
-            quali_name.append("NO DRIVER") #Ghost driver
             race_name = drivers_name[4] 
-            race_name.append("NO DRIVER") #Ghost driver
             
             return(fp1,fp2,fp3,quali,race,fp1_name,fp2_name,fp3_name,quali_name,race_name,stops)
     
@@ -164,7 +151,7 @@ class gp:
         return(suma)
         
     def get_sec(self,lista):
-        """Convert x:yy:zzz to seconds"""
+        """Convert x:yy:zzz to miliseconds"""
         sec_list = []
         if len(lista) > 0:
             if lista[0] != 0:
@@ -245,7 +232,7 @@ class gp:
                 
                 #When sesion is quali
                 if sesion == 3:
-                    for i in range(len(lista_time[sesion])):
+                    for i in range(len(lista_time[sesion]) - 1):
                         if lista_time[sesion][i][0] != 0:
                             minim = min(lista_time[sesion][i])
                             maximo = int((102*minim)/100)
@@ -256,7 +243,7 @@ class gp:
                             new_lista[sesion][i].append(0)
                             
                 else:
-                    for i in range(len(lista_time[sesion])):
+                    for i in range(len(lista_time[sesion]) - 1):
                         if lista_time[sesion][i][0] != 0:
                             minim = min(lista_time[sesion][i])
                             maximo = int((110*minim)/100)

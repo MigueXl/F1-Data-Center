@@ -2,10 +2,9 @@ import pdfplumber
 import PyPDF2 as p2
 import re
 import os
-import multidata
 
-path = "/Users/migue/Documents/F1 Data Center/"+'2022'+"/"+'Australia'+"_"+'2022'
-os.chdir(path)
+# path = "/Users/migue/Documents/F1 Data Center/"+'2022'+"/"+'Australia'+"_"+'2022'
+# os.chdir(path)
 
 #regex to find numbers
 num = re.compile("\d")
