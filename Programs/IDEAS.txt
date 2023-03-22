@@ -9,3 +9,4 @@ Contar el número de puntos por tipo de sesion que ha lluvido ALL
 Pilotos que más han quedado en cada posicion ALL
 Pilotos con más DNF en carrera ALL
 Equipos que hacen más paradas de media o menos de media ALL
+Pasar a DASH para interpretar datos mejor ALL 
