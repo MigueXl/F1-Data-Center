@@ -243,7 +243,7 @@ class f1_teams:
                     teams.append("Aston Martin Cognizant F1 Team")
 
                 elif names[i]== 'Nicholas LATIFI' or names[i] == 'Jack AITKEN' or names[i] == 'Roy NISSANY' or names[i] == 'Alexander ALBON' or (names[i] == 'Nyck VRIES' and vries_w) or names[i] == 'Logan SARGEANT':
-                    if color: colorList.append('#041e42')
+                    if color: colorList.append('#1e52b8')
                     teams.append("Williams Racing")
 
                 elif names[i]== 'Valtteri BOTTAS' or names[i] == 'Robert KUBICA'or names[i] == 'Callum ILOTT'or names[i] == 'ZHOU Guanyu' or names[i] == 'Guanyu ZHOU' or names[i] == 'Theo POURCHAIRE':
@@ -291,7 +291,7 @@ class f1_teams:
                     teams.append("Aston Martin Cognizant F1 Team")
 
                 elif names[i] == 'Jack AITKEN' or names[i] == 'Roy NISSANY' or names[i] == 'Alexander ALBON' or names[i] == 'Logan SARGEANT':
-                    if color: colorList.append('#041e42')
+                    if color: colorList.append('#1e52b8')
                     teams.append("Williams Racing")
 
                 elif names[i]== 'Valtteri BOTTAS' or names[i] == 'Robert KUBICA' or names[i] == 'Callum ILOTT' or names[i] == 'ZHOU Guanyu' or names[i] == 'Guanyu ZHOU' or names[i] == 'Theo POURCHAIRE':
@@ -299,7 +299,7 @@ class f1_teams:
                     teams.append('Alfa Romeo F1 Team Stake')
 
                 elif names[i]== 'Kevin MAGNUSSEN' or names[i] == 'Antonio GIOVINAZZI' or names[i] =='Pietro FITTIPALDI' or names[i] == 'Nico HULKENBERG':
-                    if color: colorList.append('#f0eff2')
+                    if color: colorList.append('#FFFFFF')
                     teams.append("MoneyGram Haas F1 Team")
 
                 elif names[i] == 'Yuki TSUNODA' or names[i] == 'Liam LAWSON' or names[i] == 'Nyck VRIES' or names[i] == 'Nyck DE VRIES':
@@ -1021,34 +1021,50 @@ class lastTeamName:
     """
     def __init__(self, teams: list):
         self.correct = self.getShortNames(teams)
+        self.color = self.getShortNames(teams, color = True)
     
-    def getShortNames(self,teams):
+    def getShortNames(self,teams,color=False):
         '''Return a shorter version of the name and regarding the final team is in the grid. 
         For example Renault became Alpine because in the grid they are called Alpine in the last year of the dataset
         '''
+        colorList = []
         for i,t in enumerate(teams):
             if 'McLaren' in t:
                 teams[i] = 'McLaren'
+                colorList.append('#fe8000')
             elif 'Force India' in t or 'Racing Point' in t or ('Aston Martin' in t and not 'Red Bull' in t):
                 teams[i] = 'Aston Martin'
+                colorList.append('#185d5b')
             elif 'Williams' in  t:
                 teams[i] = 'Williams'
+                colorList.append('#1e52b8')
             elif 'Alfa Romeo' in  t:
                 teams[i] = 'Alfa Romeo'
+                colorList.append('#6b101b')
             elif 'Haas' in  t:
                 teams[i] = 'Haas'
+                colorList.append('#FFFFFF')
             elif 'Toro Rosso' in t or 'AlphaTauri' in t:
                 teams[i] = 'AlphaTauri'
+                colorList.append('#022947')
             elif 'Red Bull' in  t and not 'Toro Rosso' in t:
                 teams[i] = 'Red Bull'
+                colorList.append('#340db0')
             elif 'Renault' in  t  or 'Alpine' in t:
                 teams[i] = 'Alpine'
+                colorList.append('#2180c3')
             elif 'Ferrari' in  t:
                 teams[i] = 'Ferrari'
+                colorList.append('#cc0000')
             elif 'Mercedes' in  t:
                 teams[i] = 'Mercedes'
+                colorList.append('#25b8a1')
+            else:
+                colorList.append('#000000')
+                teams.append("NO TEAM")
         
-        return teams
+        if color: return colorList
+        else: return teams
 
 # class plotColors:
 #     def __init__(self, year: int):

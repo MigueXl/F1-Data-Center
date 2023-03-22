@@ -9,7 +9,7 @@ import time
 
 inicio_t = time.time()
 
-grand_prix = 'Bahrein'
+grand_prix = 'Saudi'
 year = 2023
 
 path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"+grand_prix+"_"+str(year)

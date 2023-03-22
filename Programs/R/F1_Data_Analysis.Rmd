@@ -74,6 +74,13 @@ setwd("C:/Users/migue/Documents/F1 Data Center/Datos")
 test = read.csv("testingData.csv", sep= ';')
 ```
 
+
+```{r}
+setwd("C:/Users/migue/Documents/F1 Data Center/Datos")
+casualSes = read.csv("casualSession.csv", sep= ',',dec= '.')
+```
+
+
 #Deal with NULL VALUES('NO TIME')
 Assign NA's properly
 ```{r}
