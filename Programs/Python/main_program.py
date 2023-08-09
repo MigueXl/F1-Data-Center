@@ -9,19 +9,19 @@ import time
 
 inicio_t = time.time()
 
-grand_prix = 'Saudi'
+grand_prix = 'Hungria'
 year = 2023
 
 path = "/Users/migue/Documents/F1 Data Center/"+str(year)+"/"+grand_prix+"_"+str(year)
 os.chdir(path)
 
-sesion = "race"
+sesion = "fp2"
 inicio = 1
 final = None
 laps = [inicio,final]
 
 #n/s
-mode = 'n'
+mode = 's'
 
 #TO PRINT 
 ngp = open("name_gp.txt", "r", encoding='utf-8')

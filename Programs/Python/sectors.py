@@ -23,6 +23,22 @@ class sectors:
         self.names = self.order[0]
         self.times = self.order[1]
     
+    def driverAllSect(self, drivers_name, rows):
+        s1,s2,s3 = [],[],[]
+        for r in rows:
+            if len(r)==3:
+                s1.append(re.search(name, r[0]).group())
+                s2.append(re.search(name, r[1]).group())
+                s3.append(re.search(name, r[2]).group())
+            else:
+                for i in range(len(r)):
+                    if i==0: s1.append(re.search(name, r[i]).group())
+                    else: s2.append(re.search(name, r[i]).group())
+        
+        allDrivers = [d for d in drivers_name if d in s1 and d in s2 and d in s3]
+        
+        return allDrivers
+    
     def get_lists(self):
             """Obtain times lists and drivers names in each season"""
              
@@ -56,16 +72,18 @@ class sectors:
                         drivers_name.append(re.search(name, row).group())
                         rows.append(re.findall(drivers_sn_time, row))
             
-            index = -1
+            drivers_name = self.driverAllSect(drivers_name, rows)
             for n in drivers_name:
-                index += 1
                 for row in rows:
-                    if n in row[0]:
-                        s1.append(re.search(time, row[0]).group())
-                    if n in row[1]:
-                        s2.append(re.search(time, row[1]).group())
-                    if n in row[2]:
-                        s3.append(re.search(time, row[2]).group())      
+                    #! COULD BE BUGS IN THE CASE OF S1 DOES NOT EXIST FOR ONE DRIVER AND S2 SLOWEST SECTOR IS DONE BY ANOTHER DRIVER
+                    #TODO IN CASE THAT HAPPENS, FIX IT IN THE FUTURE (BECAUSE S1 MOVES TO THE LEFT AND THAT DRIVER WILL FIND 2 DIFFERENT S1 WHILE THE SECOND IS S2)
+                    if len(row) ==3:                             
+                        if n in row[0]:
+                            s1.append(re.search(time, row[0]).group())
+                        if n in row[1]:
+                            s2.append(re.search(time, row[1]).group())
+                        if n in row[2]:
+                            s3.append(re.search(time, row[2]).group())      
                      
             return drivers_name, s1,s2,s3
         

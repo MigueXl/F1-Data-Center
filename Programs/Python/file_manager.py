@@ -218,7 +218,7 @@ class fase4:
 
                 #OPEN THE PDF
                 os.startfile(dir+pdf)
-                time.sleep(0.5)
+                time.sleep(1)
                 pyautogui.hotkey('ctrl', 'a')
                 pyautogui.hotkey('ctrl', 'c')
                 pyautogui.hotkey('alt', 'f4')
@@ -285,11 +285,11 @@ class faseCorrect:
 
         for f in totFiles:
             if os.path.exists(f) and f in interest:
-                txt = open(f,'r', encoding='utf-8')
-                all = txt.readlines()
-                correctName = all[-2] + ' -' #PENULTIMA LINEA 
-                correctName = correctName.replace('\n','')
-                txt.close() #CLOSE THE FILE, WE WILL NOT NEED IT ANY MORE
+                
+                with open(f,'r', encoding='utf-8') as txt:
+                    all = txt.readlines()
+                    correctName = all[-2] + ' -' #PENULTIMA LINEA 
+                    correctName = correctName.replace('\n','')
 
                 with  open('name_gp.txt','w', encoding='utf-8') as nameGP:
                     nameGP.write(correctName)
@@ -316,7 +316,7 @@ class faseCorrect:
 
         self.printMessage()
 
-
+#TODO: When result.txt is missing
 class returnFault:
     '''Will return every file which fault in each directory'''
     def __init__(self, gps: list, year: int or str):
@@ -378,11 +378,6 @@ class updateALL:
         for y in years: 
             f1 = fase1(multidata.f1_calendar(y).calendar, y)
             f1.createFolder()
-        
-        #FASE CORRECT: CORRECT NAME_GP.TXT FILE
-        for y in years: 
-            fc = faseCorrect(multidata.f1_calendar(y).calendar, y)
-            fc.correctFile()
 
         #FASE 2: APPEND FILES IN THE CORRESPONDING DIRECTORY
         for y in years: 
@@ -403,6 +398,11 @@ class updateALL:
         for y in tqdm(years, desc = 'Year Progress Bar'):
             f4 = fase4(multidata.f1_calendar(y).calendar, y)
             f4.generateFiles()
+        
+        #FASE CORRECT: CORRECT NAME_GP.TXT FILE
+        for y in years: 
+            fc = faseCorrect(multidata.f1_calendar(y).calendar, y)
+            fc.correctFile()
 
         #CHECK MISSING: WHICH FILES IS NOT IN EACH DIRECTORY
         for y in years: 

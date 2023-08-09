@@ -63,8 +63,7 @@ class f1_teams:
                     teams.append("Mercedes AMG Petronas Motorsport")
 
                 else:
-                    if color: colorList.append('#000000')
-                    teams.append("NO TEAM")
+                    raise NameError(f'Driver {names[i]} has not been introduced properly in the Teams Database')
         ##################################################################################
         #2019Season
         ##################################################################################
@@ -115,8 +114,7 @@ class f1_teams:
                     teams.append("Mercedes AMG Petronas Motorsport")
 
                 else:
-                    if color: colorList.append('#000000')
-                    teams.append("NO TEAM")
+                    raise NameError(f'Driver {names[i]} has not been introduced properly in the Teams Database')
         ##################################################################################
         #2020Season
         ##################################################################################
@@ -167,8 +165,7 @@ class f1_teams:
                     teams.append("Mercedes-AMG Petronas F1 Team")
 
                 else:
-                    if color: colorList.append('#000000')
-                    teams.append("NO TEAM")
+                    raise NameError(f'Driver {names[i]} has not been introduced properly in the Teams Database')
         ##################################################################################
         #2021Season
         ##################################################################################
@@ -215,8 +212,7 @@ class f1_teams:
                     teams.append("Mercedes-AMG Petronas F1 Team")
 
                 else:
-                    if color: colorList.append('#000000')
-                    teams.append("NO TEAM")
+                    raise NameError(f'Driver {names[i]} has not been introduced properly in the Teams Database')
         ##################################################################################
         #2022Season
         ##################################################################################
@@ -275,8 +271,7 @@ class f1_teams:
                     teams.append("Mercedes-AMG Petronas F1 Team")
 
                 else:
-                    if color: colorList.append('#000000')
-                    teams.append("NO TEAM")    
+                    raise NameError(f'Driver {names[i]} has not been introduced properly in the Teams Database')  
         ##################################################################################
         #2023Season
         ##################################################################################
@@ -302,7 +297,7 @@ class f1_teams:
                     if color: colorList.append('#FFFFFF')
                     teams.append("MoneyGram Haas F1 Team")
 
-                elif names[i] == 'Yuki TSUNODA' or names[i] == 'Liam LAWSON' or names[i] == 'Nyck VRIES' or names[i] == 'Nyck DE VRIES':
+                elif names[i] == 'Yuki TSUNODA' or names[i] == 'Liam LAWSON' or names[i] == 'Nyck VRIES' or names[i] == 'Nyck DE VRIES' or names[i]== 'Daniel RICCIARDO':
                     if color: colorList.append('#022947')
                     teams.append("Scuderia AlphaTauri")
 
@@ -323,8 +318,7 @@ class f1_teams:
                     teams.append("Mercedes-AMG Petronas F1 Team")
 
                 else:
-                    if color: colorList.append('#000000')
-                    teams.append("NO TEAM")
+                    raise NameError(f'Driver {names[i]} has not been introduced properly in the Teams Database')
         else: 
             raise NameError('The year introduced is not correct')
         
@@ -920,7 +914,27 @@ class getWEATHER:
         #2023Season
         ##################################################################################    
         elif year == 2023:
-            return 'D'
+            if circuit == 'Australia' and sesion == 'fp2':
+                return 'D/I'
+            if circuit == 'Monaco' and sesion == 'race':
+                return 'D/I'
+            if circuit == 'España' and sesion == 'fp3':
+                return 'D/I'
+            if circuit == 'Canada' and (sesion == 'fp3' or sesion == 'quali'):
+                if sesion == 'fp3':
+                    return 'I/W'
+                elif sesion == 'quali':
+                    return 'I'
+            if circuit == 'GB' and (sesion == 'fp3' or sesion == 'quali'):
+                return 'D/I'
+            if circuit == 'Hungria' and sesion == 'fp1':
+                return 'I'
+            if circuit == 'Belgica' and  (sesion == 'fp1' or sesion == 'quali'):
+                if sesion == 'fp1':
+                    return 'I/W'
+                elif sesion == 'quali':
+                    return 'D/I'
+            else: return 'D'
         
         else:
             return 'D'
