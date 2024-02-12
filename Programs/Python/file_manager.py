@@ -218,7 +218,7 @@ class fase4:
 
                 #OPEN THE PDF
                 os.startfile(dir+pdf)
-                time.sleep(1)
+                time.sleep(1.5)
                 pyautogui.hotkey('ctrl', 'a')
                 pyautogui.hotkey('ctrl', 'c')
                 pyautogui.hotkey('alt', 'f4')
@@ -316,7 +316,6 @@ class faseCorrect:
 
         self.printMessage()
 
-#TODO: When result.txt is missing
 class returnFault:
     '''Will return every file which fault in each directory'''
     def __init__(self, gps: list, year: int or str):
@@ -333,10 +332,21 @@ class returnFault:
                 goodList.remove(f)
 
         return goodList
-    
+
+    def isSprint(self,dirFiles):
+        '''Returns True or False depending on the Weekend Category (Normal or Sprint)'''
+        gp_name,gp_year = dirFiles.split('/')[-1].split('_')
+        if multidata.weekendFormat(int(gp_year),gp_name).f == 'Normal':        
+            return False
+        else: return True
+
     def whatFault(self,dirFiles):
         pdf = False
-        possible = ["fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt"]
+        sprint = self.isSprint(dirFiles)
+        
+        if not sprint: possible = ["fp1.txt","fp2.txt","fp3.txt","quali.txt","race.txt","result.txt"]
+        else: possible = ["fp1.txt","quali.txt","race.txt","result.txt"]
+        
         sesionFiles = os.listdir(dirFiles)
         for f in sesionFiles:
             if f in possible:
@@ -355,7 +365,7 @@ class returnFault:
         for f,dir in zip(self.fault,self.dir):
             text +=  str(f) + ' file is not in '+str(dir)+'\n'
         print(text)
-
+    
     def lookingFault(self):
         all = os.listdir(self.path)
         for f in all:

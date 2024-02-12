@@ -276,6 +276,10 @@ class f1_teams:
         #2023Season
         ##################################################################################
         elif year == 2023:
+            hadjar_rb = False
+            if gp == 'AbuDhabi':
+                    hadjar_rb = True
+                    
             for i in range(len(names)):
                 if names[i]== 'Oscar PIASTRI' or names[i] == 'Lando NORRIS' or names[i] == 'Alex PALOU' or names[i] == "Patricio O'WARD":
                     if color: colorList.append('#fe8000')
@@ -285,7 +289,7 @@ class f1_teams:
                     if color: colorList.append('#185d5b')
                     teams.append("Aston Martin Cognizant F1 Team")
 
-                elif names[i] == 'Jack AITKEN' or names[i] == 'Roy NISSANY' or names[i] == 'Alexander ALBON' or names[i] == 'Logan SARGEANT':
+                elif names[i] == 'Alexander ALBON' or names[i] == 'Logan SARGEANT' or names[i] == "Zak O'SULLIVAN":
                     if color: colorList.append('#1e52b8')
                     teams.append("Williams Racing")
 
@@ -293,15 +297,15 @@ class f1_teams:
                     if color: colorList.append('#6b101b')
                     teams.append('Alfa Romeo F1 Team Stake')
 
-                elif names[i]== 'Kevin MAGNUSSEN' or names[i] == 'Antonio GIOVINAZZI' or names[i] =='Pietro FITTIPALDI' or names[i] == 'Nico HULKENBERG':
+                elif names[i]== 'Kevin MAGNUSSEN' or names[i] == 'Antonio GIOVINAZZI' or names[i] =='Pietro FITTIPALDI' or names[i] == 'Nico HULKENBERG' or names[i] == 'Oliver BEARMAN':
                     if color: colorList.append('#FFFFFF')
                     teams.append("MoneyGram Haas F1 Team")
 
-                elif names[i] == 'Yuki TSUNODA' or names[i] == 'Liam LAWSON' or names[i] == 'Nyck VRIES' or names[i] == 'Nyck DE VRIES' or names[i]== 'Daniel RICCIARDO':
+                elif names[i] == 'Yuki TSUNODA' or names[i] == 'Liam LAWSON' or names[i] == 'Nyck VRIES' or names[i] == 'Nyck DE VRIES' or names[i]== 'Daniel RICCIARDO' or  (names[i]== 'Isack HADJAR' and not hadjar_rb):
                     if color: colorList.append('#022947')
                     teams.append("Scuderia AlphaTauri")
 
-                elif names[i]== 'Sergio PEREZ' or names[i] == 'Max VERSTAPPEN':
+                elif names[i]== 'Sergio PEREZ' or names[i] == 'Max VERSTAPPEN' or (names[i]== 'Isack HADJAR' and hadjar_rb) or names[i] == 'Jake DENNIS':
                     if color: colorList.append('#340db0')
                     teams.append("Oracle Red Bull Racing")
 
@@ -313,7 +317,7 @@ class f1_teams:
                     if color: colorList.append('#cc0000')
                     teams.append("Scuderia Ferrari")
 
-                elif names[i]== 'George RUSSELL' or names[i] == 'Lewis HAMILTON':
+                elif names[i]== 'George RUSSELL' or names[i] == 'Lewis HAMILTON' or names[i] == 'Frederik VESTI':
                     if color: colorList.append('#25b8a1')
                     teams.append("Mercedes-AMG Petronas F1 Team")
 
@@ -598,7 +602,7 @@ class driversAGE:
             elif names[i] == 'Roy NISSANY' or names[i] == 'Carlos SAINZ' or names[i] == 'Daniil KVYAT' or names[i] == 'Artem MARKELOV':
                 born = 1994
                 age.append(year - born)
-            elif names[i]== 'Nicholas LATIFI' or names[i] == 'Jack AITKEN' or names[i] == 'Nyck VRIES' or names[i]== 'Sergey SIROTKIN':
+            elif names[i]== 'Nicholas LATIFI' or names[i] == 'Jack AITKEN' or names[i] == 'Nyck VRIES' or names[i]== 'Sergey SIROTKIN' or names[i] == 'Jake DENNIS':
                 born = 1995
                 age.append(year - born)
             elif names[i]== 'Pierre GASLY' or names[i] == 'Esteban OCON' or names[i] == 'Alexander ALBON' or names[i] == 'Pietro FITTIPALDI' or names[i] == 'Sean GELAEL':
@@ -619,14 +623,20 @@ class driversAGE:
             elif names[i] == 'Oscar PIASTRI':
                 born = 2001
                 age.append(year - born)
-            elif names[i] == 'Liam LAWSON':
-                born = 2003
+            elif names[i] == 'Liam LAWSON' or names[i] == 'Frederik VESTI':
+                born = 2002
                 age.append(year - born)
             elif names[i] == 'Theo POURCHAIRE' or names[i] == 'Jack DOOHAN':
                 born = 2003
                 age.append(year - born)
+            elif names[i]== 'Isack HADJAR':
+                born = 2004
+                age.append(year - born)
+            elif names[i] == 'Oliver BEARMAN' or names[i] == "Zak O'SULLIVAN":
+                born = 2005
+                age.append(year - born)
             else:
-                age.append("NO AGE")
+                raise NameError(f'Driver {names[i]} has not defined any age')
         
         return age
 
@@ -664,7 +674,7 @@ class raceMONTH:
                 elif grand_prix[i] == 'Brasil' or grand_prix[i] == 'AbuDhabi':
                     month.append("NOV")
                 else:
-                    month.append('NO MONTH')
+                    raise NameError(f'Grand Prix of {grand_prix[i]} has not defined any month for year {year}')
 
         ##################################################################################
         #2019Season
@@ -692,7 +702,7 @@ class raceMONTH:
                 elif grand_prix[i] == 'AbuDhabi':
                     month.append("DEC")
                 else:
-                    month.append('NO MONTH')
+                    raise NameError(f'Grand Prix of {grand_prix[i]} has not defined any month for year {year}')
 
         ##################################################################################
         #2020Season
@@ -712,7 +722,7 @@ class raceMONTH:
                 elif grand_prix[i]== 'Sahkir' or grand_prix[i] == 'AbuDhabi':
                     month.append("DEC")
                 else:
-                    month.append('NO MONTH')
+                    raise NameError(f'Grand Prix of {grand_prix[i]} has not defined any month for year {year}')
 
         ##################################################################################
         #2021Season
@@ -740,7 +750,7 @@ class raceMONTH:
                 elif grand_prix[i]== 'Saudi' or grand_prix[i] == 'AbuDhabi':
                     month.append("DEC")
                 else:
-                    month.append('NO MONTH')
+                    raise NameError(f'Grand Prix of {grand_prix[i]} has not defined any month for year {year}')
 
         ##################################################################################
         #2022Season
@@ -767,7 +777,7 @@ class raceMONTH:
                 elif grand_prix[i] == 'Brasil' or grand_prix[i] == 'AbuDhabi':
                     month.append("NOV")
                 else:
-                    month.append("NO MONTH")
+                    raise NameError(f'Grand Prix of {grand_prix[i]} has not defined any month for year {year}')
         
         ##################################################################################
         #2023Season
@@ -794,7 +804,7 @@ class raceMONTH:
                 elif grand_prix[i] == 'Brasil' or grand_prix[i] == 'AbuDhabi' or grand_prix[i] == 'Vegas':
                     month.append("NOV")
                 else:
-                    month.append("NO MONTH")
+                    raise NameError(f'Grand Prix of {grand_prix[i]} has not defined any month for year {year}')
         
         else: 
             raise NameError('The year introduced is not correct')
@@ -933,6 +943,11 @@ class getWEATHER:
                 if sesion == 'fp1':
                     return 'I/W'
                 elif sesion == 'quali':
+                    return 'D/I'
+            if circuit == 'Holanda' and  (sesion == 'fp3' or sesion == 'quali' or sesion == 'race'):
+                if sesion == 'fp3':
+                    return 'I/W'
+                elif sesion == 'quali' or sesion == 'race':
                     return 'D/I'
             else: return 'D'
         
